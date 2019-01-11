@@ -1,0 +1,119 @@
+void Start_Streategy()
+{
+  //Pradines strategijos
+  switch (START_STRATEGY_STATE) {
+    case 0:
+      motor(SPEED_NORMAL, SPEED_NORMAL);
+      delay(10);
+      break;
+    case 1:
+      motor(SPEED_NORMAL, SPEED_NORMAL);
+      delay(10);
+      motor(SPEED_NORMAL + 50, SPEED_NORMAL + 50);
+      delay(90);
+      motor(SPEED_NORMAL + 90, SPEED_NORMAL + 90);
+      delay(90);
+      motor(255, 255);
+      delay(150);
+      motor(0, 0);
+      delay(15);
+      break;
+    case 2:
+      motor(SPEED_NORMAL + 50, SPEED_NORMAL + 50);
+      delay(90);
+      motor(SPEED_ATTACK, SPEED_ATTACK);
+      delay(90);
+      motor(SPEED_ATTACK2, SPEED_ATTACK2);
+      delay(90);
+      break;
+    case 3: zigzag_desine();
+      break;
+    case 4: zigzag_kaire();
+      break;
+    case 7: posukis_desine();
+      break;
+    case 8: posukis_kaire();
+      break;
+    case 9:
+      motor(-SPEED_ATTACK, SPEED_ATTACK);
+      delay(30);
+      break;
+    case 10:
+      motor(SPEED_ATTACK, -SPEED_ATTACK);
+      delay(30);
+      break;
+  }
+}
+//------------------------------------------------------------------------------
+void zigzag_desine()
+{
+  motor(-SPEED_ATTACK - 15, SPEED_ATTACK - 15);
+  delay(15);
+  motor(-SPEED_ATTACK, SPEED_ATTACK);
+  delay(40);
+  motor(SPEED_NORMAL, SPEED_NORMAL);
+  delay(50);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(230);
+  motor(SPEED_ATTACK - 15, -SPEED_ATTACK - 15);
+  delay(20);
+  motor(SPEED_ATTACK, -SPEED_ATTACK);
+  delay(150);
+  motor(0, 0);
+  delay(10);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(35);
+  motor(SPEED_ATTACK2, SPEED_ATTACK2);
+  delay(35);
+  motor(SPEED_ATTACK2 + 30, SPEED_ATTACK2 + 30);
+  delay(150);
+}
+
+void zigzag_kaire()
+{
+  motor(SPEED_ATTACK - 15, -SPEED_ATTACK - 15);
+  delay(15);
+  motor(SPEED_ATTACK, -SPEED_ATTACK);
+  delay(40);
+  motor(SPEED_NORMAL, SPEED_NORMAL);
+  delay(50);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(230);
+  motor(-SPEED_ATTACK - 15, SPEED_ATTACK - 15);
+  delay(20);
+  motor(-SPEED_ATTACK, SPEED_ATTACK);
+  delay(150);
+  motor(0, 0);
+  delay(10);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(35);
+  motor(SPEED_ATTACK2, SPEED_ATTACK2);
+  delay(35);
+  motor(SPEED_ATTACK2 + 30, SPEED_ATTACK2 + 30);
+  delay(150);
+}
+//------------------------------------------------------------------------------
+void posukis_desine()
+{
+  motor(-SPEED_ATTACK, SPEED_ATTACK);
+  delay(55);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(200);
+  motor(SPEED_ATTACK, -SPEED_ATTACK);
+  delay(150);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(200);
+}
+void posukis_kaire()
+{
+
+  motor(SPEED_ATTACK, -SPEED_ATTACK);
+  delay(55);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(200);
+  motor(-SPEED_ATTACK, SPEED_ATTACK);
+  delay(150);
+  motor(SPEED_ATTACK, SPEED_ATTACK);
+  delay(200);
+}
+//------------------------------------------------------------------------------
