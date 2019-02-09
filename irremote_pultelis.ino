@@ -8,6 +8,7 @@
 #include <IRremote.h>
 #include <IRremoteInt.h>
 #include "strategijos.h"
+#include "irremote_pultelis.h"
 
 /**
  * Kaip veikia `irrecv.decode(&results)` ?

@@ -20,7 +20,7 @@
 #include "inicializuoti.h"
 #include "strategijos.h"
 #include "IRremote/IRremote.h"
-#include "IR_REMOTE_PULTELIS.h"
+#include "irremote_pultelis.h"
 
 void setup()
 {
