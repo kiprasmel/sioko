@@ -1,404 +1,356 @@
-#include <IRremote.h>
+/*
+ * SIOKO.ino
+ * 
+ * Pagrindinis programos failas.
+ * 
+ * Copyright (c) 2019 Kipras Melnikovas, Vismantas Masiokas, Neilas Antanavičius
+ * 
+*/
 
-//Pultelio hex kodai ir nustatymai
-#define Number1  0xFF906F
-#define Number2  0xFFB847
-#define Number3  0xFFF807
-#define Number4  0xFF9867
-#define Number5  0xFFD827
-#define Number6  0xFF8877
-#define Number7  0xFFE817
-#define Number8  0xFF48B7
-#define Number9  0xFF9A65
-#define Enter    0xFFE01F
-#define MY_PROTOCOL NEC;
+/**
+ * Kas yra etr? (Naudojamas pulteliuNustatytiStrategijas, galbūt geriau jį ten deklaruoti?) 
+ * > Perkėliau į pulteliuNustatytiStrategijas failą
+ * 
+ * Iš kur gauti IRremote.h biblioteką? kurią čia naudojat?
+ * 
+ * 
+ * Search'inimo keywords'ai: [TODO, CHECK, WARN, BROKEN]
+ */
 
-//Siustuvo nustatymai
-const byte RECV_PIN = 30;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
-int etr = 0;
+#include "inicializuoti.h"
+#include "strategijos.h"
+#include "IRremote/IRremote.h"
+#include "IR_REMOTE_PULTELIS.h"
 
-byte myLINE  = B0000;
-byte myLINEBACK  = B00;
-byte mySIDES = B000000;//8
-byte myFRONT = B000000;
-byte myMOUSE = B00;//8
+void setup()
+{
+	Serial.begin(9600);
 
-//varikliu pajungimas
-const byte PWM1 = 7;
-const byte PWM2 = 9;
-const byte DIR1 = 6;
-const byte DIR2 = 10;
+	inicializuoti();
 
-//Linijos sensoriai
-const byte LeftLine1 = 35;//rau
-const byte LeftLine2 = 36;//g
+	const byte outputPins[] = {
+			13,
+			PWM1,
+			PWM2,
+			DIR1,
+			DIR2,
+	};
+	const byte inputPins[] = {LeftLine1, LeftLine2, RightLine1, RightLine2, Right1, Right2, Right3, Rightback,
+														Left1, Left2, Left3, Leftback, Middle1, Middle2, Middle3, START_MODULE};
 
-const byte RightLine1 = 37;//ru
-const byte RightLine2 = 38;//z
+	for (const int &pin : outputPins)
+	{
+		pinMode(pin, OUTPUT);
+	}
 
+	for (const int &pin : inputPins)
+	{
+		pinMode(pin, INPUT);
+	}
 
-//puolimo sensoriai
-const byte Rightback = 15;
-const byte Right1 = 23;
-const byte Right2 = 22;
-const byte Right3 = 21;
-const byte Middle1 = 20;
-const byte Middle2 = 19;
-const byte Middle3 = 33;
-const byte Left3 = 18;
-const byte Left2 = 17;
-const byte Left1 = 16;
-const byte Leftback = 34;
-//const byte Back = 14;
+	// #NOTE - `analogWriteFrequency` susijęs su motor `analogWrite`.
 
-int k = 0;
-int b = 0;
+	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK ką daro šitas? Neveikia man, meta errorus, gal neturiu bibliotekos kažkokios */
+	analogWriteFrequency(PWM1, 15000.0f);
 
-//nep right
-//33
-//34
-//nep left
-//15
-//14
-const byte START_MODULE = 29;
+	irrecv.enableIRIn(); /** CHECK ką šitas daro? */
 
-//Varikliu greiciai
-const byte SPEED_NORMAL = 200;
-const byte SPEED_TURN = 150;
-const byte SPEED_TURN2 = 150;
-const byte SPEED_GO_BACK_LINE = 255;
-const byte SPEED_GO_BACK_LINE_TURN = 200;
-const byte SPEED_GO_BACK_LINE_TURN2 = 200;
+	pulteliuNustatytiStrategijas();
 
-//atsitraukimo ir pasisukimo atsitraukiant laikai priekiniu linijos
-const unsigned short TIME_FOR_GO_BACK = 70;//60
-const unsigned short TIME_FOR_GO_BACK_1 = 70;//105
+	while (true)
+	{
+		// laukiam, kol pasiųsk signalą pradėti
+		if (digitalRead(START_MODULE) == HIGH)
+		{
+			break; // pradėti strategiją
+		}
 
-byte START_STRATEGY_STATE = 0;
-byte MAIN_STRATEGY_STATE = 0;
+		jutikliuDuomenys(); // tikrinimas, ar veikia pinai (raudonas sensoriu)
 
-//Milis
-unsigned long time;
+		if (myFRONT != 0b000000)
+		{
+			digitalWrite(13, HIGH);
+		}
+		else
+		{
+			digitalWrite(13, LOW);
+		}
+	}
 
-bool Front = false;
-
-
-byte check;
-
-void setup() {
-  Serial.begin(9600);
-
-  pinMode(13, OUTPUT);
-
-  pinMode(PWM1, OUTPUT);//PWM1
-  pinMode(PWM2, OUTPUT);//PWM1
-  pinMode(DIR1, OUTPUT); //DIR1
-  pinMode(DIR2, OUTPUT); //DIR2
-
-  pinMode(LeftLine1, INPUT); //LeftLine1
-  pinMode(LeftLine2, INPUT); //LeftLine2
-  pinMode(RightLine1, INPUT); //RightLine1
-  pinMode(RightLine2, INPUT); //RightLine2
-
-  pinMode(Rightback, INPUT);
-  pinMode(Right1, INPUT);
-  pinMode(Right2, INPUT);
-  pinMode(Right3, INPUT);
-  pinMode(Middle1, INPUT);
-  pinMode(Middle2, INPUT);
-  pinMode(Middle3, INPUT);
-  pinMode(Left3, INPUT);
-  pinMode(Left2, INPUT);
-  pinMode(Left1, INPUT);
-  pinMode(Leftback, INPUT);
-  //pinMode(Back, INPUT);
-
-  analogWriteFrequency(9, 15000);
-  analogWriteFrequency(7, 15000);
-
-  irrecv.enableIRIn();
-  IR_Remote();
-
-  pinMode(START_MODULE, INPUT);
-  while (true) {
-    if (digitalRead(START_MODULE)== HIGH) {
-      break;
-    }
-    Jutikliu_duom();
-    if (myFRONT != 0b000000) {
-      digitalWrite(13, HIGH);
-    } else {
-      digitalWrite(13, LOW);
-    }
-  }
-  Start_Streategy();
+	vykdytiStrategija(pradineStrategija);
 }
 
-//------------------------------------------------------------------------------
-void loop() {
-  //motor(0,0);
-  Jutikliu_duom();
-  Line();
-  switch (MAIN_STRATEGY_STATE)
-  {
-    case 1:
-      switch (myFRONT) {
-        case 0b10000:
-        case 0b11000:
-          SpinLeft(SPEED_TURN, 0.1);
-          break;
-        case 0b00001:
-        case 0b00011:
-          SpinRight(SPEED_TURN, 0.1);
-          break;
-        case 0b00000:
-          Jutikliu_duom();
-          Line();
-          switch (mySIDES)
-          {
-            case 0b000000:
-              Jutikliu_duom();
-              Line();
-              break;
-            case 0b001000:
-            case 0b111000:
-            case 0b101000:
-            case 0b011000:
-              SpinLeft(SPEED_TURN, 10);
-              break;
-            case 0b000100:
-            case 0b000110:
-            case 0b000111:
-            case 0b000101:
-              SpinRight(SPEED_TURN, 10);
-              break;
-            case 0b010000:
-              SpinLeft(SPEED_TURN, 5);
-              break;
-            case 0b000010:
-              SpinRight(SPEED_TURN, 5);
-              break;
-            case 0b110000:
-            case 0b100000:
-              SpinLeft(SPEED_TURN, 40);
-              break;
-            case 0b000011:
-            case 0b000001:
-              SpinRight(SPEED_TURN, 40);
-              break;
-          }
-          break;
-        default:
-          time = millis();
-          while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
-          {
-            motor(255, 255);
-          }
-          break;
-      }
-      break;
-      case 2:
-        switch (myFRONT) {
-        case 0b10000:
-        case 0b11000:
-          SpinLeft(SPEED_TURN, 0.1);
-          break;
-        case 0b00001:
-        case 0b00011:
-          SpinRight(SPEED_TURN, 0.1);
-          break;
-        case 0b00000:
-          Jutikliu_duom();
-          Line();
-        default:
-          time = millis();
-          while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
-          {
-            motor(255, 255);
-          }
-          break;
-        }
-      break;
-      case 3:
-        Jutikliu_duom();
-        Line();
-      break;
-      case 9:
-        motor(100,100);
-        delay(2000);
-        motor(-100,-100);
-        delay(2000);
-      break;
-  }
-
+void loop()
+{
+	/** 
+	 * Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo, o
+	 * tada vairuojam robotą :D
+	 * 
+	 * Note - su dabartine konfiguracija, naudojant `vairuotiRobota`, `jutikliuDuomenys` net nereikalingi.
+	 * 
+	 * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
+	 * (gali būt, kad neišvengsim while / delay) 
+	 */
+	jutikliuDuomenys();
+	Line();
+	vairuotiRobota();
 }
-void motor(int a, int b) {
-  a = constrain(a, -255, 255);
-  b = constrain(b, -255, 255);
-  if (digitalRead(START_MODULE)== LOW) {
-      a=0;
-      b=0;
-    }
-  if (a <= -1 )//&& a > -255
-  {
-    digitalWrite(DIR1, 1);
-    analogWrite(PWM1, (255 - abs(a)));
-  } else if (a >= 1 )
-  {
-    digitalWrite(DIR1, 0);
-    analogWrite(PWM1, a);
-  } else if (a == 0)
-  {
-    digitalWrite(DIR1, 0);
-    analogWrite(PWM1, 0);
-  }
 
-  if (b >= 1 )//&& b > -255
-  {
-    // b = map(abs(b), 0,255,255,0);
-    digitalWrite(DIR2, 0);
-    analogWrite(PWM2, b); // 255 -
-  } else if (b <= -1 )//&& b < 255
-  {
-    digitalWrite(DIR2, 1);
-    analogWrite(PWM2, (255 - abs(b)));
-  } else if (b == 0)
-  {
-    digitalWrite(DIR2, 0);
-    analogWrite(PWM2, 0);
-  }
+/** <= --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- => **/
 
+/** 
+ * Toliau eina legacy dalykai, kuriuos sukūriau ne aš, bet kurie dar
+ * pilnai nepertvarkyti ir kol kas reikalingi naudojimui.
+ *
+ * Rekomenduojama jų nenaudoti, taip pat, jeigu įmanoma - perrašyti
+ * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc. 
+*/
+
+bool salygosTinkaPagrindineiStrategijai = true; // #TODO #DELETE
+
+void loop_mano_old()
+{
+	/** Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo */
+	jutikliuDuomenys();
+	Line(); // #TODO perdaryt Linijos tikrinimą ir atsitraukimą (gali būt, kad neišvengsim while / delay)
+
+	/** myFRONT turi 5 skirtingas pozicijas bitams. 2^5 = 32 skirtingi galimi variantai */
+
+	/** tarkim, kad visada norim atsisukti tiesiai į priešininką ir tada pulti tiesiai į jį. */
+
+	if (myFRONT == 0b01110 || myFRONT == 0b01100 || myFRONT == 0b00110 || myFRONT == 0b00100)
+	{
+		motor(255, 255); // CHARGE!
+	}
+
+	/** kol tiesiai nematom oponento */
+
+	// while (myFRONT != 0b01110 && myFRONT != 0b01100 && myFRONT != 0b00110 && myFRONT != 0b00100)
+	// {
+	// 	// salygosTinkaPagrindineiStrategijai = false;
+	// 	if (myFRONT == 0b00000)
+	// 	{
+	// 		// do stuff with sides
+	// 	}
+
+	// 	switch (myFRONT)
+	// 	{
+	// 	case 0b10000: // labai kairėje
+	// 		motor();
+	// 		break;
+	// 	case 0b11000:
+	// 	case 0b01000:
+	// 	}
+	// }
 }
-int Jutikliu_duom() {
-  for (int i = 0; i <= 9; i++) {//9
-    bitClear(myLINE, i);
-    bitClear(myFRONT, i);
-    bitClear(mySIDES, i);
-  }
-  //Sonai
 
-  //if (digitalRead(Rightback) == 0)  bitSet(mySIDES, 0);
-  if (digitalRead(Right1) == 0)     bitSet(mySIDES, 1);
-  if (digitalRead(Right2) == 0)     bitSet(mySIDES, 2);
-  if (digitalRead(Left2) == 0)      bitSet(mySIDES, 3);
-  if (digitalRead(Left1) == 0)      bitSet(mySIDES, 4);
-  //if (digitalRead(Leftback) == 0)   bitSet(mySIDES, 5);
+void loop_old()
+{
+	/** Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo */
+	jutikliuDuomenys();
+	Line();
 
-  //Priekis
-  if (digitalRead(Right3) == 0)     bitSet(myFRONT, 0);
-  if (digitalRead(Middle1) == 0)    bitSet(myFRONT, 1);
-  if (digitalRead(Middle2) == 0)    bitSet(myFRONT, 2);
-  if (digitalRead(Middle3) == 0)    bitSet(myFRONT, 3);
-  if (digitalRead(Left3) == 0)      bitSet(myFRONT, 4);
+	/** kažką darom lol. reikia rewrittint. */
+	switch (pagrindineStrategija)
+	{
+	case stratPirma:
+		switch (myFRONT)
+		{
+		case 0b10000:
+		case 0b11000:
+			SpinLeft(SPEED_TURN, 0.1);
+			break;
+		case 0b00001:
+		case 0b00011:
+			SpinRight(SPEED_TURN, 0.1);
+			break;
+		case 0b00000:
+			jutikliuDuomenys();
+			Line();
+			switch (mySIDES)
+			{
+			case 0b000000:
+				jutikliuDuomenys();
+				Line();
+				break;
+			case 0b001000:
+			case 0b111000:
+			case 0b101000:
+			case 0b011000:
+				SpinLeft(SPEED_TURN, 10);
+				break;
+			case 0b000100:
+			case 0b000110:
+			case 0b000111:
+			case 0b000101:
+				SpinRight(SPEED_TURN, 10);
+				break;
+			case 0b010000:
+				SpinLeft(SPEED_TURN, 5);
+				break;
+			case 0b000010:
+				SpinRight(SPEED_TURN, 5);
+				break;
+			case 0b110000:
+			case 0b100000:
+				SpinLeft(SPEED_TURN, 40);
+				break;
+			case 0b000011:
+			case 0b000001:
+				SpinRight(SPEED_TURN, 40);
+				break;
+			}
+			break;
+		default:
+			time = millis();
+			while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
+			{
+				motor(255, 255);
+			}
+			break;
+		}
+		break;
 
-  /*if (digitalRead(Right1) == 0) bitSet(myFRONT, 6);
-    if (digitalRead(Right2) == 0) bitSet(myFRONT, 5);*/
-  /*if (digitalRead(Right3) == 0) bitSet(myFRONT, 4);
-    if (digitalRead(Middle2) == 0) bitSet(myFRONT, 3);
-    if (digitalRead(Left3) == 0) bitSet(myFRONT, 2);*/
-  /*if (digitalRead(Left2) == 0) bitSet(myFRONT, 1);
-    if (digitalRead(Right1) == 0) bitSet(myFRONT, 0);*/
+	case stratAntra:
+		switch (myFRONT)
+		{
+		case 0b10000:
+		case 0b11000:
+			SpinLeft(SPEED_TURN, 0.1);
+			break;
+		case 0b00001:
+		case 0b00011:
+			SpinRight(SPEED_TURN, 0.1);
+			break;
+		case 0b00000:
+			jutikliuDuomenys();
+			Line();
+		default:
+			time = millis();
+			while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
+			{
+				motor(255, 255);
+			}
+			break;
+		}
+		break;
 
-  //Linija
-  if (digitalRead(LeftLine1) == 1)    bitSet(myLINE, 3);
-  if (digitalRead(LeftLine2) == 1)    bitSet(myLINE, 2);
-  if (digitalRead(RightLine1) == 1)   bitSet(myLINE, 0);
-  if (digitalRead(RightLine2) == 1)   bitSet(myLINE, 1);
+	case stratTrecia:
+		jutikliuDuomenys();
+		Line();
+		break;
 
+		/**
+	 * TODO CHECK - o kodėl tiek mažai strategijų?
+	 * Ir apskritai kažkaip nekaip padaryta, nes nustatant ir pradinę, ir pagrindinę, naudojamos tos pačios
+	 */
+
+		/** #WARN #DANGER delayinam (stabdom programą 2 sekundėm (tik
+	 * važiuojam, bet pinai neskenuojami ir nekeičiami!) uh oh bad!)
+	 * https://www.arduino.cc/reference/en/language/functions/time/delay/
+	 */
+
+	case stratDevinta:
+		motor(100, 100);
+		delay(2000);
+		motor(-100, -100);
+		delay(2000);
+		break;
+	}
 }
 
 void Line()
 {
-  //Back = false;
-  //Linija
-  switch (myLINE)
-  {
-    case 0b0011://Right
-      time = millis();
-      while (millis() - time <= TIME_FOR_GO_BACK)
-      {
-        motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
-        //Jutikliu_duom_back();
-        if (myLINEBACK != 0b00)
-        {
-          break;
-        }
-      }
-      time = millis();
-      while (millis() - time <= TIME_FOR_GO_BACK_1)
-      {
-        motor(-SPEED_GO_BACK_LINE_TURN, SPEED_GO_BACK_LINE_TURN2);
-        //Jutikliu_duom_back();
-        if (myLINEBACK != 0b00)
-        {
-          break;
-        }
-      }
-      break;
-    case 0b1100://Left
-      time = millis();
-      while (millis() - time <= TIME_FOR_GO_BACK)
-      {
-        motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
-        //Jutikliu_duom_back();
-        if (myLINEBACK != 0b00)
-        {
-          break;
-        }
-      }
-      time = millis();
-      while (millis() - time <= TIME_FOR_GO_BACK_1)
-      {
-        motor(SPEED_GO_BACK_LINE_TURN, -SPEED_GO_BACK_LINE_TURN2);
-        //Jutikliu_duom_back();
-        if (myLINEBACK != 0b00)
-        {
-          break;
-        }
-      }
-      break;
-    case 0b1111://Both
-      time = millis();
-      while (millis() - time <= TIME_FOR_GO_BACK)
-      {
-        motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
-        //Jutikliu_duom_back();
-        if (myLINEBACK != 0b00)
-        {
-          break;
-        }
-      }
-      time = millis();
-      while (millis() - time <= TIME_FOR_GO_BACK)
-      {
-        motor(-SPEED_GO_BACK_LINE_TURN, SPEED_GO_BACK_LINE_TURN2);
-        //Jutikliu_duom_back();
-        if (myLINEBACK != 0b00)
-        {
-          break;
-        }
-      }
-      break;
-    case 0:
-      motor(SPEED_NORMAL, SPEED_NORMAL);
-      break;
-  }
+	//Back = false;
+	//Linija
+	switch (myLINE)
+	{
+	case 0b0011: //Right
+		time = millis();
+		while (millis() - time <= TIME_FOR_GO_BACK)
+		{
+			motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
+			//jutikliuDuomenys_back();
+			if (myLINEBACK != 0b00)
+			{
+				break;
+			}
+		}
+		time = millis();
+		while (millis() - time <= TIME_FOR_GO_BACK_1)
+		{
+			motor(-SPEED_GO_BACK_LINE_TURN, SPEED_GO_BACK_LINE_TURN2);
+			//jutikliuDuomenys_back();
+			if (myLINEBACK != 0b00)
+			{
+				break;
+			}
+		}
+		break;
+	case 0b1100: //Left
+		time = millis();
+		while (millis() - time <= TIME_FOR_GO_BACK)
+		{
+			motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
+			//jutikliuDuomenys_back();
+			if (myLINEBACK != 0b00)
+			{
+				break;
+			}
+		}
+		time = millis();
+		while (millis() - time <= TIME_FOR_GO_BACK_1)
+		{
+			motor(SPEED_GO_BACK_LINE_TURN, -SPEED_GO_BACK_LINE_TURN2);
+			//jutikliuDuomenys_back();
+			if (myLINEBACK != 0b00)
+			{
+				break;
+			}
+		}
+		break;
+	case 0b1111: //Both
+		time = millis();
+		while (millis() - time <= TIME_FOR_GO_BACK)
+		{
+			motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
+			//jutikliuDuomenys_back();
+			if (myLINEBACK != 0b00)
+			{
+				break;
+			}
+		}
+		time = millis();
+		while (millis() - time <= TIME_FOR_GO_BACK)
+		{
+			motor(-SPEED_GO_BACK_LINE_TURN, SPEED_GO_BACK_LINE_TURN2);
+			//jutikliuDuomenys_back();
+			if (myLINEBACK != 0b00)
+			{
+				break;
+			}
+		}
+		break;
+	case 0:
+		motor(SPEED_NORMAL, SPEED_NORMAL);
+		break;
+	}
 }
+
 void SpinRight(int a, int t)
 {
-  time = millis();
-  while (millis() - time <= t && (digitalRead(Middle1) == 1 or digitalRead(Middle2) == 1 or digitalRead(Middle3) == 1))
-  {
-    motor(a, -a);
-  }
+	time = millis();
+	while (millis() - time <= t && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
+	{
+		motor(a, -a);
+	}
 }
+
 void SpinLeft(int a, int t)
 {
-  time = millis();
-  while (millis() - time <= t && (digitalRead(Middle1) == 1 or digitalRead(Middle2) == 1 or digitalRead(Middle3) == 1))
-  {
-    motor(-a, a);
-  }
+	time = millis();
+	while (millis() - time <= t && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
+	{
+		motor(-a, a);
+	}
 }
