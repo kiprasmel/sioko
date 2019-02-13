@@ -61,4 +61,4 @@ byte data[] = { B11111111, B11110000, B00001111, B00010001 };
 
 ## Licence
 
-Copyright (c) 2019 Vismantas Masiokas, Neilas Andriuškevičius, Kipras Melnikovas
+Copyright (c) 2019 Vismantas Masiokas, Neilas Antanavicius, Kipras Melnikovas
