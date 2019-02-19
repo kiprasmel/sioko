@@ -23,7 +23,7 @@ void pulteliuNustatytiStrategijas()
 
 	while (etr < 2)
 	{
-		if (irrecv.decode(&results))
+		if (irrecv.decode(&results) && results.decode_type == NEC)
 		{
 			irrecv.resume();
 			// if (irrecv.decode(&results) && results.decode_type == NEC)
@@ -50,8 +50,8 @@ void pulteliuNustatytiStrategijas()
 			 * kaip suprantu, reikia dviejų enter paspaudimų, kad baigtume ciklą, right?
 			 */
 
-			// todo pakeisiti Enteri i stratPatvirtinimas
-			if (results.value == Enter || results.value == stratPatvirtinimas)
+			// todo pakeisiti Enteri i stratPatvirtinimasNECEnter
+			if (results.value == Enter || results.value == stratPatvirtinimasNECEnter)
 			{
 				etr++;
 				delay(300);
@@ -77,6 +77,47 @@ void pulteliuNustatytiStrategijas()
 			// }
 		}
 		//digitalWrite(13, LOW); /** TODO CHECK kodėl šitas čia buvo? Ar jo reikia? */
+	}
+}
+
+void lauktiKazkokioMygtukoPaspaudimo(StrategijosPagalHex strategija)
+{
+	while (true)
+	{
+		if (irrecv.decode(&results) && results.decode_type == NEC)
+		{
+			irrecv.resume();
+			if (results.value == Enter || results.value == stratPatvirtinimasNECEnter)
+			{
+				break;
+			}
+		}
+	}
+}
+
+void lauktiEnterPaspaudimo()
+{
+	while (true)
+	{
+		if (irrecv.decode(&results) && results.decode_type == NEC)
+		{
+			irrecv.resume();
+			if (results.value == Enter || results.value == stratPatvirtinimasNECEnter)
+			{
+				break;
+			}
+		}
+	}
+}
+
+StrategijosPagalHex lauktiMygtukoPaspaudimoIrGautiMygtukoKoda()
+{
+	while (true)
+	{
+		if (irrecv.decode(&results) && results.decode_type == NEC)
+		{
+			return (StrategijosPagalHex)results.value; // numanant, kad atsiųsta reikšmė YRA aprašyta `StrategijosPagalHex` enum'e #WARN #TODO
+		}
 	}
 }
 

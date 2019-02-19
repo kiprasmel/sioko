@@ -21,6 +21,10 @@
 #include "strategijos.h"
 #include "IRremote/IRremote.h"
 #include "irremote_pultelis.h"
+#include "pagalbines_funkcijos.h"
+#include "vairuotiRobota.h"
+#include "ivairusTestai.h"
+#include "strategijos.h"
 
 void setup()
 {
@@ -55,7 +59,7 @@ void setup()
 
 	irrecv.enableIRIn(); /** CHECK ką šitas daro? */
 
-	pulteliuNustatytiStrategijas();
+	// pulteliuNustatytiStrategijas();
 
 	while (true)
 	{
@@ -67,18 +71,37 @@ void setup()
 
 		jutikliuDuomenys(); // tikrinimas, ar veikia pinai (raudonas sensoriu)
 
-		if (myFRONT != 0b000000)
-		{
-			digitalWrite(13, HIGH);
-		}
-		else
-		{
-			digitalWrite(13, LOW);
-		}
+		// #TODO atkomentuot (led'ų tikrinimas)
+		// if (myFRONT != 0b000000)
+		// {
+		// 	digitalWrite(13, HIGH);
+		// }
+		// else
+		// {
+		// 	digitalWrite(13, LOW);
+		// }
 	}
 
-	vykdytiStrategija(pradineStrategija);
+	// vykdytiStrategija(pradineStrategija);
+
+	// pirmaStrategija();
+	// hardCodedVarikliuTestai();
 }
+
+// void loop()
+// {
+// 	motor(100, -100);
+// 	delay(1000);
+
+// 	motor(0, 0);
+// 	delay(2000);
+
+// 	motor(-100, 100);
+// 	delay(1000);
+
+// 	motor(0, 0);
+// 	delay(2000);
+// }
 
 void loop()
 {
@@ -91,9 +114,23 @@ void loop()
 	 * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
 	 * (gali būt, kad neišvengsim while / delay) 
 	 */
+
 	jutikliuDuomenys();
-	Line();
+	Line(); // gali būt bėdų dėl prastos funkcijos
 	vairuotiRobota();
+
+	// sukimosiTestaiSuEnter();
+
+	// motoraiSuLaiku(10, -10, 1000);
+
+	// motoraiSuLaiku(-10, 10, 1000);
+
+	// sukimosiTestaiSuEnter();
+
+	// Serial.print("mySIDES, myFRONT, myLINE = ");
+	// Serial.print(mySIDES);
+	// Serial.print(myFRONT);
+	// Serial.print(myLINE);
 }
 
 /** <= --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- => **/
@@ -105,8 +142,6 @@ void loop()
  * Rekomenduojama jų nenaudoti, taip pat, jeigu įmanoma - perrašyti
  * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc. 
 */
-
-bool salygosTinkaPagrindineiStrategijai = true; // #TODO #DELETE
 
 void loop_mano_old()
 {
@@ -120,14 +155,13 @@ void loop_mano_old()
 
 	if (myFRONT == 0b01110 || myFRONT == 0b01100 || myFRONT == 0b00110 || myFRONT == 0b00100)
 	{
-		motor(255, 255); // CHARGE!
+		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // CHARGE!
 	}
 
 	/** kol tiesiai nematom oponento */
 
 	// while (myFRONT != 0b01110 && myFRONT != 0b01100 && myFRONT != 0b00110 && myFRONT != 0b00100)
 	// {
-	// 	// salygosTinkaPagrindineiStrategijai = false;
 	// 	if (myFRONT == 0b00000)
 	// 	{
 	// 		// do stuff with sides
@@ -144,120 +178,120 @@ void loop_mano_old()
 	// }
 }
 
-void loop_old()
-{
-	/** Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo */
-	jutikliuDuomenys();
-	Line();
+// void loop_old()
+// {
+// 	/** Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo */
+// 	jutikliuDuomenys();
+// 	Line();
 
-	/** kažką darom lol. reikia rewrittint. */
-	switch (pagrindineStrategija)
-	{
-	case stratPirma:
-		switch (myFRONT)
-		{
-		case 0b10000:
-		case 0b11000:
-			SpinLeft(SPEED_TURN, 0.1);
-			break;
-		case 0b00001:
-		case 0b00011:
-			SpinRight(SPEED_TURN, 0.1);
-			break;
-		case 0b00000:
-			jutikliuDuomenys();
-			Line();
-			switch (mySIDES)
-			{
-			case 0b000000:
-				jutikliuDuomenys();
-				Line();
-				break;
-			case 0b001000:
-			case 0b111000:
-			case 0b101000:
-			case 0b011000:
-				SpinLeft(SPEED_TURN, 10);
-				break;
-			case 0b000100:
-			case 0b000110:
-			case 0b000111:
-			case 0b000101:
-				SpinRight(SPEED_TURN, 10);
-				break;
-			case 0b010000:
-				SpinLeft(SPEED_TURN, 5);
-				break;
-			case 0b000010:
-				SpinRight(SPEED_TURN, 5);
-				break;
-			case 0b110000:
-			case 0b100000:
-				SpinLeft(SPEED_TURN, 40);
-				break;
-			case 0b000011:
-			case 0b000001:
-				SpinRight(SPEED_TURN, 40);
-				break;
-			}
-			break;
-		default:
-			time = millis();
-			while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
-			{
-				motor(255, 255);
-			}
-			break;
-		}
-		break;
+// 	/** kažką darom lol. reikia rewrittint. */
+// 	switch (pagrindineStrategija)
+// 	{
+// 	case stratPirmaNEC1:
+// 		switch (myFRONT)
+// 		{
+// 		case 0b10000:
+// 		case 0b11000:
+// 			SpinLeft(SPEED_TURN, 0.1);
+// 			break;
+// 		case 0b00001:
+// 		case 0b00011:
+// 			SpinRight(SPEED_TURN, 0.1);
+// 			break;
+// 		case 0b00000:
+// 			jutikliuDuomenys();
+// 			Line();
+// 			switch (mySIDES)
+// 			{
+// 			case 0b000000:
+// 				jutikliuDuomenys();
+// 				Line();
+// 				break;
+// 			case 0b001000:
+// 			case 0b111000:
+// 			case 0b101000:
+// 			case 0b011000:
+// 				SpinLeft(SPEED_TURN, 10);
+// 				break;
+// 			case 0b000100:
+// 			case 0b000110:
+// 			case 0b000111:
+// 			case 0b000101:
+// 				SpinRight(SPEED_TURN, 10);
+// 				break;
+// 			case 0b010000:
+// 				SpinLeft(SPEED_TURN, 5);
+// 				break;
+// 			case 0b000010:
+// 				SpinRight(SPEED_TURN, 5);
+// 				break;
+// 			case 0b110000:
+// 			case 0b100000:
+// 				SpinLeft(SPEED_TURN, 40);
+// 				break;
+// 			case 0b000011:
+// 			case 0b000001:
+// 				SpinRight(SPEED_TURN, 40);
+// 				break;
+// 			}
+// 			break;
+// 		default:
+// 			time = millis();
+// 			while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
+// 			{
+// 				motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+// 			}
+// 			break;
+// 		}
+// 		break;
 
-	case stratAntra:
-		switch (myFRONT)
-		{
-		case 0b10000:
-		case 0b11000:
-			SpinLeft(SPEED_TURN, 0.1);
-			break;
-		case 0b00001:
-		case 0b00011:
-			SpinRight(SPEED_TURN, 0.1);
-			break;
-		case 0b00000:
-			jutikliuDuomenys();
-			Line();
-		default:
-			time = millis();
-			while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
-			{
-				motor(255, 255);
-			}
-			break;
-		}
-		break;
+// 	case startAntraNEC2:
+// 		switch (myFRONT)
+// 		{
+// 		case 0b10000:
+// 		case 0b11000:
+// 			SpinLeft(SPEED_TURN, 0.1);
+// 			break;
+// 		case 0b00001:
+// 		case 0b00011:
+// 			SpinRight(SPEED_TURN, 0.1);
+// 			break;
+// 		case 0b00000:
+// 			jutikliuDuomenys();
+// 			Line();
+// 		default:
+// 			time = millis();
+// 			while (millis() - time <= 100 && digitalRead(Middle1) == 0 && digitalRead(Middle2) == 0 && digitalRead(Middle3) == 0 && millis() - time >= 40)
+// 			{
+// 				motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+// 			}
+// 			break;
+// 		}
+// 		break;
 
-	case stratTrecia:
-		jutikliuDuomenys();
-		Line();
-		break;
+// 	case stratTreciaNEC3:
+// 		jutikliuDuomenys();
+// 		Line();
+// 		break;
 
-		/**
-	 * TODO CHECK - o kodėl tiek mažai strategijų?
-	 * Ir apskritai kažkaip nekaip padaryta, nes nustatant ir pradinę, ir pagrindinę, naudojamos tos pačios
-	 */
+// 		/**
+// 	 * TODO CHECK - o kodėl tiek mažai strategijų?
+// 	 * Ir apskritai kažkaip nekaip padaryta, nes nustatant ir pradinę, ir pagrindinę, naudojamos tos pačios
+// 	 */
 
-		/** #WARN #DANGER delayinam (stabdom programą 2 sekundėm (tik
-	 * važiuojam, bet pinai neskenuojami ir nekeičiami!) uh oh bad!)
-	 * https://www.arduino.cc/reference/en/language/functions/time/delay/
-	 */
+// 		/** #WARN #DANGER delayinam (stabdom programą 2 sekundėm (tik
+// 	 * važiuojam, bet pinai neskenuojami ir nekeičiami!) uh oh bad!)
+// 	 * https://www.arduino.cc/reference/en/language/functions/time/delay/
+// 	 */
 
-	case stratDevinta:
-		motor(100, 100);
-		delay(2000);
-		motor(-100, -100);
-		delay(2000);
-		break;
-	}
-}
+// 	case stratDevintaNEC9:
+// 		motor(100, 100);
+// 		delay(2000);
+// 		motor(-100, -100);
+// 		delay(2000);
+// 		break;
+// 	}
+// }
 
 void Line()
 {
@@ -331,9 +365,9 @@ void Line()
 			}
 		}
 		break;
-	case 0:
-		motor(SPEED_NORMAL, SPEED_NORMAL);
-		break;
+		// case 0:
+		// 	motor(SPEED_NORMAL, SPEED_NORMAL);
+		// 	break;
 	}
 }
 

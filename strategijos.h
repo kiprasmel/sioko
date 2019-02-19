@@ -1,20 +1,35 @@
 #pragma once
 
-typedef enum : long unsigned int
+// typedef enum : long unsigned int
+// {
+// 	stratPirmaNEC1 = 0xFF906F,									// TODO - reikia užvadinti
+// 	stratAntraNEC2 = 0xFFB847,									//
+// 	stratTreciaNEC3 = 0xFFF807,									//
+// 	stratZigzagasDesinenMazasNEC4 = 0xFF9867,		// stratZigzagasDesinenMazasNEC4
+// 	stratZigzagasKairenMazasNEC5 = 0xFFD827,		// stratZigzagasKairenMazasNEC5
+// 	stratZigzagasDesinenDidelisNEC6 = 0xFF8877, // stratZigzagasDesinenDidelisNEC6
+// 	stratZigzagasKairenDidelisNEC7 = 0xFFE817,	// stratZigzagasKairenDidelisNEC7
+// 	stratAstuntaNEC8 = 0xFF48B7,
+// 	stratDevintaNEC9 = 0xFF9A65,
+// 	stratPatvirtinimasNECEnter = 0xFFE01F // TODO anksčiau `enter`
+// } StrategijosPagalHex;
+
+enum StrategijosPagalHex : long unsigned int
 {
-	stratPirma = 0xFF906F,									// TODO - reikia užvadinti
-	stratAntra = 0xFFB847,									//
-	stratTrecia = 0xFFF807,									//
-	stratZigzagasDesinenMazas = 0xFF9867,		// stratZigzagasDesinenMazas
-	stratZigzagasKairenMazas = 0xFFD827,		// stratZigzagasKairenMazas
-	stratZigzagasDesinenDidelis = 0xFF8877, // stratZigzagasDesinenDidelis
-	stratZigzagasKairenDidelis = 0xFFE817,	// stratZigzagasKairenDidelis
-	stratAstunta = 0xFF48B7,
-	stratDevinta = 0xFF9A65,
-	stratPatvirtinimas = 0xFFE01F // TODO anksčiau `enter`
-} StrategijosPagalHex;
+	stratPirmaNEC1 = 0xFF906F,									// TODO - reikia užvadinti
+	stratAntraNEC2 = 0xFFB847,									//
+	stratTreciaNEC3 = 0xFFF807,									//
+	stratZigzagasDesinenMazasNEC4 = 0xFF9867,		// stratZigzagasDesinenMazasNEC4
+	stratZigzagasKairenMazasNEC5 = 0xFFD827,		// stratZigzagasKairenMazasNEC5
+	stratZigzagasDesinenDidelisNEC6 = 0xFF8877, // stratZigzagasDesinenDidelisNEC6
+	stratZigzagasKairenDidelisNEC7 = 0xFFE817,	// stratZigzagasKairenDidelisNEC7
+	stratAstuntaNEC8 = 0xFF48B7,
+	stratDevintaNEC9 = 0xFF9A65,
+	stratPatvirtinimasNECEnter = 0xFFE01F // TODO anksčiau `enter`
+};
 
 unsigned int laikas;
 StrategijosPagalHex pradineStrategija, pagrindineStrategija;
 
+void pirmaStrategija();
 void vykdytiStrategija(StrategijosPagalHex strategijosKodas);

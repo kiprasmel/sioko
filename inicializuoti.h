@@ -13,20 +13,66 @@
 
 void inicializuoti();
 
-const int perKiekMsApsisukam360_TODO = 50; //#TODO
+const double greitisVaziavimoPirmyn = 255;
+const double greitisSukimosi = 255;							 // #EDITME
+double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
+
+// const double perKiekMsApsisukam360Sukdamiesi255 = greitisSukimosi * 157 / 255;
+
+// 255 greitis - 157 sec
+// 1 greitis = x sec
+// x = 1 * 157 / 255
+// x = 0.61
+// * greitisSukimosi
+
+// greitis 100; sukimasis 100
+// greitis 50; sukimasis 200
+
+// laikas = kelias / greicio
+/*
+	1 laipsnio apsisukimas = 157 / 360 ~ 0.43
+	90 laipsniu = 38.7
+
+
+
+	157 = kelias / 255
+	x = kelias / 100
+	
+
+*/
+
+// greitis = kelias / laikas
+
+// testavimui
+// const double perKiekMsApsisukam360Sukdamiesi255 = 4003; //#TODO
+// const double greitisSukimosi = 10;													 // #EDITME
 
 // TODO FAST perdaryt šituos. Galbūt reiktų iškart dėt, kas yra priekyje, kas kairėj, kas dešinėj etc.
 //puolimo sensoriai
+
+const byte Right1 = 21; // Dešinysis aukščiausias (nesvarbiausias)
+const byte Right2 = 23; // Dešinysis vidurinis
+const byte Right3 = 22; // Pats pats dešinysis (90 laipsnių) svarbiausias
+
+const byte Middle1 = 20; // kairiausias
+const byte Middle2 = 19; // vidurinysis
+const byte Middle3 = 33; // desiniausias
+
+const byte Left1 = 18; // Kairysis aukščiausias (nesvarbiausias)
+const byte Left2 = 16; // Kairysis vidurinis
+const byte Left3 = 17; // Pats pats kairysis (90 laipsnių) svarbiausias
+
+// const byte Right1 = 23;
+// const byte Right2 = 22;
+// const byte Right3 = 21;
+// const byte Middle1 = 20;
+// const byte Middle2 = 19;
+// const byte Middle3 = 33;
+// const byte Left3 = 18;
+// const byte Left2 = 17;
+// const byte Left1 = 16;
+
 const byte Rightback = 15;
-const byte Right1 = 23;
-const byte Right2 = 22;
-const byte Right3 = 21;
-const byte Middle1 = 20;
-const byte Middle2 = 19;
-const byte Middle3 = 33;
-const byte Left3 = 18;
-const byte Left2 = 17;
-const byte Left1 = 16;
 const byte Leftback = 34;
 
 /**
@@ -74,6 +120,7 @@ const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
 const double maximalusBalas = 255;
+// const double maximalusBalas = 100;
 const double didinimoSkaicius = maximalusBalas / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
 
 /**

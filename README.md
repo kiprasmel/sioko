@@ -7,6 +7,34 @@
 - [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
 - [Teensy LC](https://www.pjrc.com/teensy/td_download.html)
 
+### URGENT TODOS
+
+- PERDARYT BALŲ APSKAIČIAVIMĄ PINAMS, NES DABAR Š GAUNAS
+
+  - #sukimosiSkaiciavimas - skaičiuot ne pagal 90 laipsnių, o naudojant vieną laipsnį ir turint nusistačius, kiek maždaug suktis, priklausomai kokie sensoriai mato (kiek kuris sensorius reiškia sukimosi laipsnių)
+
+- Patikrint, ar teisingai išdėlioti pinai
+
+### Important todos
+
+- Linijos checkinimas yra visiškai broken, nes gi perdėliojom pinus į vietas kitaip (pagal stiprumą, inicializuoti.h)
+
+- Jeigu break'ina per anksti - perdaryt `arVidurysKaNorsMato` funkciją (vietoj 5 padaryt 3, palikt tik middle)
+
+- Ištestuot, per kiek laiko apsisuka robotas, jeigu sukimosi greitis yra `1`
+
+- Strategijos (pradinės) yra rip. Naudoja delayjus etc.
+
+---
+
+- Pakeist matieką. Kuo mažiau sensorių mato, tuo taikliau ir tuo aštriau pasisukęs (šonams)
+
+- Testuot keletą laikų
+
+- Bandyt padaryt time'out'us, kad jeigu sukosi į vieną pusę, tai kad kažkiek ms nesisuktų į kitą, o eitų tiesiai
+
+- Bandyt po posukio pasiųst atvirkštinius greičius kelioms ms, kad sustabdyt inerciją
+
 ### Questions
 
 - DIR1 ir DIR2. Kodėl jie du? PWM1 ir PWM2 yra kairys ir dešinys motorai, o kam DIR2 ir DIR2 skirti?
