@@ -71,7 +71,7 @@ void setup()
 			break; // pradėti strategiją
 		}
 
-		jutikliuDuomenys(); // tikrinimas, ar veikia pinai (raudonas sensoriu)
+		atnaujintiJutikliuDuomenis(); // tikrinimas, ar veikia pinai (raudonas sensoriu)
 
 		// #TODO atkomentuot (led'ų tikrinimas)
 		// if (myFRONT != 0b000000)
@@ -113,14 +113,12 @@ void loop()
 	 * Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo, o
 	 * tada vairuojam robotą :D
 	 * 
-	 * Note - su dabartine konfiguracija, naudojant `vairuotiRobota`, `jutikliuDuomenys` net nereikalingi.
+	 * Note - su dabartine konfiguracija, naudojant `vairuotiRobota`, `atnaujintiJutikliuDuomenis` net nereikalingi.
 	 * 
 	 * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
 	 * (gali būt, kad neišvengsim while / delay) 
 	 */
-
-	jutikliuDuomenys();
-	Line(); // gali būt bėdų dėl prastos funkcijos
+	
 	vairuotiRobota();
 
 	// if (!printinom)
@@ -164,7 +162,7 @@ void loop()
 void loop_mano_old()
 {
 	/** Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo */
-	jutikliuDuomenys();
+	atnaujintiJutikliuDuomenis();
 	Line(); // #TODO perdaryt Linijos tikrinimą ir atsitraukimą (gali būt, kad neišvengsim while / delay)
 
 	/** myFRONT turi 5 skirtingas pozicijas bitams. 2^5 = 32 skirtingi galimi variantai */
@@ -199,7 +197,7 @@ void loop_mano_old()
 // void loop_old()
 // {
 // 	/** Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo */
-// 	jutikliuDuomenys();
+// 	atnaujintiJutikliuDuomenis();
 // 	Line();
 
 // 	/** kažką darom lol. reikia rewrittint. */
@@ -217,12 +215,12 @@ void loop_mano_old()
 // 			SpinRight(SPEED_TURN, 0.1);
 // 			break;
 // 		case 0b00000:
-// 			jutikliuDuomenys();
+// 			atnaujintiJutikliuDuomenis();
 // 			Line();
 // 			switch (mySIDES)
 // 			{
 // 			case 0b000000:
-// 				jutikliuDuomenys();
+// 				atnaujintiJutikliuDuomenis();
 // 				Line();
 // 				break;
 // 			case 0b001000:
@@ -275,7 +273,7 @@ void loop_mano_old()
 // 			SpinRight(SPEED_TURN, 0.1);
 // 			break;
 // 		case 0b00000:
-// 			jutikliuDuomenys();
+// 			atnaujintiJutikliuDuomenis();
 // 			Line();
 // 		default:
 // 			time = millis();
@@ -288,7 +286,7 @@ void loop_mano_old()
 // 		break;
 
 // 	case stratTreciaNEC3:
-// 		jutikliuDuomenys();
+// 		atnaujintiJutikliuDuomenis();
 // 		Line();
 // 		break;
 
@@ -322,7 +320,7 @@ void Line()
 		while (millis() - time <= TIME_FOR_GO_BACK)
 		{
 			motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
-			//jutikliuDuomenys_back();
+			//atnaujintiJutikliuDuomenis_back();
 			if (myLINEBACK != 0b00)
 			{
 				break;
@@ -332,7 +330,7 @@ void Line()
 		while (millis() - time <= TIME_FOR_GO_BACK_1)
 		{
 			motor(-SPEED_GO_BACK_LINE_TURN, SPEED_GO_BACK_LINE_TURN2);
-			//jutikliuDuomenys_back();
+			//atnaujintiJutikliuDuomenis_back();
 			if (myLINEBACK != 0b00)
 			{
 				break;
@@ -344,7 +342,7 @@ void Line()
 		while (millis() - time <= TIME_FOR_GO_BACK)
 		{
 			motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
-			//jutikliuDuomenys_back();
+			//atnaujintiJutikliuDuomenis_back();
 			if (myLINEBACK != 0b00)
 			{
 				break;
@@ -354,7 +352,7 @@ void Line()
 		while (millis() - time <= TIME_FOR_GO_BACK_1)
 		{
 			motor(SPEED_GO_BACK_LINE_TURN, -SPEED_GO_BACK_LINE_TURN2);
-			//jutikliuDuomenys_back();
+			//atnaujintiJutikliuDuomenis_back();
 			if (myLINEBACK != 0b00)
 			{
 				break;
@@ -366,7 +364,7 @@ void Line()
 		while (millis() - time <= TIME_FOR_GO_BACK)
 		{
 			motor(-SPEED_GO_BACK_LINE, -SPEED_GO_BACK_LINE);
-			//jutikliuDuomenys_back();
+			//atnaujintiJutikliuDuomenis_back();
 			if (myLINEBACK != 0b00)
 			{
 				break;
@@ -376,7 +374,7 @@ void Line()
 		while (millis() - time <= TIME_FOR_GO_BACK)
 		{
 			motor(-SPEED_GO_BACK_LINE_TURN, SPEED_GO_BACK_LINE_TURN2);
-			//jutikliuDuomenys_back();
+			//atnaujintiJutikliuDuomenis_back();
 			if (myLINEBACK != 0b00)
 			{
 				break;
