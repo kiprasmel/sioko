@@ -115,7 +115,7 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 		/** 
 		 * tikrinam jutiklių duomenis, jog jeigu priekis ką nors mato - iškart varytume į priekį. 
 		 */
-		jutikliuDuomenys(); // #NEW! Gali būt, kad sutvarkys.
+		atnaujintiJutikliuDuomenis(); // #NEW! Gali būt, kad sutvarkys.
 		// Line();							// gali būt bėdų dėl prastos funkcijos #TODO ATKOMENTUOT
 
 		if (arVidurysKaNorsMato())
@@ -128,7 +128,7 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 			// laikasDepth2 = millis();
 			// while (millis() - laikasDepth2 < 2500)
 			// {
-			// 	jutikliuDuomenys();
+			// 	atnaujintiJutikliuDuomenis();
 			// 	// delay(2500);
 			// 	// Line();
 			// 	arVidurysKaNorsMato(); // tiesiog atnaujins ledą

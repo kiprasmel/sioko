@@ -1,4 +1,4 @@
 #pragma once
 
 bool arVidurysKaNorsMato();
-void jutikliuDuomenys();
+void atnaujintiJutikliuDuomenis();

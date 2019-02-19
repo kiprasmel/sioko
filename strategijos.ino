@@ -134,7 +134,7 @@ void zigzagasDesinenMazas()
 	//  (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 	{
 		motor(-200, 200);
-		jutikliuDuomenys();
+		atnaujintiJutikliuDuomenis();
 
 		if (myLINE != 0b0000 || arVidurysKaNorsMato())
 		{
@@ -150,7 +150,7 @@ void zigzagasDesinenMazas()
 					 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				matome = true;
@@ -171,7 +171,7 @@ void zigzagasDesinenMazas()
 					 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				matome = true;
@@ -191,7 +191,7 @@ void zigzagasDesinenMazas()
 		while (millis() - laikas <= 45 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(200, -200);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				matome = true;
@@ -211,7 +211,7 @@ void zigzagasDesinenMazas()
 		while (millis() - laikas <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				matome = true;
@@ -231,7 +231,7 @@ void zigzagasDesinenMazas()
 		while (millis() - laikas <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // #go
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				matome = true;
@@ -255,7 +255,7 @@ void zigzag_desine_M()
 				 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 	{
 		motor(-200, 200);
-		jutikliuDuomenys();
+		atnaujintiJutikliuDuomenis();
 		if (myLINE != 0b0000)
 		{
 			see = true;
@@ -275,7 +275,7 @@ void zigzag_desine_M()
 					 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -296,7 +296,7 @@ void zigzag_desine_M()
 					 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -316,7 +316,7 @@ void zigzag_desine_M()
 		while (millis() - time <= 45 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(200, -200);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -336,7 +336,7 @@ void zigzag_desine_M()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -356,7 +356,7 @@ void zigzag_desine_M()
 		while (millis() - time <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -390,7 +390,7 @@ void zigzag_kaire_M()
 	while (millis() - time <= 20 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 	{
 		motor(200, -200);
-		jutikliuDuomenys();
+		atnaujintiJutikliuDuomenis();
 		if (myLINE != 0b0000)
 		{
 			see = true;
@@ -408,7 +408,7 @@ void zigzag_kaire_M()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -427,7 +427,7 @@ void zigzag_kaire_M()
 		while (millis() - time <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -446,7 +446,7 @@ void zigzag_kaire_M()
 		while (millis() - time <= 45 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(-200, 200);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -465,7 +465,7 @@ void zigzag_kaire_M()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -484,7 +484,7 @@ void zigzag_kaire_M()
 		while (millis() - time <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -515,7 +515,7 @@ void zigzag_desine_D()
 	while (millis() - time <= 20 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 	{
 		motor(-200, 200);
-		jutikliuDuomenys();
+		atnaujintiJutikliuDuomenis();
 		if (myLINE != 0b0000)
 		{
 			see = true;
@@ -533,7 +533,7 @@ void zigzag_desine_D()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -552,7 +552,7 @@ void zigzag_desine_D()
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -571,7 +571,7 @@ void zigzag_desine_D()
 		while (millis() - time <= 45 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(200, -200);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -590,7 +590,7 @@ void zigzag_desine_D()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -609,7 +609,7 @@ void zigzag_desine_D()
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -638,7 +638,7 @@ void zigzag_kaire_D()
 	while (millis() - time <= 20 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 	{
 		motor(200, -200);
-		jutikliuDuomenys();
+		atnaujintiJutikliuDuomenis();
 		if (myLINE != 0b0000)
 		{
 			see = true;
@@ -656,7 +656,7 @@ void zigzag_kaire_D()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -675,7 +675,7 @@ void zigzag_kaire_D()
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -694,7 +694,7 @@ void zigzag_kaire_D()
 		while (millis() - time <= 45 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(-200, 200);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -713,7 +713,7 @@ void zigzag_kaire_D()
 		while (millis() - time <= 5 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(0, 0);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;
@@ -732,7 +732,7 @@ void zigzag_kaire_D()
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			jutikliuDuomenys();
+			atnaujintiJutikliuDuomenis();
 			if (myLINE != 0b0000)
 			{
 				see = true;

@@ -56,7 +56,7 @@ void atnaujintiBitusXPusesPagalPinus(byte &kazkuriPuse, const int pinaiSkenavimu
 	// return kazkuriPuse;
 }
 
-void jutikliuDuomenys()
+void atnaujintiJutikliuDuomenis()
 {
 	for (int i = 0; i <= 9; i++)
 	{ //9
@@ -108,7 +108,7 @@ void jutikliuDuomenys()
 		bitSet(myLINE, 1);
 }
 
-// void jutikliuDuomenys()
+// void atnaujintiJutikliuDuomenis()
 // {
 // 	atnaujintiBitusXPusesPagalPinus(myFRONT, priekioPinai);
 // 	atnaujintiBitusXPusesPagalPinus(mySIDES, sonuPinai);
@@ -135,7 +135,7 @@ void jutikliuDuomenys()
 */
 // int Jutikliu_Duom()
 // nuskenuot jutiklius, susivest info į myLINE, myFRONT, mySIDES kintamuosius booleanais
-void jutikliuDuomenys_old()
+void atnaujintiJutikliuDuomenis_old()
 {
 
 	// TODO CHECK kodėl nuo 0 iki 9 (10 kartų)? Tipo turi myLINE, myFRONT ir mySIDES po 10 bitų?
