@@ -152,8 +152,3 @@ void motoraiSuLaikuNereguojantysIPrieki(int kairioMotoroGreitis, int desinioMoto
 	}
 	motor(0, 0);
 }
-
-void motoraiSimtasPriekiSimtasAtgal()
-{
-	motor(0, 0);
-}

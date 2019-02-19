@@ -19,6 +19,10 @@
 
 ### Important todos
 
+- Bandyt su laipnsiais skaičiuot (90deg, 45deg, ~20deg)
+
+- Perkelt Line() ir jutikliuDuomenys() į vairuotiRobota()
+
 - Linijos checkinimas yra visiškai broken, nes gi perdėliojom pinus į vietas kitaip (pagal stiprumą, inicializuoti.h)
 
 - Jeigu break'ina per anksti - perdaryt `arVidurysKaNorsMato` funkciją (vietoj 5 padaryt 3, palikt tik middle)
