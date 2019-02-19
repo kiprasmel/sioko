@@ -38,14 +38,11 @@ void pulteliuNustatytiStrategijas()
 			/** 
 			 * visi `case` blokai daro lygiai tą patį, taigi, net nereikia switch'o
 			 * 
-			 * by the way, kodėl visada digitalWrite yra į tą patį (13) ir tas pats frequency (HIGH)?
-			 * Neužtektų vieną kartą to padaryt?
-			 * 
 			 * Ir kam čia delayus yra?
 			 * Jo naudoti nerekomenduoja ilgiau nei 10-tims mili sekundžių..
 			* https://www.arduino.cc/reference/en/language/functions/time/delay/
 			 */
-			digitalWrite(13, HIGH);
+			digitalWrite(LEDas, HIGH);
 			/**
 			 * kaip suprantu, reikia dviejų enter paspaudimų, kad baigtume ciklą, right?
 			 */
@@ -69,14 +66,14 @@ void pulteliuNustatytiStrategijas()
 				delay(200);
 			}
 
-			digitalWrite(13, LOW);
+			digitalWrite(LEDas, LOW);
 			// TODO - `MAIN_STRATEGY_STATE = (kažkaip hexą iš pavadinimo į int'ą) resuts.value`
 			// WARN NOT DONE
 
 			// irrecv.resume();
 			// }
 		}
-		//digitalWrite(13, LOW); /** TODO CHECK kodėl šitas čia buvo? Ar jo reikia? */
+		//digitalWrite(LEDas, LOW); /** TODO CHECK kodėl šitas čia buvo? Ar jo reikia? */
 	}
 }
 
@@ -144,52 +141,52 @@ void pulteliuNustatytiStrategijas_OLD()
 					switch (results.value)
 					{
 					case Number1:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 1;
 						break;
 					case Number2:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 2;
 						break;
 					case Number3:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 3;
 						break;
 					case Number4:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 4;
 						break;
 					case Number5:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 5;
 						break;
 					case Number6:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 6;
 						break;
 					case Number7:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 7;
 						break;
 					case Number8:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 8;
 						break;
 					case Number9:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						MAIN_STRATEGY_STATE = 9;
 						break;
 					case Enter: //Enter
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						etr++;
 						break;
@@ -201,52 +198,52 @@ void pulteliuNustatytiStrategijas_OLD()
 					switch (results.value)
 					{
 					case Number1:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 1;
 						break;
 					case Number2:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 2;
 						break;
 					case Number3:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 3;
 						break;
 					case Number4:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 4;
 						break;
 					case Number5:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 5;
 						break;
 					case Number6:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 6;
 						break;
 					case Number7:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 7;
 						break;
 					case Number8:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 8;
 						break;
 					case Number9:
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(200);
 						START_STRATEGY_STATE = 9;
 						break;
 					case Enter: //Enter
-						digitalWrite(13, HIGH);
+						digitalWrite(LEDas, HIGH);
 						delay(300);
 						etr++;
 						break;
@@ -258,8 +255,8 @@ void pulteliuNustatytiStrategijas_OLD()
 					break;
 				}
 			}
-			digitalWrite(13, LOW);
+			digitalWrite(LEDas, LOW);
 		}
 	}
-	//digitalWrite(13, LOW);
+	//digitalWrite(LEDas, LOW);
 }

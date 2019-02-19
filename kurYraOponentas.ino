@@ -67,11 +67,11 @@ double oponentoPozicijosBalas()
 	// const byte temp = Middle3;
 	// if (digitalRead(temp) == 0)
 	// {
-	// 	digitalWrite(13, HIGH);
+	// 	digitalWrite(LEDas, HIGH);
 	// }
 	// else
 	// {
-	// 	digitalWrite(13, LOW);
+	// 	digitalWrite(LEDas, LOW);
 	// }
 
 	// Serial.print("\nMiddle3 = ");

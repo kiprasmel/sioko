@@ -5,13 +5,13 @@ bool arVidurysKaNorsMato()
 {
 	if (digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0)
 	{
-		digitalWrite(13, HIGH);
+		digitalWrite(LEDas, HIGH);
 		// Serial.print("\nVidurys kažką mato. Returninu true");
 		return true;
 	}
 	else
 	{
-		digitalWrite(13, LOW);
+		digitalWrite(LEDas, LOW);
 		return false;
 	}
 	// return (digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0

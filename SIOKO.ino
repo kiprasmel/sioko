@@ -76,11 +76,11 @@ void setup()
 		// #TODO atkomentuot (led'ų tikrinimas)
 		// if (myFRONT != 0b000000)
 		// {
-		// 	digitalWrite(13, HIGH);
+		// 	digitalWrite(LEDas, HIGH);
 		// }
 		// else
 		// {
-		// 	digitalWrite(13, LOW);
+		// 	digitalWrite(LEDas, LOW);
 		// }
 	}
 

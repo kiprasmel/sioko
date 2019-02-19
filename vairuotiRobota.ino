@@ -91,11 +91,11 @@ void vairuotiRobota()
 	// // #TESTING
 	// if (kiekMsReikesSuktis != 0)
 	// {
-	// 	digitalWrite(13, HIGH);
+	// 	digitalWrite(LEDas, HIGH);
 	// }
 	// else
 	// {
-	// 	digitalWrite(13, LOW);
+	// 	digitalWrite(LEDas, LOW);
 	// }
 
 	// if (abs(oponentoPozicija) < didinimoSkaicius)

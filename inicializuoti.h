@@ -62,6 +62,8 @@ const byte Left1 = 18; // Kairysis aukščiausias (nesvarbiausias)
 const byte Left2 = 16; // Kairysis vidurinis
 const byte Left3 = 17; // Pats pats kairysis (90 laipsnių) svarbiausias
 
+const byte LEDas = 13;
+
 // const byte Right1 = 23;
 // const byte Right2 = 22;
 // const byte Right3 = 21;
