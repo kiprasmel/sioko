@@ -119,9 +119,11 @@ const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
 		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
-const double maximalusBalas = 255;
+double maximalusBalas = 255;
 // const double maximalusBalas = 100;
 const double didinimoSkaicius = maximalusBalas / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
+
+// maximalusBalas = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
 
 /**
  * patvirtinti, jog atitinka min/max sąlygą 

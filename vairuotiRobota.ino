@@ -33,11 +33,13 @@ void vairuotiRobota()
 	*/
 	kiekMsReikesSuktis = fabs(perKiekMsApsisukam360Sukdamiesi255 / 4 * oponentoPozicija);
 	// Serial.print(perKiekMsApsisukam360Sukdamiesi255);
-	Serial.print("\nKiek ms reikės suktis ");
-	Serial.print(kiekMsReikesSuktis);
-	Serial.print(" oponento pozicija ");
-	Serial.print(oponentoPozicija);
-	// Serial.print("Oponento pozicija");
+
+	// Serial.print("\nKiek ms reikės suktis ");
+	// Serial.print(kiekMsReikesSuktis);
+	// Serial.print(" oponento pozicija ");
+	// Serial.print(oponentoPozicija);
+
+	// Serial.print("\nOponento pozicija: ");
 	// Serial.print(oponentoPozicija);
 
 	// // #TESTING

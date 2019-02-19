@@ -9,6 +9,8 @@
 
 ### URGENT TODOS
 
+- PERDARYT MATKĘ (patį balų skaičiavimą @ inicializuoti.h ir inicializuoti.ino ir kurYraOponentas)
+
 - PERDARYT BALŲ APSKAIČIAVIMĄ PINAMS, NES DABAR Š GAUNAS
 
   - #sukimosiSkaiciavimas - skaičiuot ne pagal 90 laipsnių, o naudojant vieną laipsnį ir turint nusistačius, kiek maždaug suktis, priklausomai kokie sensoriai mato (kiek kuris sensorius reiškia sukimosi laipsnių)

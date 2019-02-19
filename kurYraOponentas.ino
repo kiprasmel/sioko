@@ -94,10 +94,11 @@ double oponentoPozicijosBalas()
 	}
 
 	// for (int i = 0; i < kiekPinu; ++i)
-	// if (digitalRead(visiPinaiIrJuTeikiamiBalai[i][0]) == 0) // jeigu matome
 	// {
-	// 	baluSuma += visiPinaiIrJuTeikiamiBalai[i][1];
-	// }
+	// 	if (digitalRead(visiPinaiIrJuTeikiamiBalai[i][0]) == 0) // jeigu matome
+	// 	{
+	// 		baluSuma += visiPinaiIrJuTeikiamiBalai[i][1];
+	// 	}
 	// }
 
 	return baluSuma;

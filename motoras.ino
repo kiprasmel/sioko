@@ -13,6 +13,7 @@ void motor(int a, int b)
 {
 	a = constrain(a, -255, 255);
 	b = constrain(b, -255, 255);
+
 	if (digitalRead(START_MODULE) == LOW)
 	{
 		a = 0;

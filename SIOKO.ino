@@ -57,6 +57,8 @@ void setup()
 	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK ką daro šitas? Neveikia man, meta errorus, gal neturiu bibliotekos kažkokios */
 	analogWriteFrequency(PWM1, 15000.0f);
 
+	suskaiciuotiBalusVisiemsPinams();
+
 	irrecv.enableIRIn(); /** CHECK ką šitas daro? */
 
 	// pulteliuNustatytiStrategijas();
@@ -103,6 +105,8 @@ void setup()
 // 	delay(2000);
 // }
 
+bool printinom = false;
+
 void loop()
 {
 	/** 
@@ -118,6 +122,20 @@ void loop()
 	jutikliuDuomenys();
 	Line(); // gali būt bėdų dėl prastos funkcijos
 	vairuotiRobota();
+
+	// if (!printinom)
+	// {
+	// 	Serial.print("\nvisi pinai ir jų teikiami balai");
+	// 	// Serial.print(visiPinaiIrJuTeikiamiBalai);
+	// 	for (int i = 0; i < sizeof(visiPinaiIrJuTeikiamiBalai) / sizeof(double); i++)
+	// 	{
+	// 		Serial.print(i);
+	// 		Serial.print(visiPinaiIrJuTeikiamiBalai[i][0]);
+	// 		Serial.print(visiPinaiIrJuTeikiamiBalai[i][1]);
+	// 	}
+
+	// 	printinom = true;
+	// }
 
 	// sukimosiTestaiSuEnter();
 

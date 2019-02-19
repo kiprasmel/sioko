@@ -21,7 +21,7 @@ double apskaiciuotiNaujaBala(double skaicius, int iteratorius)
 
 	// pradedam skaičiuoti nuo paskutinio elemento - 1, o paskui, didėjant
 	// iteratoriui, skaičius vis mažėja
-	const double balas = skaicius * (poKiekPinuKiekvienojePuseje - 1 - iteratorius);
+	double balas = skaicius * (poKiekPinuKiekvienojePuseje - 1 - iteratorius);
 
 	// patvirtinti, jog atitinka (patikrinom ankščiau)
 	// assert(balas >= -255 && balas <= 255);
@@ -30,14 +30,21 @@ double apskaiciuotiNaujaBala(double skaicius, int iteratorius)
 	switch (iteratorius)
 	{
 	case minusinisIndeksas:
-		return balas * -1;
+		// return balas * -1;
+		balas *= -1;
 	case neutralusIndeksas:
-		return 0;
+		// return 0;
+		balas = 0;
 	case pliusinisIndeksas:
-		return balas;
+		// return balas;
+		balas = balas;
 	default:
 		Serial.println("Klaida! iteratorius buvo didesnis, negu yra indeksų\nir todėl neįmanoma apskaičiuoti naujos didinimo reikšmės,\njog galėtume nustatyti, kur yra oponentas!");
 	};
+
+	// Serial.print("\nNaujas balas: ");
+	// Serial.print(balas);
+	return balas;
 }
 
 void suskaiciuotiBalusVisiemsPinams()
