@@ -6,3 +6,4 @@ IRrecv irrecv(RECV_PIN);
 decode_results results;
 
 void pulteliuNustatytiStrategijas();
+void lauktiEnterPaspaudimo();

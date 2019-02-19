@@ -9,3 +9,4 @@ typedef enum
 int kokiaKryptis(int);
 void motor(int, int);
 void motoraiSuLaiku(int, int, unsigned long);
+void motoraiSuLaikuNereguojantysIPrieki(int, int, unsigned long);

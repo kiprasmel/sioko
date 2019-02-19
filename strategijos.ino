@@ -22,43 +22,45 @@
 // TODO - pervadinti pagal strategijų pavadinimus
 #include "strategijos.h"
 #include "motoras.h"
+#include "inicializuoti.h" // #TODO #CHECK nežinau, ar reikalingas čia
+
 // enum StrategijosPagalHex
 // {
-// 	stratPirma = 0xFF906F,									// TODO - reikia užvadinti
-// 	stratAntra = 0xFFB847,									//
-// 	stratTrecia = 0xFFF807,									//
-// 	stratZigzagasDesinenMazas = 0xFF9867,		// stratZigzagasDesinenMazas
-// 	stratZigzagasKairenMazas = 0xFFD827,		// stratZigzagasKairenMazas
-// 	stratZigzagasDesinenDidelis = 0xFF8877, // stratZigzagasDesinenDidelis
-// 	stratZigzagasKairenDidelis = 0xFFE817,	// stratZigzagasKairenDidelis
-// 	stratAstunta = 0xFF48B7,
-// 	stratDevinta = 0xFF9A65,
-// 	stratPatvirtinimas = 0xFFE01F // TODO anksčiau `enter`
+// 	stratPirmaNEC1 = 0xFF906F,									// TODO - reikia užvadinti
+// 	startAntraNEC2 = 0xFFB847,									//
+// 	stratTreciaNEC3 = 0xFFF807,									//
+// 	stratZigzagasDesinenMazasNEC4 = 0xFF9867,		// stratZigzagasDesinenMazasNEC4
+// 	stratZigzagasKairenMazasNEC5 = 0xFFD827,		// stratZigzagasKairenMazasNEC5
+// 	stratZigzagasDesinenDidelisNEC6 = 0xFF8877, // stratZigzagasDesinenDidelisNEC6
+// 	stratZigzagasKairenDidelisNEC7 = 0xFFE817,	// stratZigzagasKairenDidelisNEC7
+// 	stratAstuntaNEC8 = 0xFF48B7,
+// 	stratDevintaNEC9 = 0xFF9A65,
+// 	stratPatvirtinimasNECEnter = 0xFFE01F // TODO anksčiau `enter`
 // };
 
 void vykdytiStrategija(StrategijosPagalHex strategijosKodas)
 {
 	switch (strategijosKodas)
 	{
-	case stratPirma:
+	case stratPirmaNEC1:
 		pirmaStrategija();
 		break;
-	case stratAntra:
+	case stratAntraNEC2:
 		antraStrategija();
 		break;
-	case stratTrecia:
+	case stratTreciaNEC3:
 		treciaStrategija();
 		break;
-	case stratZigzagasDesinenMazas:
+	case stratZigzagasDesinenMazasNEC4:
 		zigzagasDesinenMazas();
 		break;
-	case stratZigzagasKairenMazas:
+	case stratZigzagasKairenMazasNEC5:
 		zigzagasKairenMazas();
 		break;
-	case stratZigzagasDesinenDidelis:
+	case stratZigzagasDesinenDidelisNEC6:
 		zigzagasDesinenDidelis();
 		break;
-	case stratZigzagasKairenDidelis:
+	case stratZigzagasKairenDidelisNEC7:
 		zigzagasKairenDidelis();
 		break;
 	}
@@ -66,6 +68,7 @@ void vykdytiStrategija(StrategijosPagalHex strategijosKodas)
 
 // const int SPEED_NORMAL = 200;
 // TODO - pervardinti strategijų pavadinimus
+// TODO FRESH persikelt į `hardCodedVarikliuTestai`
 void pirmaStrategija()
 {
 	motor(SPEED_NORMAL, SPEED_NORMAL);
@@ -73,13 +76,13 @@ void pirmaStrategija()
 
 void antraStrategija()
 {
-	motor(255, 255);
+	motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 	delay(200);
 }
 
 void treciaStrategija()
 {
-	motor(255, 255);
+	motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 	delay(325);
 }
 
@@ -167,7 +170,7 @@ void zigzagasDesinenMazas()
 		while (millis() - laikas <= 120 &&
 					 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -227,7 +230,7 @@ void zigzagasDesinenMazas()
 		laikas = millis();
 		while (millis() - laikas <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255); // #go
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // #go
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -292,7 +295,7 @@ void zigzag_desine_M()
 		while (millis() - time <= 120 &&
 					 (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -352,7 +355,7 @@ void zigzag_desine_M()
 		time = millis();
 		while (millis() - time <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -370,13 +373,13 @@ void zigzag_desine_M()
     delay(20);
     motor(0, 0);
     delay(5);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(135);
     motor(200, -200);
     delay(45);
     motor(0, 0);
     delay(5);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(135);*/
 }
 
@@ -423,7 +426,7 @@ void zigzag_kaire_M()
 		time = millis();
 		while (millis() - time <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -480,7 +483,7 @@ void zigzag_kaire_M()
 		time = millis();
 		while (millis() - time <= 120 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -497,11 +500,11 @@ void zigzag_kaire_M()
 
 	/*motor(200, -200);
     delay(15);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(50);
     motor(-200, 200);
     delay(20);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(150);*/
 }
 //------------------------------------------------------------------------------
@@ -548,7 +551,7 @@ void zigzag_desine_D()
 		time = millis();
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -605,7 +608,7 @@ void zigzag_desine_D()
 		time = millis();
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -621,11 +624,11 @@ void zigzag_desine_D()
 	}
 	/*motor(-200, 200);
     delay(40);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(100);
     motor(200, -200);
     delay(40);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(150);*/
 }
 void zigzag_kaire_D()
@@ -671,7 +674,7 @@ void zigzag_kaire_D()
 		time = millis();
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -728,7 +731,7 @@ void zigzag_kaire_D()
 		time = millis();
 		while (millis() - time <= 140 && (digitalRead(Middle1) == 1 || digitalRead(Middle2) == 1 || digitalRead(Middle3) == 1))
 		{
-			motor(255, 255);
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 			jutikliuDuomenys();
 			if (myLINE != 0b0000)
 			{
@@ -744,11 +747,11 @@ void zigzag_kaire_D()
 	}
 	/*motor(200, -200);
     delay(40);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(100);
     motor(-200, 200);
     delay(40);
-    motor(255, 255);
+    motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
     delay(150);*/
 }
 //------------------------------------------------------------------------------
