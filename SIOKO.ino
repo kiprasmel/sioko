@@ -71,7 +71,7 @@ void setup()
 			break; // pradėti strategiją
 		}
 
-		atnaujintiJutikliuDuomenis(); // tikrinimas, ar veikia pinai (raudonas sensoriu)
+		atnaujintiJutikliuDuomenis();
 
 		// #TODO atkomentuot (led'ų tikrinimas)
 		// if (myFRONT != 0b000000)
@@ -105,21 +105,11 @@ void setup()
 // 	delay(2000);
 // }
 
-bool printinom = false;
+// bool printinom = false;
 
 void loop()
 {
-	/** 
-	 * Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo, o
-	 * tada vairuojam robotą :D
-	 * 
-	 * Note - su dabartine konfiguracija, naudojant `vairuotiRobota`, `atnaujintiJutikliuDuomenis` net nereikalingi.
-	 * 
-	 * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
-	 * (gali būt, kad neišvengsim while / delay) 
-	 */
-	
-	vairuotiRobota();
+	vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
 
 	// if (!printinom)
 	// {

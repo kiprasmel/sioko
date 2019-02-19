@@ -1,3 +1,11 @@
+/**
+ * Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo, o
+ * tada vairuojam robotą :D
+ * 
+ * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
+ * (gali būt, kad neišvengsim while / delay) 
+*/
+
 #include "vairuotiRobota.h"
 #include "kurYraOponentas.h"
 #include "motoras.h"
@@ -6,12 +14,43 @@
 #include "linija.h"
 #include <math.h>
 
+void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
+{
+	if (arStabdytiMotorus())
+	{
+		motor(0, 0);
+		return;
+	}
+
+	atnaujintiJutikliuDuomenis();
+
+	originaliLinijaBeDefaultCase();
+
+	if (arVidurysKaNorsMato())
+	{
+		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
+		return;
+	}
+
+	// Ar KAIRĖ ką nors mato?  min => max reikšmingumas
+	// gali reikėt išimt Left1
+	else if (digitalRead(Left1) || digitalRead(Left2) || digitalRead(Left3))
+	{
+		motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
+		return;
+	}
+	// Ar DEŠINĖ ką nors mato? min => max reikšmingumas
+	// gali reikėt išimt Right1
+	else if (digitalRead(Right1) || digitalRead(Right2) || digitalRead(Right3))
+	{
+		motor(+greitisSukimosi, -greitisSukimosi); // +max rotate; -max rotate
+		return;
+	}
+}
+
 void vairuotiRobota()
 {
-	double oponentoPozicija = 0;
-	double kiekMsReikesSuktis = 0;
-
-	if (digitalRead(START_MODULE) == LOW)
+	if (arStabdytiMotorus())
 	{
 		motor(0, 0);
 		return;
@@ -26,6 +65,9 @@ void vairuotiRobota()
 		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 		return;
 	}
+
+	double oponentoPozicija = 0;
+	double kiekMsReikesSuktis = 0;
 
 	oponentoPozicija = kurYraOponentas(); // nuo -1 iki +1
 
