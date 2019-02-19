@@ -38,8 +38,8 @@ void vairuotiRobota()
 	// Serial.print(" oponento pozicija ");
 	// Serial.print(oponentoPozicija);
 
-	// Serial.print("\nOponento pozicija: ");
-	// Serial.print(oponentoPozicija);
+	Serial.print("\nOponento pozicija: ");
+	Serial.print(oponentoPozicija);
 
 	// // #TESTING
 	// if (kiekMsReikesSuktis != 0)
