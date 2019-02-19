@@ -9,6 +9,15 @@ int kokiaKryptis(int motoroGreitis)
 	// return motoroGreitis < 0 ? 1 : 0;
 }
 
+bool arStabdytiMotorus()
+{
+	if (digitalRead(START_MODULE) == LOW)
+	{
+		return true;
+	}
+	return false;
+}
+
 void motor(int a, int b)
 {
 	a = constrain(a, -255, 255);
