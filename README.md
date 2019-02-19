@@ -15,7 +15,11 @@
 
 - Patikrint, ar teisingai išdėlioti pinai
 
+- Bandyt su laipnsiais skaičiuot (90deg, 45deg, ~20deg)
+
 ### Important todos
+
+- Perkelt Line() ir jutikliuDuomenys() į vairuotiRobota()
 
 - Linijos checkinimas yra visiškai broken, nes gi perdėliojom pinus į vietas kitaip (pagal stiprumą, inicializuoti.h)
 

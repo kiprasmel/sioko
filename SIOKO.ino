@@ -116,7 +116,11 @@ void loop()
 	 */
 
 	jutikliuDuomenys();
+
+	// Serial.print("\n");
+	// Serial.print(myLINE);
 	Line(); // gali būt bėdų dėl prastos funkcijos
+
 	vairuotiRobota();
 
 	// sukimosiTestaiSuEnter();
