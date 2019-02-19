@@ -5,12 +5,11 @@
 #include "pagalbines_funkcijos.h"
 #include <math.h>
 
-// #POSTCOMMIT - perkelt į funkciją
-double oponentoPozicija = 0;
-double kiekMsReikesSuktis = 0;
-
 void vairuotiRobota()
 {
+	double oponentoPozicija = 0;
+	double kiekMsReikesSuktis = 0;
+
 	if (digitalRead(START_MODULE) == LOW)
 	{
 		motor(0, 0);
