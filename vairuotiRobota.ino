@@ -3,6 +3,7 @@
 #include "motoras.h"
 #include "inicializuoti.h"
 #include "pagalbines_funkcijos.h"
+#include "linija.h"
 #include <math.h>
 
 void vairuotiRobota()
@@ -15,6 +16,10 @@ void vairuotiRobota()
 		motor(0, 0);
 		return;
 	}
+
+	atnaujintiJutikliuDuomenis();
+
+	originaliLinijaBeDefaultCase();
 
 	if (arVidurysKaNorsMato())
 	{
