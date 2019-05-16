@@ -85,13 +85,18 @@ double oponentoPozicijosBalas()
 		return 0;
 	}
 
+	int kiekPinuMato = 0;
+
 	for (int i = 0; i < kiekPinu; ++i)
 	{
-		if (digitalRead(tempPinaiIrBalai[i][0]) == 0) // jeigu matome
+		if (digitalRead(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][0]) == 0) // jeigu matome
 		{
-			baluSuma += tempPinaiIrBalai[i][1];
+			baluSuma += pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][1];
+			kiekPinuMato += 1;
 		}
 	}
+
+	baluSuma /= kiekPinuMato;
 
 	// for (int i = 0; i < kiekPinu; ++i)
 	// {
