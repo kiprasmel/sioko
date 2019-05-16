@@ -32,18 +32,28 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 		return;
 	}
 
-	// Ar KAIRĖ ką nors mato?  min => max reikšmingumas
-	// gali reikėt išimt Left1
-	else if (digitalRead(Left1) || digitalRead(Left2) || digitalRead(Left3))
-	{
+	else if (arKaireKaNorsMato() || arDesineKaNorsMato()) {
+
+		/** dafuq? Abu šonai mato:D Tiesiog varom pirmyn */
+		if (arKaireKaNorsMato() && arDesineKaNorsMato()) {
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
+			return;
+		}
+		
+		else if (arKaireKaNorsMato()) {
 		motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
 		return;
 	}
-	// Ar DEŠINĖ ką nors mato? min => max reikšmingumas
-	// gali reikėt išimt Right1
-	else if (digitalRead(Right1) || digitalRead(Right2) || digitalRead(Right3))
-	{
-		motor(+greitisSukimosi, -greitisSukimosi); // +max rotate; -max rotate
+		else if (arDesineKaNorsMato()) {
+			motor(+greitisSukimosi, -greitisSukimosi); // -max rotate; +max rotate
+			return;
+		}
+	}
+	
+	// nemato niekas
+	else {
+		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+		Serial.print("Niekas");
 		return;
 	}
 }
