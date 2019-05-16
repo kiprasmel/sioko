@@ -30,7 +30,7 @@ const byte START_MODULE = 29;
 
 void setup()
 {
-	Serial.begin(9600);
+	Serial.begin(115200);
 
 	inicializuoti();
 
