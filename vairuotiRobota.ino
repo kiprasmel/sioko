@@ -70,6 +70,22 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 		Serial.print("Niekas");
 		return;
 	}
+
+	//// Ar KAIRĖ ką nors mato?  min => max reikšmingumas
+	//// gali reikėt išimt Left1
+	//// else if (digitalRead(Left1) || digitalRead(Left2) || digitalRead(Left3))
+	//else if (arKaireKaNorsMato())
+	//{
+		//motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
+		//return;
+	//}
+	//// Ar DEŠINĖ ką nors mato? min => max reikšmingumas
+	//// gali reikėt išimt Right1
+	//else if (arDesineKaNorsMato())
+	//{
+		//motor(+greitisSukimosi, -greitisSukimosi); // +max rotate; -max rotate
+		//return;
+	//}
 }
 
 void vairuotiRobota()
@@ -109,8 +125,10 @@ void vairuotiRobota()
 	// Serial.print(" oponento pozicija ");
 	// Serial.print(oponentoPozicija);
 
-	Serial.print("\nOponento pozicija: ");
+	Serial.print("\r\n\r\nOponento pozicija");
 	Serial.print(oponentoPozicija);
+	Serial.print("\r\n kiek reikės suktis == ");
+	Serial.print(kiekMsReikesSuktis);
 
 	// // #TESTING
 	// if (kiekMsReikesSuktis != 0)
