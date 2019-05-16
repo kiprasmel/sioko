@@ -121,9 +121,22 @@ const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
 		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
-double maximalusBalas = 255;
-// const double maximalusBalas = 100;
-const double didinimoSkaicius = maximalusBalas / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
+
+/**
+ * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
+ * 
+ */
+const double pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
+	{Left3, -90},
+	{Left2, -50},
+	{Left1, -15},
+	{Middle1, 0},
+	{Middle2, 0},
+	{Middle3, 0},
+	{Right1, 15},
+	{Right2, 50},
+	{Right3, 90}
+};
 
 // maximalusBalas = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
 
