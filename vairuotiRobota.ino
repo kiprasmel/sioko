@@ -14,6 +14,9 @@
 #include "linija.h"
 #include <math.h>
 
+// for testing:
+// #include "ivairusTestai.h" 
+
 void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 {
 	if (arStabdytiMotorus())
@@ -22,9 +25,20 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 		return;
 	}
 
-	atnaujintiJutikliuDuomenis();
+	atnaujintiJutikliuDuomenis(); // #TODO #CHECK galima mėginti atkomentuot senąjį pin'ų surašymą
+
+	// pinuSensoriuTestas(); // serial print'ai
 
 	originaliLinijaBeDefaultCase();
+
+	// Serial.print(myLINE + "\r\n");
+	// Serial.println(myLINE + " linija");
+
+	// // TESTING ONLY
+	// if (arVidurysKaNorsMato() || arKaireKaNorsMato() || arDesineKaNorsMato())  {
+	// 	motor(0, 0);
+	// 	return;
+	// }
 
 	if (arVidurysKaNorsMato())
 	{
