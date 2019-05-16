@@ -89,16 +89,25 @@ void treciaStrategija()
 void zigzagasKairenMazas()
 {
 	Serial.println("#TODO - dar nepadaryta");
+	zigzag_kaire_M();
 }
 
-void zigzagasDesinenDidelis()
+void zigzagasDesinenMazas()
 {
 	Serial.println("#TODO - dar nepadaryta");
+	zigzag_desine_M();
 }
 
 void zigzagasKairenDidelis()
 {
 	Serial.println("#TODO - dar nepadaryta");
+	zigzag_kaire_D();
+}
+
+void zigzagasDesinenDidelis()
+{
+	Serial.println("#TODO - dar nepadaryta");
+	zigzag_desine_D();
 }
 
 /** 
@@ -112,7 +121,7 @@ void zigzagasKairenDidelis()
  * max į priekį 
  */
 
-void zigzagasDesinenMazas()
+void zigzagasDesinenMazas_unfinished()
 {
 	Serial.println("#TODO - dar nepadaryta (dabar tobulinu)");
 
