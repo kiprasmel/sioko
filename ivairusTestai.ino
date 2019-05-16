@@ -137,16 +137,6 @@ void pinuSensoriuTestas()
 		if (digitalRead(pinai[i]) == 0)
 		{
 			Serial.print(pavadinimai[i]);
-
-			// testuojam 1-ąjį pin'ą
-			if (i == 0)
-			{
-				digitalWrite(LEDas, HIGH);
-			}
-			else
-			{
-				digitalWrite(LEDas, LOW);
-			}
 		}
 	}
 }
