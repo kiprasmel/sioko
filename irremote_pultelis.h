@@ -7,3 +7,4 @@ decode_results results;
 
 void pulteliuNustatytiStrategijas();
 void lauktiEnterPaspaudimo();
+void lauktiKazkokioMygtukoPaspaudimo();

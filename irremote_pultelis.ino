@@ -55,11 +55,14 @@ void pulteliuNustatytiStrategijas()
 				// continue;
 			}
 
+			/** pradinė */
 			if (etr == 0 && results.value != Enter)
 			{
 				pradineStrategija = (StrategijosPagalHex)results.value;
 				delay(200);
 			}
+
+			/** pagrindinė */
 			else if (etr == 1 && results.value != Enter)
 			{
 				pagrindineStrategija = (StrategijosPagalHex)results.value;
@@ -67,13 +70,13 @@ void pulteliuNustatytiStrategijas()
 			}
 
 			digitalWrite(LEDas, LOW);
-			// TODO - `MAIN_STRATEGY_STATE = (kažkaip hexą iš pavadinimo į int'ą) resuts.value`
-			// WARN NOT DONE
 
-			// irrecv.resume();
-			// }
+			// // TODO - `MAIN_STRATEGY_STATE = (kažkaip hexą iš pavadinimo į int'ą) resuts.value`
+			// // WARN NOT DONE
+			// // irrecv.resume();
+			// // }
 		}
-		//digitalWrite(LEDas, LOW); /** TODO CHECK kodėl šitas čia buvo? Ar jo reikia? */
+		// // digitalWrite(LEDas, LOW);
 	}
 }
 
