@@ -26,6 +26,8 @@
 #include "ivairusTestai.h"
 #include "strategijos.h"
 
+const byte START_MODULE = 29;
+
 void setup()
 {
 	Serial.begin(9600);
