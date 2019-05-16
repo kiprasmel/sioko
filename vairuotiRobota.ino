@@ -44,7 +44,7 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 	{
 		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
 		return;
-	}
+	} 
 
 	else if (arKaireKaNorsMato() || arDesineKaNorsMato()) {
 
@@ -55,9 +55,9 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 		}
 		
 		else if (arKaireKaNorsMato()) {
-		motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
-		return;
-	}
+			motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
+			return;
+		}
 		else if (arDesineKaNorsMato()) {
 			motor(+greitisSukimosi, -greitisSukimosi); // -max rotate; +max rotate
 			return;
@@ -117,7 +117,7 @@ void vairuotiRobota()
 	 * #TODO #CLEANUP
 	* #sukimosiSkaiciavimas
 	*/
-	kiekMsReikesSuktis = fabs(perKiekMsApsisukam360Sukdamiesi255 / 4 * oponentoPozicija);
+	kiekMsReikesSuktis = fabs(perKiekMsApsisukam90Sukdamiesi255 * oponentoPozicija); // nuo 0 iki 90 laipsnių
 	// Serial.print(perKiekMsApsisukam360Sukdamiesi255);
 
 	// Serial.print("\nKiek ms reikės suktis ");
