@@ -37,16 +37,6 @@ double oponentoPozicijosBalas()
 	// 		{Right3, 127.5}
 	//};
 
-	const int tempPinaiIrBalai[][2] = {
-			{Left1, 0},		// 0 // -15
-			{Left2, -30}, ////// 64
-			{Left3, -40}, ////// 100
-			{Middle1, 0},
-			{Middle2, 0},
-			{Middle3, 0},
-			{Right1, 0},	 // 0 // 15
-			{Right2, 30},	////// 64
-			{Right3, 40}}; ////// 100
 
 	// least important
 	// middle
@@ -78,6 +68,34 @@ double oponentoPozicijosBalas()
 	// Serial.print(digitalRead(temp));
 	// Serial.print("  ; digitalRead(Left1) = ");
 	// Serial.print(digitalRead(Left1));
+
+	// const int tempPinaiIrBalai[][2] = {
+	// 		{Left1, 0},		// 0 // -15
+	// 		{Left2, -30}, ////// 64
+	// 		{Left3, -40}, ////// 100
+	// 		{Middle1, 0},
+	// 		{Middle2, 0},
+	// 		{Middle3, 0},
+	// 		{Right1, 0},	 // 0 // 15
+	// 		{Right2, 30},	////// 64
+	// 		{Right3, 40}}; ////// 100
+
+
+	// maximalusBalas = 100;
+	// jeigu imtume laipsniais, tai reiktų max balą daryt 90.
+	// const double tempPinaiIrBalai[][2] = {
+	// 		{Left3, -100},
+	// 		{Left2, -50},
+	// 		{Left1, -15},
+	// 		{Middle1, 0},
+	// 		{Middle2, 0},
+	// 		{Middle3, 0},
+	// 		{Right1, 15},	
+	// 		{Right2, 50},
+	// 		{Right3, 100}
+	// 	};
+
+	
 
 	// iškart grąžinam 0;
 	if (arVidurysKaNorsMato())
