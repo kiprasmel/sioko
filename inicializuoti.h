@@ -14,8 +14,9 @@
 void inicializuoti();
 
 const double greitisVaziavimoPirmyn = 255;
-const double greitisSukimosi = 255;							 // #EDITME
-double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
+const double greitisSukimosi = 255;										 // #EDITME
+const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
+const double perKiekMsApsisukam90Sukdamiesi255 = 40;
 
 // const double perKiekMsApsisukam360Sukdamiesi255 = greitisSukimosi * 157 / 255;
 
@@ -50,6 +51,8 @@ double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
 // TODO FAST perdaryt šituos. Galbūt reiktų iškart dėt, kas yra priekyje, kas kairėj, kas dešinėj etc.
 //puolimo sensoriai
 
+const byte LEDas = 13;
+
 const byte Right1 = 21; // Dešinysis aukščiausias (nesvarbiausias)
 const byte Right2 = 23; // Dešinysis vidurinis
 const byte Right3 = 22; // Pats pats dešinysis (90 laipsnių) svarbiausias
@@ -61,8 +64,6 @@ const byte Middle3 = 33; // desiniausias
 const byte Left1 = 18; // Kairysis aukščiausias (nesvarbiausias)
 const byte Left2 = 16; // Kairysis vidurinis
 const byte Left3 = 17; // Pats pats kairysis (90 laipsnių) svarbiausias
-
-const byte LEDas = 13;
 
 // const byte Right1 = 23;
 // const byte Right2 = 22;
@@ -121,22 +122,25 @@ const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
 		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
+// double maximalusBalas = 255;
+// double maximalusBalas = 100
+const double maximalusBalas = 90; // laipsniai. galim mėgint 360 vėliau, jei reiks stipresnių pasisukimų.
+const double didinimoSkaicius = maximalusBalas / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2); // TODO reikia tiesiog nuo min iki maximalaus balo.
 
 /**
  * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
  * 
  */
 const double pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
-	{Left3, -90},
-	{Left2, -50},
-	{Left1, -15},
-	{Middle1, 0},
-	{Middle2, 0},
-	{Middle3, 0},
-	{Right1, 15},
-	{Right2, 50},
-	{Right3, 90}
-};
+		{Left3, -90},
+		{Left2, -50},
+		{Left1, -15},
+		{Middle1, 0},
+		{Middle2, 0},
+		{Middle3, 0},
+		{Right1, 15},
+		{Right2, 50},
+		{Right3, 90}};
 
 // maximalusBalas = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
 
@@ -154,7 +158,7 @@ const double pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
 // {
 // 	didinimoReiksmes[i] = didinimoReiksmes[i + 1] + didinimoSkaicius;
 // }
-double apskaiciuotiNaujaBala(double skaicius, int iteratorius);
+double apskaiciuotiNaujaBala(double skaicius, int iteratorius); // tiesigo nuo min iki 100
 
 const int visiPinai[kiekPinuPusiu][poKiekPinuKiekvienojePuseje] = {
 		{Left1, Left2, Left3},
@@ -219,7 +223,7 @@ int b = 0;
 //nep left
 //15
 //14
-const byte START_MODULE = 29;
+// // const byte START_MODULE = 29;
 
 //Varikliu greiciai
 const byte SPEED_NORMAL = 200;
