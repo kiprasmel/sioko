@@ -1,12 +1,22 @@
 #include "pagalbines_funkcijos.h"
 #include "inicializuoti.h"
 
+/**
+ * NOTE:
+ * Tikrinant su `digitalRead`, mato tada, kai `== 0`, o ne `1`!
+ */
+
 bool arVidurysKaNorsMato()
 {
-	if (digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0)
+	if (
+			digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0
+			//|| digitalRead(Left1) == 0 || digitalRead(Right1) == 0
+			// makes checking loose (also includes the near left & right sensors)
+	)
 	{
+		Serial.print("\nVidurys");
+
 		digitalWrite(LEDas, HIGH);
-		// Serial.print("\nVidurys kažką mato. Returninu true");
 		return true;
 	}
 	else
@@ -14,9 +24,38 @@ bool arVidurysKaNorsMato()
 		digitalWrite(LEDas, LOW);
 		return false;
 	}
-	// return (digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0
-	// 				// || digitalRead(Right1) == 0 || digitalRead(Left1) == 0
-	// );
+}
+
+bool arKaireKaNorsMato()
+{
+	if (digitalRead(Left1) == 0 || digitalRead(Left2) == 0 || digitalRead(Left3) == 0)
+	{
+		Serial.print("\nKaire");
+
+		digitalWrite(LEDas, HIGH);
+		return true;
+	}
+	else
+	{
+		digitalWrite(LEDas, LOW);
+		return false;
+	}
+}
+
+bool arDesineKaNorsMato()
+{
+	if (digitalRead(Right1) == 0 || digitalRead(Right2) == 0 || digitalRead(Right3) == 0)
+	{
+		Serial.print("\nDesine");
+
+		digitalWrite(LEDas, HIGH);
+		return true;
+	}
+	else
+	{
+		digitalWrite(LEDas, LOW);
+		return false;
+	}
 }
 
 int kiekMatoKazkuriPuse(const int pinaiSkenavimui[])
