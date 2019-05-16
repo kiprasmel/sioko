@@ -35,56 +35,60 @@ void setup()
 	inicializuoti();
 
 	const byte outputPins[] = {
-			13,
+			LEDas,
 			PWM1,
 			PWM2,
 			DIR1,
 			DIR2,
 	};
+
 	const byte inputPins[] = {LeftLine1, LeftLine2, RightLine1, RightLine2, Right1, Right2, Right3, Rightback,
 														Left1, Left2, Left3, Leftback, Middle1, Middle2, Middle3, START_MODULE};
 
-	for (const int &pin : outputPins)
+	for (const byte &pin : outputPins)
 	{
 		pinMode(pin, OUTPUT);
 	}
 
-	for (const int &pin : inputPins)
+	for (const byte &pin : inputPins)
 	{
 		pinMode(pin, INPUT);
 	}
-
 	// #NOTE - `analogWriteFrequency` susijęs su motor `analogWrite`.
 
 	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK ką daro šitas? Neveikia man, meta errorus, gal neturiu bibliotekos kažkokios */
 	analogWriteFrequency(PWM1, 15000.0f);
 
-	suskaiciuotiBalusVisiemsPinams();
+	// // motor(255, 255);
 
 	irrecv.enableIRIn(); /** CHECK ką šitas daro? */
 
-	// pulteliuNustatytiStrategijas();
+	pulteliuNustatytiStrategijas();
+	// MAIN_STRATEGY_STATE = 1;
+	// START_STRATEGY_STATE = 1;
 
+	// Serial.print(digitalRead(arStabdytiMotorus() == false));
+
+	/** 
+	 * laukti, iki kol `START_MODULE` == `HIGH`
+	 */
 	while (true)
 	{
-		// laukiam, kol pasiųsk signalą pradėti
-		if (digitalRead(START_MODULE) == HIGH)
+		if (arStabdytiMotorus() == false)
 		{
-			break; // pradėti strategiją
+			break;
 		}
-
-		atnaujintiJutikliuDuomenis();
-
-		// #TODO atkomentuot (led'ų tikrinimas)
-		// if (myFRONT != 0b000000)
-		// {
-		// 	digitalWrite(LEDas, HIGH);
-		// }
-		// else
-		// {
-		// 	digitalWrite(LEDas, LOW);
-		// }
 	}
+
+	// while (true)
+	// {
+	// 	if (digitalRead(START_MODULE) == HIGH)
+	// 	{
+	// 		break;
+	// 	}
+
+	// 	atnaujintiJutikliuDuomenis();
+	// }
 
 	// vykdytiStrategija(pradineStrategija);
 
@@ -92,26 +96,13 @@ void setup()
 	// hardCodedVarikliuTestai();
 }
 
-// void loop()
-// {
-// 	motor(100, -100);
-// 	delay(1000);
-
-// 	motor(0, 0);
-// 	delay(2000);
-
-// 	motor(-100, 100);
-// 	delay(1000);
-
-// 	motor(0, 0);
-// 	delay(2000);
-// }
-
-// bool printinom = false;
-
 void loop()
 {
+	/** mėgink `vairuotiRobota`, tik pasikeisk laipsnius `inicializuoti.h`e */
+
 	vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
+
+	// hardCodedVarikliuTestai();
 
 	// if (!printinom)
 	// {
@@ -140,6 +131,23 @@ void loop()
 	// Serial.print(myFRONT);
 	// Serial.print(myLINE);
 }
+
+// void loop()
+// {
+// 	motor(100, -100);
+// 	delay(1000);
+
+// 	motor(0, 0);
+// 	delay(2000);
+
+// 	motor(-100, 100);
+// 	delay(1000);
+
+// 	motor(0, 0);
+// 	delay(2000);
+// }
+
+// bool printinom = false;
 
 /** <= --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- => **/
 
