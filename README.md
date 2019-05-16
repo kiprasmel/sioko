@@ -19,6 +19,10 @@
 
 ### Important todos
 
+- Pervadinti `maximalusBalas` į `maximalusLaipsnis`
+
+- Padaryti pasisukimo skaičiavimus naudojant medianą vietoj aritmetion vidurkio
+
 - Bandyt su laipnsiais skaičiuot (90deg, 45deg, ~20deg)
 
 - Perkelt Line() ir atnaujintiJutikliuDuomenis() į vairuotiRobota()
@@ -67,6 +71,10 @@
 - Reikia nepamiršt, kad remotai nesocolidintu. Tai yra, kad nesutaptų hex kodai
 
 ### Notes
+
+- Minimaliai pakeitus motor funkciją ji nebeveikia normaliai. Keista.
+
+- Kartais, ypač po `upload`inimo, būna bėdų su paleidimu (nereaguoja į pultelį)
 
 - `while` ciklai veikia kaip ir `delay` - kol jie vyksta, programa tarsi sustojusi ir niekas kitkas nevyksta (su niuansais)
 
