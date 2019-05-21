@@ -11,7 +11,8 @@ int kokiaKryptis(int motoroGreitis)
 
 bool arStabdytiMotorus()
 {
-	return digitalRead(START_MODULE) == LOW ? true : false;
+	return digitalRead(START_MODULE) == HIGH ? false : true;
+	// return digitalRead(START_MODULE) == LOW ? true : false;
 }
 
 void motor(int a, int b)
