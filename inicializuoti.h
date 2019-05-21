@@ -142,6 +142,8 @@ const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
 		{Right2, 50},
 		{Right3, 90}};
 
+const int kiekYraPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai) / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
+
 // maximalusBalas = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
 
 /**
