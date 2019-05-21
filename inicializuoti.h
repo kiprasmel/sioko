@@ -95,11 +95,11 @@ const int desinesPinai[] = {Right1, Right2, Right3};
  * apskaičiuoti, po kiek didinti kiekvieno pino balus, kad galutinė max
  * suma vienos pusės būtų nuo -255 iki +255;
  * formulė:
- * (double) maximalusBalas / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
+ * (double) tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
  * 
  * skaitykite => https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
  * 
- * šiuo metu, poKiekPinuKiekvienojePuseje = 3; maximalusBalas = 255;
+ * šiuo metu, poKiekPinuKiekvienojePuseje = 3; tolimiausioPinoLaipsnis = 255;
  * 255 / ((3 * (3 + 1) / 2) = 255 / (3 * 4 / 2) = 255 / 6 = 42.5;
  * 
  * pradedant nuo mažiausiai reikšmingo pino ir prie 0 pridedant gautą reikšmę;
@@ -122,10 +122,8 @@ const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
 		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
-// double maximalusBalas = 255;
-// double maximalusBalas = 100
-const double maximalusBalas = 90; // laipsniai. galim mėgint 360 vėliau, jei reiks stipresnių pasisukimų.
-const double didinimoSkaicius = maximalusBalas / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2); // TODO reikia tiesiog nuo min iki maximalaus balo.
+const double tolimiausioPinoLaipsnis = 90;
+const double didinimoSkaicius = tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2); // TODO reikia tiesiog nuo min iki maximalaus balo.
 
 /**
  * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
@@ -144,12 +142,12 @@ const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
 
 const int kiekYraPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai) / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
 
-// maximalusBalas = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
+// tolimiausioPinoLaipsnis = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
 
 /**
  * patvirtinti, jog atitinka min/max sąlygą 
 */
-//assert(didinimoSkaicius * poKiekPinuKiekvienojePuseje >= -maximalusBalas && didinimoSkaicius * poKiekPinuKiekvienojePuseje <= maximalusBalas);
+//assert(didinimoSkaicius * poKiekPinuKiekvienojePuseje >= -tolimiausioPinoLaipsnis && didinimoSkaicius * poKiekPinuKiekvienojePuseje <= tolimiausioPinoLaipsnis);
 
 /**
  * #TODO optimizuoti `apskaiciuotiNaujaBala`

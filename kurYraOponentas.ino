@@ -8,7 +8,7 @@
 */
 
 #include "kurYraOponentas.h"
-#include "inicializuoti.h" // maximalusBalas
+#include "inicializuoti.h" // tolimiausioPinoLaipsnis
 #include "pagalbines_funkcijos.h"
 
 // double mappinti(double skaicius, double minReiksme, double maxReiksme)
@@ -91,7 +91,7 @@ double oponentoPozicijosBalasMediana()
 */
 double kurYraOponentas() // nuo -1 iki +1
 {
-	return oponentoPozicijosBalasMediana() / maximalusBalas;
+	return oponentoPozicijosBalasMediana() / tolimiausioPinoLaipsnis;
 }
 
 /** 
