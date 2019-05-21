@@ -15,16 +15,10 @@
 #include <math.h>
 
 // for testing:
-// #include "ivairusTestai.h" 
+// #include "ivairusTestai.h"
 
 void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 {
-	if (arStabdytiMotorus())
-	{
-		motor(0, 0);
-		return;
-	}
-
 	atnaujintiJutikliuDuomenis(); // #TODO #CHECK galima mėginti atkomentuot senąjį pin'ų surašymą
 
 	// pinuSensoriuTestas(); // serial print'ai
@@ -44,28 +38,33 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 	{
 		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
 		return;
-	} 
+	}
 
-	else if (arKaireKaNorsMato() || arDesineKaNorsMato()) {
+	else if (arKaireKaNorsMato() || arDesineKaNorsMato())
+	{
 
 		/** dafuq? Abu šonai mato:D Tiesiog varom pirmyn */
-		if (arKaireKaNorsMato() && arDesineKaNorsMato()) {
+		if (arKaireKaNorsMato() && arDesineKaNorsMato())
+		{
 			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
 			return;
 		}
-		
-		else if (arKaireKaNorsMato()) {
+
+		else if (arKaireKaNorsMato())
+		{
 			motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
 			return;
 		}
-		else if (arDesineKaNorsMato()) {
+		else if (arDesineKaNorsMato())
+		{
 			motor(+greitisSukimosi, -greitisSukimosi); // -max rotate; +max rotate
 			return;
 		}
 	}
-	
+
 	// nemato niekas
-	else {
+	else
+	{
 		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 		Serial.print("Niekas");
 		return;
@@ -76,26 +75,20 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 	//// else if (digitalRead(Left1) || digitalRead(Left2) || digitalRead(Left3))
 	//else if (arKaireKaNorsMato())
 	//{
-		//motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
-		//return;
+	//motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
+	//return;
 	//}
 	//// Ar DEŠINĖ ką nors mato? min => max reikšmingumas
 	//// gali reikėt išimt Right1
 	//else if (arDesineKaNorsMato())
 	//{
-		//motor(+greitisSukimosi, -greitisSukimosi); // +max rotate; -max rotate
-		//return;
+	//motor(+greitisSukimosi, -greitisSukimosi); // +max rotate; -max rotate
+	//return;
 	//}
 }
 
 void vairuotiRobota()
 {
-	if (arStabdytiMotorus())
-	{
-		motor(0, 0);
-		return;
-	}
-
 	atnaujintiJutikliuDuomenis();
 
 	originaliLinijaBeDefaultCase();
