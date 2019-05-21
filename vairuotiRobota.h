@@ -1,4 +1,4 @@
 #pragma once
 
 void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
-void vairuotiRobota();
+void vairuotiRobotaSuApskaiciavimais();

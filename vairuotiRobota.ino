@@ -87,7 +87,7 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 	//}
 }
 
-void vairuotiRobota()
+void vairuotiRobotaSuApskaiciavimais()
 {
 	atnaujintiJutikliuDuomenis();
 
