@@ -63,9 +63,13 @@ void setup()
 
 	irrecv.enableIRIn(); /** CHECK ką šitas daro? */
 
-	pulteliuNustatytiStrategijas();
-	// MAIN_STRATEGY_STATE = 1;
-	// START_STRATEGY_STATE = 1;
+	/**
+	 * #TEMP #DEV - išjungiam strategijų pultelį 
+	 */
+
+	// pulteliuNustatytiStrategijas();
+	MAIN_STRATEGY_STATE = 1;
+	START_STRATEGY_STATE = 1;
 
 	// Serial.print(digitalRead(arStabdytiMotorus() == false));
 
