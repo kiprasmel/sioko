@@ -131,7 +131,7 @@ const double didinimoSkaicius = maximalusBalas / ((poKiekPinuKiekvienojePuseje *
  * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
  * 
  */
-const double pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
+const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
 		{Left3, -90},
 		{Left2, -50},
 		{Left1, -15},
