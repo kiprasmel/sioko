@@ -12,7 +12,7 @@
 
 void inicializuoti()
 {
-	suskaiciuotiBalusVisiemsPinams();
+	// suskaiciuotiBalusVisiemsPinams();
 }
 
 double apskaiciuotiNaujaBala(double skaicius, int iteratorius)
@@ -47,13 +47,13 @@ double apskaiciuotiNaujaBala(double skaicius, int iteratorius)
 	return balas;
 }
 
-void suskaiciuotiBalusVisiemsPinams()
-{
-	for (int i = 0; i < kiekPinuPusiu; ++i)
-	{
-		for (int j = 0; j < poKiekPinuKiekvienojePuseje; ++j)
-		{
-			visiPinaiIrJuTeikiamiBalai[i][j] = apskaiciuotiNaujaBala(didinimoSkaicius, i);
-		}
-	}
-}
+// void suskaiciuotiBalusVisiemsPinams()
+// {
+// 	for (int i = 0; i < kiekPinuPusiu; ++i)
+// 	{
+// 		for (int j = 0; j < poKiekPinuKiekvienojePuseje; ++j)
+// 		{
+// 			visiPinaiIrJuTeikiamiBalai[i][j] = apskaiciuotiNaujaBala(didinimoSkaicius, i);
+// 		}
+// 	}
+// }
