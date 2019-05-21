@@ -173,5 +173,5 @@ double kurYraOponentas() // nuo -1 iki +1
 */
 double kurYraOponentasProcentaliai() // nuo -100 iki +100
 {
-	return oponentoPozicijosBalas() * 100 / maximalusBalas;
+	return kurYraOponentas() * 100;
 }
