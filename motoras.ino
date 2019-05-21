@@ -15,6 +15,16 @@ bool arStabdytiMotorus()
 	// return digitalRead(START_MODULE) == LOW ? true : false;
 }
 
+/** 
+ * laukti, iki kol `START_MODULE` == `HIGH`
+ */
+void lauktiKolPaleisimRobota()
+{
+	while (arStabdytiMotorus())
+	{
+	}
+}
+
 void motor(int a, int b)
 {
 	a = constrain(a, -255, 255);
