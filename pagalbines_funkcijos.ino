@@ -61,8 +61,8 @@ bool arDesineKaNorsMato()
 int kiekMatoKazkuriPuse(const int pinaiSkenavimui[])
 {
 	int suma = 0;
-	int kiekPinu = (sizeof(pinaiSkenavimui) / sizeof(pinaiSkenavimui[0]));
-	for (int i = 0; i < kiekPinu; ++i)
+	int kiekYraPinu = (sizeof(pinaiSkenavimui) / sizeof(pinaiSkenavimui[0]));
+	for (int i = 0; i < kiekYraPinu; ++i)
 	{
 		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
 		{
@@ -74,14 +74,14 @@ int kiekMatoKazkuriPuse(const int pinaiSkenavimui[])
 
 void atnaujintiBitusXPusesPagalPinus(byte &kazkuriPuse, const int pinaiSkenavimui[])
 {
-	int kiekPinu = (sizeof(pinaiSkenavimui) / sizeof(pinaiSkenavimui[0]));
+	int kiekYraPinu = (sizeof(pinaiSkenavimui) / sizeof(pinaiSkenavimui[0]));
 
-	// for (int i = 0; i < kiekPinu; ++i)
+	// for (int i = 0; i < kiekYraPinu; ++i)
 	// {
 	// 	bitClear(kazkuriPuse, i);
 	// }
 
-	for (int i = 0; i < kiekPinu; ++i)
+	for (int i = 0; i < kiekYraPinu; ++i)
 	{
 		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
 		{
