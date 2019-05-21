@@ -26,7 +26,7 @@
 #include "ivairusTestai.h"
 #include "strategijos.h"
 
-const byte START_MODULE = 29;
+// const byte START_MODULE = 29;
 
 void setup()
 {

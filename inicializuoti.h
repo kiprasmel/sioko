@@ -223,7 +223,7 @@ int b = 0;
 //nep left
 //15
 //14
-// // const byte START_MODULE = 29;
+const byte START_MODULE = 29;
 
 //Varikliu greiciai
 const byte SPEED_NORMAL = 200;
