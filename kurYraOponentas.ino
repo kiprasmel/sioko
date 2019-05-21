@@ -95,26 +95,55 @@ double oponentoPozicijosBalas()
 	// 		{Right3, 100}
 	// 	};
 
+	// // // iškart grąžinam 0;
+	// // if (arVidurysKaNorsMato())
+	// // {
+	// // 	return 0;
+	// // }
 	
-
-	// iškart grąžinam 0;
-	if (arVidurysKaNorsMato())
-	{
-		return 0;
-	}
+	/**
+	 * Pirma susirašom matančių pin'ų reikšmes,
+	 * o tada apskaičiuojam medianą.
+	 */
 
 	int kiekPinuMato = 0;
+	double matanciuPinuReiksmes[kiekPinu];
 
 	for (int i = 0; i < kiekPinu; ++i)
 	{
 		if (digitalRead(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][0]) == 0) // jeigu matome
 		{
-			baluSuma += pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][1];
+			// // baluSuma += pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][1];
+
+			/**
+			 * [kiekPinuMato] - kiek kol kas šiame cikle mato pin'ų.
+			 * 
+			 * Tai reiškia, jog jei tik pradėjom tikrinti,
+			 * gali būti, jog atsiras ir daugiau matančių.
+			 * 
+			 * Čia realiai naudojama kaip std::vector'o push_back() metodas,
+			 * tik patiems atnaujinant indeksą (kiekPinuMato)
+			 */
+			matanciuPinuReiksmes[kiekPinuMato] = pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][1];
 			kiekPinuMato += 1;
 		}
 	}
 
-	baluSuma /= kiekPinuMato;
+	// // baluSuma /= kiekPinuMato;
+
+	// 0 1 2 3
+	// (1 + 2) / 2  =  3 / 2  =  1.5
+	if (kiekPinuMato % 2 == 0)
+	{
+		baluSuma = (matanciuPinuReiksmes[kiekPinuMato / 2 - 1] + matanciuPinuReiksmes[kiekPinuMato / 2]) / 2;
+	}
+
+	// 0 1 2
+	// 1
+	else
+	{
+		baluSuma = matanciuPinuReiksmes[kiekPinuMato / 2];
+	}
 
 	// for (int i = 0; i < kiekPinu; ++i)
 	// {
