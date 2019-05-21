@@ -19,7 +19,8 @@ void motor(int a, int b)
 	a = constrain(a, -255, 255);
 	b = constrain(b, -255, 255);
 	// a-=10;//buvo80 pries tempima i viena puse
-	if (digitalRead(START_MODULE) == LOW)
+
+	if (arStabdytiMotorus())
 	{
 		a = 0;
 		b = 0;
