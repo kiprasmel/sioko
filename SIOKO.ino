@@ -102,9 +102,8 @@ void setup()
 
 void loop()
 {
-	/** mėgink `vairuotiRobota`, tik pasikeisk laipsnius `inicializuoti.h`e */
-
-	vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
+	// vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
+	vairuotiRobotaSuApskaiciavimais();
 
 	// hardCodedVarikliuTestai();
 
