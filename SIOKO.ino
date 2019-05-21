@@ -2,20 +2,11 @@
  * SIOKO.ino
  * 
  * Pagrindinis programos failas.
+ * Search'inimo keywords'ai: [TODO, CHECK, WARN, BROKEN, DEV]
  * 
  * Copyright (c) 2019 Kipras Melnikovas, Vismantas Masiokas, Neilas Antanavičius
  * 
 */
-
-/**
- * Kas yra etr? (Naudojamas pulteliuNustatytiStrategijas, galbūt geriau jį ten deklaruoti?) 
- * > Perkėliau į pulteliuNustatytiStrategijas failą
- * 
- * Iš kur gauti IRremote.h biblioteką? kurią čia naudojat?
- * 
- * 
- * Search'inimo keywords'ai: [TODO, CHECK, WARN, BROKEN]
- */
 
 #include "inicializuoti.h"
 #include "strategijos.h"
@@ -53,15 +44,22 @@ void setup()
 		pinMode(pin, INPUT);
 	}
 
-	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK ką daro šitas? Neveikia man, meta errorus, gal neturiu bibliotekos kažkokios */
+	/** 
+	 * ką daro `analogWriteFrequency`?
+	 * 
+	 * Man neveikia per `vscode`, meta errorus - 
+	 * tikriausiai trūksta kažkokios bibliotekos.
+	 * 
+	 * `Upload`inant su arduino IDE veikia.
+	*/
+	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK */
 	analogWriteFrequency(PWM1, 15000.0f);
 
-	// // motor(255, 255);
-
-	irrecv.enableIRIn(); /** CHECK ką šitas daro? */
+	/** enable receiving I suppose?:D */
+	irrecv.enableIRIn();
 
 	/**
-	 * #TEMP #DEV - išjungiam strategijų pultelį 
+	 * #TEMP #DEV - išjungiam strategijų pultelį  (įjungti production'ui!)
 	 */
 	// pulteliuNustatytiStrategijas();
 	MAIN_STRATEGY_STATE = 1;
@@ -69,10 +67,10 @@ void setup()
 
 	lauktiKolPaleisimRobota();
 
+	/**
+	 * #TEMP #DEV - nevykdom pradinės strategijos (įjungti production'ui!)
+	 */
 	// vykdytiStrategija(pradineStrategija);
-
-	// pirmaStrategija();
-	// hardCodedVarikliuTestai();
 }
 
 void loop()
