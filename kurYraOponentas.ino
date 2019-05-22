@@ -67,9 +67,14 @@ double oponentoPozicijosBalasMediana()
 		}
 	}
 
+	if (kiekPinuMato == 0)
+	{
+		baluSuma = 0;
+	}
+
 	// 0 1 2 3
 	// (1 + 2) / 2  =  3 / 2  =  1.5
-	if (kiekPinuMato % 2 == 0)
+	else if (kiekPinuMato % 2 == 0)
 	{
 		baluSuma = (matanciuPinuReiksmes[kiekPinuMato / 2 - 1] + matanciuPinuReiksmes[kiekPinuMato / 2]) / 2;
 	}
@@ -80,6 +85,11 @@ double oponentoPozicijosBalasMediana()
 	{
 		baluSuma = matanciuPinuReiksmes[kiekPinuMato / 2];
 	}
+
+	Serial.print("\n\rKiekPinuMato = ");
+	Serial.print(kiekPinuMato);
+	Serial.print("\n\rMediana = ");
+	Serial.print(baluSuma);
 
 	return baluSuma;
 }
