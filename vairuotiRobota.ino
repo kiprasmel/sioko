@@ -93,11 +93,17 @@ void vairuotiRobotaSuApskaiciavimais()
 
 	originaliLinijaBeDefaultCase();
 
-	if (arVidurysKaNorsMato())
-	{
-		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-		return;
-	}
+	/**
+	 * #EXPERIMENTAL
+	 * Išjungiam, kad visas flow būtų toks pat bet kokiu atveju,
+	 * turint omeny, jeigu norėtume daryti ką nors skirtingo,
+	 * nepriklausomai nuo to, ar vidurys mato.
+	 */
+	// // if (arVidurysKaNorsMato())
+	// // {
+	// // 	motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+	// // 	return;
+	// // }
 
 	double oponentoPozicija = 0;
 	double kiekMsReikesSuktis = 0;
