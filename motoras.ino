@@ -25,7 +25,7 @@ bool arStabdytiMotorus()
 	// return digitalRead(START_MODULE) == LOW ? true : false;
 }
 
-/** 
+/**
  * laukti, iki kol `START_MODULE` == `HIGH`
  *
  * BAD, nes ir motoras tą patį daro
@@ -136,8 +136,8 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 
 	while (millis() - time < kiekMsLaukti)
 	{
-		/** 
-		 * tikrinam jutiklių duomenis, jog jeigu priekis ką nors mato - iškart varytume į priekį. 
+		/**
+		 * tikrinam jutiklių duomenis, jog jeigu priekis ką nors mato - iškart varytume į priekį.
 		 */
 		atnaujintiJutikliuDuomenis(); // #NEW! Gali būt, kad sutvarkys.
 		// Line();							// gali būt bėdų dėl prastos funkcijos #TODO ATKOMENTUOT
@@ -163,7 +163,11 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 			return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
 		}
 	}
-	motor(0, 0);
+
+	/**
+	 * TODO - ar šito reikia?
+	 */
+	// // motor(0, 0);
 }
 
 void motoraiSuLaikuNereguojantysIPrieki(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
