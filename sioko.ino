@@ -20,8 +20,6 @@ void setup()
 {
 	Serial.begin(115200);
 
-	inicializuoti();
-
 	const byte outputPins[] = {
 			LEDas,
 			PWM1,

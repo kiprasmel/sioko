@@ -5,51 +5,21 @@
  * funkcijomis, kurių reikia inicializacijai ir visam programos
  * veikimui.
  *
+ * Naudojamas pagrindiniame projekto faile (sioko.ino)
+ * ir suteikia globalius kintamuosius visiems failams.
+ *
  * Copyright (c) 2019 Kipras Melnikovas
  *
 */
 
 #pragma once
 
-void inicializuoti();
-
 const double greitisVaziavimoPirmyn = 255;
 const double greitisSukimosi = 255;										 // #EDITME
 const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
 const double perKiekMsApsisukam90Sukdamiesi255 = 40;
 
-// const double perKiekMsApsisukam360Sukdamiesi255 = greitisSukimosi * 157 / 255;
-
-// 255 greitis - 157 sec
-// 1 greitis = x sec
-// x = 1 * 157 / 255
-// x = 0.61
-// * greitisSukimosi
-
-// greitis 100; sukimasis 100
-// greitis 50; sukimasis 200
-
-// laikas = kelias / greicio
-/*
-	1 laipsnio apsisukimas = 157 / 360 ~ 0.43
-	90 laipsniu = 38.7
-
-
-
-	157 = kelias / 255
-	x = kelias / 100
-	
-
-*/
-
-// greitis = kelias / laikas
-
-// testavimui
-// const double perKiekMsApsisukam360Sukdamiesi255 = 4003; //#TODO
-// const double greitisSukimosi = 10;													 // #EDITME
-
-// TODO FAST perdaryt šituos. Galbūt reiktų iškart dėt, kas yra priekyje, kas kairėj, kas dešinėj etc.
-//puolimo sensoriai
+/** --- */
 
 const byte LEDas = 13;
 
@@ -78,16 +48,11 @@ const byte Left3 = 17; // Pats pats kairysis (90 laipsnių) svarbiausias
 const byte Rightback = 15;
 const byte Leftback = 34;
 
-/**
- * visų pusių pinai, suskirstyti pusėmis.
- * išvardinti nuo mažiausiai reikšmingo iki reikšmingiausio
- * (kuo labiau toje pusėje, tuo reikšmingesnis)
-*/
-const int kairesPinai[] = {Left1, Left2, Left3};
-const int priekioPinai[] = {Middle1, Middle2, Middle3};
-const int desinesPinai[] = {Right1, Right2, Right3};
+/** --- */
 
 /**
+ * TODO perrašyt šituos docs'us pagal naujausią softo versiją.
+ *
  * skaičiuojant, kur yra oponentas kuo kairiau, tuo daugiau -, kuo
  * dešiniau, tuo daugiau + Turi būti vienodai pinų kairėje ir dešinėje
  *
@@ -96,26 +61,27 @@ const int desinesPinai[] = {Right1, Right2, Right3};
  * suma vienos pusės būtų nuo -255 iki +255;
  * formulė:
  * (double) tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
- * 
+ *
  * skaitykite => https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
- * 
+ *
  * šiuo metu, poKiekPinuKiekvienojePuseje = 3; tolimiausioPinoLaipsnis = 255;
  * 255 / ((3 * (3 + 1) / 2) = 255 / (3 * 4 / 2) = 255 / 6 = 42.5;
- * 
+ *
  * pradedant nuo mažiausiai reikšmingo pino ir prie 0 pridedant gautą reikšmę;
  * sekančiam - labiau reikšmingesniam, pridedam tiek pat, iki kol pridedam visiems,
  * o galutinė suma = 255
- * 
+ *
  * ---
- * 
+ *
  * arba, galima naudoti bet kokias reikšmes, tarkim, didinant / mažinant kas 64,
  * o paskui gautą balų skaičių mappinant nuo -255 iki +255
 */
 
+/** --- */
+
 /**
  * Konfiguracija. Pakeitus pinų sudėtį reikia PATIEMS pertvarkyti!
 */
-const int kiekPinuPusiu = 3;
 const int poKiekPinuKiekvienojePuseje = 3;
 
 const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
@@ -127,7 +93,7 @@ const double didinimoSkaicius = tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienoj
 
 /**
  * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
- * 
+ *
  */
 const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
 		{Left3, -90},
@@ -142,41 +108,21 @@ const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
 
 const int kiekYraPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai) / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
 
-// tolimiausioPinoLaipsnis = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
-
 /**
- * patvirtinti, jog atitinka min/max sąlygą 
+ * patvirtinti, jog atitinka min/max sąlygą
 */
 //assert(didinimoSkaicius * poKiekPinuKiekvienojePuseje >= -tolimiausioPinoLaipsnis && didinimoSkaicius * poKiekPinuKiekvienojePuseje <= tolimiausioPinoLaipsnis);
 
-/**
- * #TODO optimizuoti `apskaiciuotiNaujaBala`
-*/
-// double didinimoReiksmes[poKiekPinuKiekvienojePuseje];
-// didinimoReiksmes[poKiekPinuKiekvienojePuseje - 1] = didinimoSkaicius;
-// for (int i = poKiekPinuKiekvienojePuseje - 2; i > 0; --i)
-// {
-// 	didinimoReiksmes[i] = didinimoReiksmes[i + 1] + didinimoSkaicius;
-// }
-double apskaiciuotiNaujaBala(double skaicius, int iteratorius); // tiesigo nuo min iki 100
-
-const int visiPinai[kiekPinuPusiu][poKiekPinuKiekvienojePuseje] = {
-		{Left1, Left2, Left3},
-		{Middle1, Middle2, Middle3},
-		{Right1, Right2, Right3}};
-
-double visiPinaiIrJuTeikiamiBalai[kiekPinuPusiu * poKiekPinuKiekvienojePuseje][2];
-
-void suskaiciuotiBalusVisiemsPinams();
-
 /** <= --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- => **/
 
-/** 
+/**
+ * TODO - atsirinkti, ko reikia, o kitką išmest
+ *
  * Toliau eina legacy dalykai, kuriuos sukūriau ne aš, bet kurie dar
  * pilnai nepertvarkyti ir kol kas reikalingi naudojimui.
  *
  * Rekomenduojama jų nenaudoti, taip pat, jeigu įmanoma - perrašyti
- * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc. 
+ * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc.
 */
 
 // protokolas (atrodo, jog nereikalingas)
