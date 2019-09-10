@@ -1,5 +1,7 @@
 /**
  * NUSKAITO REMOTE PULTELĮ IR NUSTATO PRADINĘ BEI PAGRINDINĘ STRATEGIJAS 
+ *
+ * See https://www.circuitbasics.com/arduino-ir-remote-receiver-tutorial/
  */
 
 /** CHECK kokie čia includai? Iš kur bibliotekos / kokios jos, ir kam naudojat jų utilities? */
