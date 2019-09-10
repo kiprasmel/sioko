@@ -1,16 +1,15 @@
 /**
  * SIOKO.ino
- * 
+ *
  * Pagrindinis programos failas.
  * Search'inimo keywords'ai: [TODO, CHECK, WARN, BROKEN, DEV]
- * 
+ *
  * Copyright (c) 2019 Kipras Melnikovas, Vismantas Masiokas, Neilas Antanavičius
- * 
+ *
 */
 
 #include "inicializuoti.h"
 #include "strategijos.h"
-#include "IRremote/IRremote.h"
 #include "irremote_pultelis.h"
 #include "pagalbines_funkcijos.h"
 #include "vairuotiRobota.h"
@@ -44,19 +43,20 @@ void setup()
 		pinMode(pin, INPUT);
 	}
 
-	/** 
+	/**
 	 * ką daro `analogWriteFrequency`?
-	 * 
-	 * Man neveikia per `vscode`, meta errorus - 
+	 *
+	 * Man neveikia per `vscode`, meta errorus -
 	 * tikriausiai trūksta kažkokios bibliotekos.
-	 * 
+	 *
 	 * `Upload`inant su arduino IDE veikia.
 	*/
-	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK */
-	analogWriteFrequency(PWM1, 15000.0f);
+	// analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK */
+	// analogWriteFrequency(PWM1, 15000.0f);
 
 	/** enable receiving I suppose?:D */
 	irrecv.enableIRIn();
+	// irrecv.blink13(true); /** signalizuotų, kai gaunam signalą */
 
 	/**
 	 * #TEMP #DEV - išjungiam strategijų pultelį  (įjungti production'ui!)
