@@ -6,6 +6,12 @@
 
 - [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
 - [Teensy LC](https://www.pjrc.com/teensy/td_download.html)
+- For building on linux for teensy - [teensyduino](https://www.pjrc.com/teensy/td_download.html)
+
+## Configuration
+
+`board`: `Teensy 3.5` (not `uno`! (analogWriteFrequency etc.))
+`programmer`: `AVRISP mk11`
 
 ## Questions
 
