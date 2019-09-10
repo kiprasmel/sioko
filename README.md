@@ -13,6 +13,8 @@
 `board`: `Teensy 3.5` (not `uno`! (analogWriteFrequency etc.))
 `programmer`: `AVRISP mk11`
 
+note - linux's port of the device you connect through a USB will probably be `/dev/ttyACM*` or `/dev/ttyUSB*`
+
 ## Questions
 
 - DIR1 ir DIR2. Kodėl jie du? PWM1 ir PWM2 yra kairys ir dešinys motorai, o kam DIR2 ir DIR2 skirti?
