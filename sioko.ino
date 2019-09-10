@@ -58,10 +58,8 @@ void setup()
 	irrecv.enableIRIn();
 	// irrecv.blink13(true); /** signalizuotų, kai gaunam signalą */
 
-	/**
-	 * #TEMP #DEV - išjungiam strategijų pultelį  (įjungti production'ui!)
-	 */
-	// pulteliuNustatytiStrategijas();
+	pulteliuNustatytiStrategijas();
+
 	MAIN_STRATEGY_STATE = 1;
 	START_STRATEGY_STATE = 1;
 
