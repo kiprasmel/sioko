@@ -3,10 +3,10 @@
  */
 
 /** CHECK kokie čia includai? Iš kur bibliotekos / kokios jos, ir kam naudojat jų utilities? */
-#include <boarddefs.h>
-#include <ir_Lego_PF_BitStreamEncoder.h>
-#include <IRremote.h>
-#include <IRremoteInt.h>
+// #include <boarddefs.h>
+// #include <ir_Lego_PF_BitStreamEncoder.h>
+// #include <IRremote.h>
+// #include <IRremoteInt.h>
 #include "strategijos.h"
 #include "irremote_pultelis.h"
 
