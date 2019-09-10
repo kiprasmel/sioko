@@ -11,12 +11,25 @@ int kokiaKryptis(int motoroGreitis)
 
 bool arStabdytiMotorus()
 {
-	return digitalRead(START_MODULE) == HIGH ? false : true;
+	const int startModulis = digitalRead(START_MODULE);
+	const bool arStabdyti = startModulis == HIGH ? false : true;
+
+	// Serial.print("\nSTART_MODULE ");
+	// Serial.print(START_MODULE);
+	// Serial.print("\nstartModulis ");
+	// Serial.print(startModulis);
+	// Serial.print("\narStabdyti ");
+	// Serial.print(arStabdyti);
+
+	return arStabdyti;
 	// return digitalRead(START_MODULE) == LOW ? true : false;
 }
 
 /** 
  * laukti, iki kol `START_MODULE` == `HIGH`
+ *
+ * BAD, nes ir motoras tą patį daro
+ *
  */
 void lauktiKolPaleisimRobota()
 {
@@ -36,6 +49,7 @@ void motor(int a, int b)
 		a = 0;
 		b = 0;
 	}
+
 	if (a <= -1) //&& a > -255
 	{
 		digitalWrite(DIR1, 1);
@@ -70,57 +84,6 @@ void motor(int a, int b)
 	}
 }
 
-/** NEVEIKIA */
-// void motor(int a, int b)
-// {
-// 	a = constrain(a, -255, 255);
-// 	b = constrain(b, -255, 255);
-
-// 	if (arStabdytiMotorus) {
-// 		a = 0;
-// 		b = 0;
-// 	}
-
-// 	// if (arVidurysKaNorsMato()) // #BAD
-// 	// {
-// 	// 	// motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-// 	// 	a = greitisVaziavimoPirmyn;
-// 	// 	b = greitisVaziavimoPirmyn;
-// 	// }
-
-// 	if (a <= -1) //&& a > -255
-// 	{
-// 		digitalWrite(DIR1, 1);
-// 		analogWrite(PWM1, (255 - abs(a)));
-// 	}
-// 	else if (a >= 1)
-// 	{
-// 		digitalWrite(DIR1, 0);
-// 		analogWrite(PWM1, a);
-// 	}
-// 	else if (a == 0)
-// 	{
-// 		digitalWrite(DIR1, 0);
-// 		analogWrite(PWM1, 0);
-// 	}
-
-// 	if (b >= 1) //&& b > -255
-// 	{
-// 		// b = map(abs(b), 0,255,255,0);
-// 		digitalWrite(DIR2, 0);
-// 		analogWrite(PWM2, b); // 255 -
-// 	}
-// 	else if (b <= -1) //&& b < 255
-// 	{
-// 		digitalWrite(DIR2, 1);
-// 		analogWrite(PWM2, (255 - abs(b)));
-// 	}
-// 	else if (b == 0)
-// 	{
-// 		digitalWrite(DIR2, 0);
-// 		analogWrite(PWM2, 0);
-// 	}
-// }
 
 // void motor(int kairioMotoroGreitis, int desinioMotoroGreitis)
 // {
@@ -199,7 +162,6 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 			kiekMsLaukti = -1;
 			return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
 		}
-		// pause programm (not good). Much like using a delay.
 	}
 	motor(0, 0);
 }
