@@ -2,6 +2,12 @@
 
 🤖⚡ Kovinio roboto programinė įranga, remastered
 
+## Installation
+
+1. Make sure you have all the required [dependencies](./Dependencies)
+
+2. Run `./install.sh`
+
 ## Dependencies
 
 - [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
