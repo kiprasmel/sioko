@@ -1,5 +1,5 @@
 /**
- * NUSKAITO REMOTE PULTELĮ IR NUSTATO PRADINĘ BEI PAGRINDINĘ STRATEGIJAS 
+ * NUSKAITO REMOTE PULTELĮ IR NUSTATO PRADINĘ BEI PAGRINDINĘ STRATEGIJAS
  *
  * See https://www.circuitbasics.com/arduino-ir-remote-receiver-tutorial/
  */
@@ -27,7 +27,6 @@ void pulteliuNustatytiStrategijas()
 	{
 		if (irrecv.decode(&results) && results.decode_type == NEC)
 		{
-			irrecv.resume();
 			// if (irrecv.decode(&results) && results.decode_type == NEC)
 			// if (results.decode_type == NEC)
 			// {
@@ -37,9 +36,9 @@ void pulteliuNustatytiStrategijas()
 			//   break;
 			// }
 
-			/** 
+			/**
 			 * visi `case` blokai daro lygiai tą patį, taigi, net nereikia switch'o
-			 * 
+			 *
 			 * Ir kam čia delayus yra?
 			 * Jo naudoti nerekomenduoja ilgiau nei 10-tims mili sekundžių..
 			* https://www.arduino.cc/reference/en/language/functions/time/delay/
@@ -72,6 +71,8 @@ void pulteliuNustatytiStrategijas()
 			}
 
 			digitalWrite(LEDas, LOW);
+
+			irrecv.resume(); /** pretty sure this should go to the end */
 
 			// // TODO - `MAIN_STRATEGY_STATE = (kažkaip hexą iš pavadinimo į int'ą) resuts.value`
 			// // WARN NOT DONE
