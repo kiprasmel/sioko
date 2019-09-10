@@ -15,6 +15,8 @@
 
 void inicializuoti() {
 	sukurtiBendraPinuMasyva();
+
+	suteiktiPinModusViskam();
 }
 
 void sukurtiBendraPinuMasyva() {
@@ -45,4 +47,29 @@ void sukurtiBendraPinuMasyva() {
 
 		bendrasIndex++;
 	}
+}
+
+
+void suteiktiPinModusViskam() {
+	const int outputPins[] = {
+			LEDas,
+			PWM1,
+			PWM2,
+			DIR1,
+			DIR2,
+	};
+
+	const int outputPinsDydis = sizeof(outputPins) / sizeof(outputPins[0]);
+
+	suteiktiPinModeMasyvui(outputPins, outputPinsDydis, OUTPUT);
+
+	const int inputPins[] = {START_MODULE, Rightback, Leftback};
+
+	const int inputPinsDydis = sizeof(inputPins) / sizeof(inputPins[0]);
+
+	suteiktiPinModeMasyvui(inputPins, inputPinsDydis, INPUT);
+
+	suteiktiPinModeMasyvui(ziurintysIKairePinai, ziurintysIKairePinaiDydis, INPUT);
+	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT);
+	suteiktiPinModeMasyvui(ziurintysIDesinePinai,  ziurintysIDesinePinaiDydis, INPUT);
 }
