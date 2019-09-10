@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * inicializuoti.h
  *
@@ -12,7 +14,28 @@
  *
 */
 
-#pragma once
+/**
+ * DĖMESIO
+ *
+ * Šitas VEIKIA masyvams, kurie yra `stack`e,
+ * bet ne `heap`e!
+ *
+ * Šitas NEVEIKIA, jeigu masyvas buvo paduotas kaip funkcijos parametras,
+ * nes jis tampa `pointer`iu ir nebeišeina patikrinti jo dydžio!
+ *
+ * Skaityti daugiau:
+ *
+ * https://stackoverflow.com/a/10349610
+ * https://stackoverflow.com/a/37539
+ *
+ */
+#define gautiMasyvoDydi(x) (sizeof(x) / sizeof((x)[0]))
+
+void inicializuoti();
+
+void sukurtiBendraPinuMasyva();
+void suteiktiPinModus();
+void paruostiGeneralConfiga();
 
 const double greitisVaziavimoPirmyn = 255;
 const double greitisSukimosi = 255;										 // #EDITME
@@ -21,32 +44,115 @@ const double perKiekMsApsisukam90Sukdamiesi255 = 40;
 
 /** --- */
 
+/**
+ * new layout of pins etc
+ *
+ * Esmė sudelioti pagal tai, kur pinai **ŽIŪRI**
+ *
+ * Note - strategijos bus broken
+ *
+*/
+
 const byte LEDas = 13;
 
-const byte Right1 = 21; // Dešinysis aukščiausias (nesvarbiausias)
-const byte Right2 = 23; // Dešinysis vidurinis
-const byte Right3 = 22; // Pats pats dešinysis (90 laipsnių) svarbiausias
 
-const byte Middle1 = 20; // kairiausias
-const byte Middle2 = 19; // vidurinysis
-const byte Middle3 = 33; // desiniausias
 
-const byte Left1 = 18; // Kairysis aukščiausias (nesvarbiausias)
-const byte Left2 = 16; // Kairysis vidurinis
-const byte Left3 = 17; // Pats pats kairysis (90 laipsnių) svarbiausias
 
-// const byte Right1 = 23;
-// const byte Right2 = 22;
-// const byte Right3 = 21;
-// const byte Middle1 = 20;
-// const byte Middle2 = 19;
-// const byte Middle3 = 33;
-// const byte Left3 = 18;
-// const byte Left2 = 17;
-// const byte Left1 = 16;
+/** palieku čia - reikia strategijoms -- TODO perdaryt, nes nereikšmingi */
+const int Middle1 = 16; /** lazeris ilgas, padėtas pačiame viduryje */
+const int Middle2 = 21; /** ne lazeris, žiūri į vidurinį (irgi pačiame viduryje) */
+const int Middle3 = 15; /** lazeris trumpas, padėtas pačiame viduryje */
 
 const byte Rightback = 15;
 const byte Leftback = 34;
+
+/**
+ * Toliau aprašomi sensoriai:
+ *
+ * { pinas, kiekLaipsniuPasisukes }
+ *
+ */
+
+/** ŽIŪRI į dešinę */
+const int ziurintysIDesineSensoriai[][2] = {
+		{17, 15}, /** lazeris trumpas */
+		{18, 15}, /** lazeris ilgas */
+		{22, 45},
+		{19, 90}
+};
+
+const int ziurintysIDesineSensoriaiDydis = gautiMasyvoDydi(ziurintysIDesineSensoriai);
+
+const int ziurintysIDesinePinai[ziurintysIDesineSensoriaiDydis] = {
+	ziurintysIDesineSensoriai[0][0],
+	ziurintysIDesineSensoriai[1][0],
+	ziurintysIDesineSensoriai[2][0],
+	ziurintysIDesineSensoriai[3][0]
+};
+
+const int ziurintysIDesinePinaiDydis = gautiMasyvoDydi(ziurintysIDesinePinai);
+
+/** ŽIŪRI į vidurį */
+const int ziurintysIViduriSensoriai[][2] = {
+		{Middle1, 0}, /** lazeris ilgas */
+		{Middle2, 0},
+		{Middle3, 0}  /** lazeris trumpas */
+};
+
+const int ziurintysIViduriSensoriaiDydis = gautiMasyvoDydi(ziurintysIViduriSensoriai);
+
+const int ziurintysIViduriPinai[ziurintysIViduriSensoriaiDydis] = {
+	ziurintysIViduriSensoriai[0][0],
+	ziurintysIViduriSensoriai[1][0],
+	ziurintysIViduriSensoriai[2][0]
+};
+
+const int ziurintysIViduriPinaiDydis = gautiMasyvoDydi(ziurintysIViduriPinai);
+
+/** ŽIŪRI į kairę */
+const int ziurintysIKaireSensoriai[][2] = {
+		{23, -90},
+		{20, -45},
+		{14, -15}, /** lazeris ilgas */
+		{39, -15}  /** lazeris trumpas */
+};
+
+const int ziurintysIKaireSensoriaiDydis = gautiMasyvoDydi(ziurintysIKaireSensoriai);
+
+const int ziurintysIKairePinai[ziurintysIKaireSensoriaiDydis] = {
+	ziurintysIKaireSensoriai[0][0],
+	ziurintysIKaireSensoriai[1][0],
+	ziurintysIKaireSensoriai[2][0],
+	ziurintysIKaireSensoriai[3][0]
+};
+
+const int ziurintysIKairePinaiDydis = gautiMasyvoDydi(ziurintysIKairePinai);
+
+/**
+ * Nesirūpinam linijom.
+ * čia tik tie sensoriai, kurie aktualūs skaičiuojant pasisukimus / puolimus.
+ */
+const int kiekYraSensoriuPinu = ziurintysIDesinePinaiDydis + ziurintysIKairePinaiDydis + ziurintysIViduriPinaiDydis;
+
+/**
+ * dinamiškai sukuriamas `inicializuoti()` funkcijoje
+ * iš kitų turimų duomenų
+ */
+int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[kiekYraSensoriuPinu][2];
+
+/**
+ * didžiausio laipsnio modulio (paversto į teigiamo sk.) greitis
+ * iš `pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai`
+*/
+const double tolimiausioPinoLaipsnis = 90;
+
+/** ŽIŪRI į linijas (bet jau nebesvarbūs skaičiavimams) */
+const int linijuSensoriai[] = {
+	35, /** LeftLine1 */
+	36, /** LeftLine2 */
+	37, /** RightLine1 */
+	38 /** RightLine2 */
+};
 
 /** --- */
 
@@ -82,36 +188,28 @@ const byte Leftback = 34;
 /**
  * Konfiguracija. Pakeitus pinų sudėtį reikia PATIEMS pertvarkyti!
 */
-const int poKiekPinuKiekvienojePuseje = 3;
+// // const int poKiekPinuKiekvienojePuseje = 3;
 
-const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
-		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
-		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
-
-const double tolimiausioPinoLaipsnis = 90;
-const double didinimoSkaicius = tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2); // TODO reikia tiesiog nuo min iki maximalaus balo.
+// // const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
+// // 		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
+// // 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
 /**
  * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
  *
  */
-const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
-		{Left3, -90},
-		{Left2, -50},
-		{Left1, -15},
-		{Middle1, 0},
-		{Middle2, 0},
-		{Middle3, 0},
-		{Right1, 15},
-		{Right2, 50},
-		{Right3, 90}};
+// const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
+// 		{Left3, -90},
+// 		{Left2, -50},
+// 		{Left1, -15},
+// 		{Middle1, 0},
+// 		{Middle2, 0},
+// 		{Middle3, 0},
+// 		{Right1, 15},
+// 		{Right2, 50},
+// 		{Right3, 90}};
 
-const int kiekYraPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai) / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
-
-/**
- * patvirtinti, jog atitinka min/max sąlygą
-*/
-//assert(didinimoSkaicius * poKiekPinuKiekvienojePuseje >= -tolimiausioPinoLaipsnis && didinimoSkaicius * poKiekPinuKiekvienojePuseje <= tolimiausioPinoLaipsnis);
+// const int kiekYraSensoriuPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai); / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
 
 /** <= --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- => **/
 
@@ -154,11 +252,11 @@ const byte DIR1 = 6;	// ?
 const byte DIR2 = 10; // ?
 
 //Linijos sensoriai
-const byte LeftLine1 = 35; //rau
-const byte LeftLine2 = 36; //g
+// const byte LeftLine1 = 35; //rau
+// const byte LeftLine2 = 36; //g
 
-const byte RightLine1 = 37; //ru
-const byte RightLine2 = 38; //z
+// const byte RightLine1 = 37; //ru
+// const byte RightLine2 = 38; //z
 
 int k = 0;
 int b = 0;
