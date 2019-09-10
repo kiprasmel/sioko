@@ -1,9 +1,9 @@
 /**
  * Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo, o
  * tada vairuojam robotą :D
- * 
+ *
  * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
- * (gali būt, kad neišvengsim while / delay) 
+ * (gali būt, kad neišvengsim while / delay)
 */
 
 #include "vairuotiRobota.h"
@@ -105,18 +105,16 @@ void vairuotiRobotaSuApskaiciavimais()
 	// // 	return;
 	// // }
 
-	double oponentoPozicija = 0;
-	double kiekMsReikesSuktis = 0;
+	double oponentoPozicija = kurYraOponentas(); // nuo -1 iki +1
 
-	oponentoPozicija = kurYraOponentas(); // nuo -1 iki +1
-
-	/** 
+	/**
+	 * nuo `0` iki `tolimiausioPinoLaipsnis` laipsnių
+	 *
 	 * skaičiuojam numamant, jog didžiausias kampas, kokį mato sensorius,
-	 * palyginus su roboto priekiu, yra 90 laipsnių (360 / 4)
-	 * #TODO #CLEANUP
-	* #sukimosiSkaiciavimas
+	 * #sukimosiSkaiciavimas
 	*/
-	kiekMsReikesSuktis = fabs(perKiekMsApsisukam90Sukdamiesi255 * oponentoPozicija); // nuo 0 iki 90 laipsnių
+	double kiekMsReikesSuktis = fabs(perKiekMsApsisukam90Sukdamiesi255 * oponentoPozicija);
+
 	// Serial.print(perKiekMsApsisukam360Sukdamiesi255);
 
 	// Serial.print("\nKiek ms reikės suktis ");
@@ -124,22 +122,21 @@ void vairuotiRobotaSuApskaiciavimais()
 	// Serial.print(" oponento pozicija ");
 	// Serial.print(oponentoPozicija);
 
-	Serial.print("\r\n\r\nOponento pozicija");
+	Serial.print("\n\nOponento pozicija");
 	Serial.print(oponentoPozicija);
-	Serial.print("\r\n kiek reikės suktis == ");
+	Serial.print("\n kiek reikės suktis == ");
 	Serial.print(kiekMsReikesSuktis);
 
 	// // #TESTING
-	// if (kiekMsReikesSuktis != 0)
-	// {
-	// 	digitalWrite(LEDas, HIGH);
-	// }
-	// else
-	// {
-	// 	digitalWrite(LEDas, LOW);
-	// }
+	if (oponentoPozicija != 0)
+	{
+		digitalWrite(LEDas, HIGH);
+	}
+	else
+	{
+		digitalWrite(LEDas, LOW);
+	}
 
-	// if (abs(oponentoPozicija) < didinimoSkaicius)
 	if (oponentoPozicija == 0) // priekis
 	{
 		//nenaudos while ciklo, tad `loop`as vyks nesustodamas, kol oponentoPozicija pasikeis iš 0
