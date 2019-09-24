@@ -74,6 +74,8 @@ void suteiktiPinModusViskam() {
 	suteiktiPinModeMasyvui(ziurintysIKairePinai, ziurintysIKairePinaiDydis, INPUT);
 	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT);
 	suteiktiPinModeMasyvui(ziurintysIDesinePinai,  ziurintysIDesinePinaiDydis, INPUT);
+
+	suteiktiPinModeMasyvui(linijuSensoriai,  gautiMasyvoDydi(linijuSensoriai), INPUT);
 }
 
 void suteiktiPinModeMasyvui(const int pinuMasyvas[], int masyvoDydis, int pinModas) {
