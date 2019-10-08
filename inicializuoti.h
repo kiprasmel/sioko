@@ -37,6 +37,12 @@ void sukurtiBendraPinuMasyva();
 void suteiktiPinModus();
 void paruostiGeneralConfiga();
 
+/**
+ * didžiausio laipsnio modulio (paversto į teigiamo sk.) greitis
+ * iš `pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai`
+*/
+const double tolimiausioPinoLaipsnis = 90;
+
 const double greitisVaziavimoPirmyn = 255;
 const double greitisSukimosi = 255;										 // #EDITME
 const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
@@ -139,12 +145,6 @@ const int kiekYraSensoriuPinu = ziurintysIDesinePinaiDydis + ziurintysIKairePina
  * iš kitų turimų duomenų
  */
 int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[kiekYraSensoriuPinu][2];
-
-/**
- * didžiausio laipsnio modulio (paversto į teigiamo sk.) greitis
- * iš `pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai`
-*/
-const double tolimiausioPinoLaipsnis = 90;
 
 /** ŽIŪRI į linijas (bet jau nebesvarbūs skaičiavimams) */
 const int linijuSensoriai[] = {
