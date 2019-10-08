@@ -46,7 +46,7 @@ const double tolimiausioPinoLaipsnis = 90;
 const double greitisVaziavimoPirmyn = 255;
 const double greitisSukimosi = 255;										 // #EDITME
 const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
-const double perKiekMsApsisukam90Sukdamiesi255 = 40;
+const double perKiekMsApsisukam90Sukdamiesi255 = 56; // 56; 64;
 
 /** --- */
 
