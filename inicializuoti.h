@@ -101,8 +101,10 @@ const int ziurintysIDesinePinaiDydis = gautiMasyvoDydi(ziurintysIDesinePinai);
 /** ŽIŪRI į vidurį */
 const int ziurintysIViduriSensoriai[][2] = {
 		{Middle1, 0}, /** lazeris ilgas */
-		{Middle2, 0},
-		{Middle3, 0}  /** lazeris trumpas */
+		// {Middle2, 0}, /** buvo vienas priekinis, dabar yra 2 iš šonų priekyje */
+		{Middle3, 0},  /** lazeris trumpas */
+		{34, 0}, /** iš šono į priekį */
+		{21, 0} /** iš šono į priekį */
 };
 
 const int ziurintysIViduriSensoriaiDydis = gautiMasyvoDydi(ziurintysIViduriSensoriai);
@@ -110,7 +112,8 @@ const int ziurintysIViduriSensoriaiDydis = gautiMasyvoDydi(ziurintysIViduriSenso
 const int ziurintysIViduriPinai[ziurintysIViduriSensoriaiDydis] = {
 	ziurintysIViduriSensoriai[0][0],
 	ziurintysIViduriSensoriai[1][0],
-	ziurintysIViduriSensoriai[2][0]
+	ziurintysIViduriSensoriai[2][0],
+	ziurintysIViduriSensoriai[3][0]
 };
 
 const int ziurintysIViduriPinaiDydis = gautiMasyvoDydi(ziurintysIViduriPinai);
