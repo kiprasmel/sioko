@@ -1,6 +1,7 @@
 #include "ivairusTestai.h"
 #include "irremote_pultelis.h" // tik testavimo strategijoms
 #include "inicializuoti.h"		 // tik testavimo strategijoms
+#include "motoras.h"
 
 void hardCodedVarikliuTestai()
 {
@@ -140,3 +141,23 @@ void interaktyvusSukimosiTestaiNesibaigiantys()
 // 		}
 // 	}
 // }
+
+void testuotiKiekLaikoSukames(unsigned long laikasMs) {
+	motor(255, -255);
+	delay(laikasMs);
+	/**
+	 * 50 per mažai stipriai
+	 * 60 šiek tiek per daug
+	 *
+	 * 56 good 90 deg 255 speed
+	 *
+	 * ---
+	 *
+	 * 32 bandėm kažkam
+	 *
+	 */
+
+	motor(0, 0);
+
+	delay(3000);
+}
