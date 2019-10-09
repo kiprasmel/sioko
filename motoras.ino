@@ -149,17 +149,68 @@ void motoraiKolPriekisPamato(int kairioMotoroGreitis, int desinioMotoroGreitis) 
 	return;
 }
 
+/**
+ * naudoja while ciklą, kad motorai vykdytų dalykus X laiko
+ * (senoji versija iš `v1.1.0` (9962c68))
+ */
 void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
 {
-	unsigned long pradinisLaikas = millis();
-
-	while (millis() - pradinisLaikas <= kiekMsLaukti && !arVidurysKaNorsMato())
+	if (arVidurysKaNorsMato())
 	{
-		motor(kairioMotoroGreitis, desinioMotoroGreitis);
+		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+		kiekMsLaukti = -1;
+		return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
 	}
 
-	return;
+	time = millis();
+	// unsigned long laikasDepth2;
+
+	motor(kairioMotoroGreitis, desinioMotoroGreitis);
+
+	while (millis() - time < kiekMsLaukti)
+	{
+		/**
+		 * tikrinam jutiklių duomenis, jog jeigu priekis ką nors mato - iškart varytume į priekį.
+		 */
+		atnaujintiJutikliuDuomenis(); // #NEW! Gali būt, kad sutvarkys.
+		// Line();							// gali būt bėdų dėl prastos funkcijos #TODO ATKOMENTUOT
+
+		if (arVidurysKaNorsMato())
+		{
+			// motor(-kairioMotoroGreitis, -desinioMotoroGreitis);
+
+			// motor(0, 0);
+			// delay(2500);
+
+			// laikasDepth2 = millis();
+			// while (millis() - laikasDepth2 < 2500)
+			// {
+			// 	atnaujintiJutikliuDuomenis();
+			// 	// delay(2500);
+			// 	// Line();
+			// 	arVidurysKaNorsMato(); // tiesiog atnaujins ledą
+			// }
+
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+			kiekMsLaukti = -1;
+			return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
+		}
+		// pause programm (not good). Much like using a delay.
+	}
+	motor(0, 0);
 }
+
+// void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
+// {
+// 	unsigned long pradinisLaikas = millis();
+
+// 	while (millis() - pradinisLaikas <= kiekMsLaukti && !arVidurysKaNorsMato())
+// 	{
+// 		motor(kairioMotoroGreitis, desinioMotoroGreitis);
+// 	}
+
+// 	return;
+// }
 
 void motoraiSuLaikuNereguojantysIPrieki(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
 {
