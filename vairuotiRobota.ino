@@ -19,11 +19,11 @@
 
 void pirmynSuDelay() {
 	motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-	digitalWrite(LEDas, HIGH);
+	// digitalWrite(LEDas, HIGH);
 
 	delay(50);
 
-	digitalWrite(LEDas, LOW);
+	// digitalWrite(LEDas, LOW);
 	return;
 }
 

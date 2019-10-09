@@ -56,6 +56,13 @@ void motor(int a, int b)
 		b = 0;
 	}
 
+	if (a == b && a == greitisVaziavimoPirmyn) {
+		/** važiuojam pirmyn */
+		ledasON();
+	} else {
+		ledasOFF();
+	}
+
 	if (a <= -1) //&& a > -255
 	{
 		digitalWrite(DIR1, 1);
