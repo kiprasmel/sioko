@@ -61,15 +61,11 @@ void suteiktiPinModusViskam() {
 			DIR2,
 	};
 
-	const int outputPinsDydis = sizeof(outputPins) / sizeof(outputPins[0]);
+	suteiktiPinModeMasyvui(outputPins, gautiMasyvoDydi(outputPins), OUTPUT);
 
-	suteiktiPinModeMasyvui(outputPins, outputPinsDydis, OUTPUT);
+	const int randomInputPins[] = {START_MODULE, Rightback, Leftback};
 
-	const int inputPins[] = {START_MODULE, Rightback, Leftback};
-
-	const int inputPinsDydis = sizeof(inputPins) / sizeof(inputPins[0]);
-
-	suteiktiPinModeMasyvui(inputPins, inputPinsDydis, INPUT);
+	suteiktiPinModeMasyvui(randomInputPins, gautiMasyvoDydi(randomInputPins), INPUT);
 
 	suteiktiPinModeMasyvui(ziurintysIKairePinai, ziurintysIKairePinaiDydis, INPUT);
 	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT);
