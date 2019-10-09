@@ -48,10 +48,17 @@ double oponentoPozicijosBalasMediana()
 	 * o tada apskaičiuojam medianą.
 	*/
 
+	// Serial.print("\n\nPinai: ");
+
 	for (int i = 0; i < kiekYraSensoriuPinu; ++i)
 	{
+		// Serial.print("\n");
+		// Serial.print(i);
+
 		if (digitalRead(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][0]) == 0) // jeigu matome
 		{
+			// Serial.print(" +");
+
 			/**
  			  * [kiekPinuMato] - kiek kol kas šiame cikle mato pin'ų.
 			  *
@@ -63,6 +70,8 @@ double oponentoPozicijosBalasMediana()
 			 */
 			matanciuPinuLaipsniai[kiekPinuMato] = pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[i][1];
 			++kiekPinuMato;
+		} else {
+			// Serial.print(" -");
 		}
 	}
 
@@ -83,7 +92,7 @@ double oponentoPozicijosBalasMediana()
 	 */
 	else if (kiekPinuMato % 2 == 0)
 	{
-		const int kairesnioIndeksas =  (kiekPinuMato / 2) - 1;
+		const int kairesnioIndeksas = (kiekPinuMato / 2) - 1;
 		const int desinesnioIndeksas = (kiekPinuMato / 2);
 
 		const int kairesnisLaipsnis =  matanciuPinuLaipsniai[kairesnioIndeksas];
