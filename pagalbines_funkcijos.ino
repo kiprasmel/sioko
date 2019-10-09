@@ -6,28 +6,53 @@
  * Tikrinant su `digitalRead`, mato tada, kai `== 0`, o ne `1`!
  */
 
+int kiekMatoKazkuriPuse(const int pinaiSkenavimui[], const int masyvoDydis)
+{
+	int suma = 0;
+
+	for (int i = 0; i < masyvoDydis; i++)
+	{
+		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
+		{
+			++suma;
+		}
+	}
+
+	return suma;
+}
+
 bool arVidurysKaNorsMato()
 {
 	const int kiekMato = kiekMatoKazkuriPuse(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis);
 
 	if (
 		kiekMato > 0
-			// digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0
-			//|| digitalRead(Left1) == 0 || digitalRead(Right1) == 0
-			// makes checking loose (also includes the near left & right sensors)
 	)
 	{
 		// Serial.print("\nVidurys");
-
 		// digitalWrite(LEDas, HIGH);
+
 		return true;
 	}
 	else
 	{
 		// digitalWrite(LEDas, LOW);
+
 		return false;
 	}
 }
+
+// bool arVidurysKaNorsMato() {
+// 	if (digitalRead(ziurintysIViduriPinai[0]) == 0
+// 		|| digitalRead(ziurintysIViduriPinai[1]) == 0
+// 		|| digitalRead(ziurintysIViduriPinai[2]) == 0
+// 		|| digitalRead(ziurintysIViduriPinai[3]) == 0
+// 	) {
+// 		return true;
+// 	}
+
+// 	return false;
+// }
 
 bool arKaireKaNorsMato()
 {
@@ -35,26 +60,14 @@ bool arKaireKaNorsMato()
 
 	if (kiekMato > 0) {
 		// Serial.print("\nKaire");
-
 		// digitalWrite(LEDas, HIGH);
+
 		return true;
 	} else {
 		// digitalWrite(LEDas, LOW);
+
 		return false;
 	}
-
-// 	if (digitalRead(Left1) == 0 || digitalRead(Left2) == 0 || digitalRead(Left3) == 0)
-// 	{
-// 		Serial.print("\nKaire");
-
-// 		digitalWrite(LEDas, HIGH);
-// 		return true;
-// 	}
-// 	else
-// 	{
-// 		digitalWrite(LEDas, LOW);
-// 		return false;
-// 	}
 }
 
 bool arDesineKaNorsMato()
@@ -84,21 +97,14 @@ bool arDesineKaNorsMato()
 	}
 }
 
-int kiekMatoKazkuriPuse(const int pinaiSkenavimui[], const int masyvoDydis)
+bool arBetKuriPuseKaNorsMato()
 {
-	int suma = 0;
+	const int kiekMato = kiekMatoKazkuriPuse(visiPinai, kiekYraSensoriuPinu);
 
-	for (int i = 0; i < masyvoDydis; ++i)
-	{
-		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
-		{
-			++suma;
-		}
-	}
-	return suma;
+	return kiekMato > 0 ? true : false;
 }
 
-void atnaujintiBitusXPusesPagalPinus(byte &kazkuriPuse, const int pinaiSkenavimui[], int masyvoDydis)
+void atnaujintiBitusXPusesPagalPinus(byte kazkuriPuse, const int pinaiSkenavimui[], int masyvoDydis)
 {
 	/** pirma išvalyti; tas 10 keistas */
 	for (int i = 0; i < 10; ++i)
@@ -106,10 +112,20 @@ void atnaujintiBitusXPusesPagalPinus(byte &kazkuriPuse, const int pinaiSkenavimu
 		bitClear(kazkuriPuse, i);
 	}
 
+	int kiekMato = 0;
+
 	for (int i = 0; i < masyvoDydis; ++i)
 	{
-		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
+		/**
+		 * TODO
+		 *
+		 * LINIJA MATO, kai yra `1`,
+		 * o VISI KITI, kai `0`!!!! ATSARGHEI XD
+		 *
+		 */
+		if (digitalRead(pinaiSkenavimui[i]) == 1) // jeigu matome
 		{
+			kiekMato++;
 			bitSet(kazkuriPuse, i); // 1
 		}
 		// // else // nematome
@@ -118,13 +134,61 @@ void atnaujintiBitusXPusesPagalPinus(byte &kazkuriPuse, const int pinaiSkenavimu
 		// // }
 	}
 	// // return kazkuriPuse;
+
+	Serial.print("\nKiek mato linija: ");
+	Serial.print(kiekMato);
+
 }
 
-void atnaujintiJutikliuDuomenis() {
-	atnaujintiBitusXPusesPagalPinus(myLINE, linijuSensoriai, gautiMasyvoDydi(linijuSensoriai));
-	// // atnaujintiBitusXPusesPagalPinus(MYFRONT, ziurintysIKaireSensoriai);
-	// // atnaujintiBitusXPusesPagalPinus(, ziurintysIKaireSensoriai);
+// void atnaujintiJutikliuDuomenis() {
+// 	atnaujintiBitusXPusesPagalPinus(myLINE, linijuSensoriai, gautiMasyvoDydi(linijuSensoriai));
+// 	// // atnaujintiBitusXPusesPagalPinus(MYFRONT, ziurintysIKaireSensoriai);
+// 	// // atnaujintiBitusXPusesPagalPinus(, ziurintysIKaireSensoriai);
+// }
+
+void printLinijuMatyma() {
+	Serial.print("\n\nLinijos:");
+
+	for (int i = 0; i < gautiMasyvoDydi(linijuSensoriai); i++) {
+		Serial.print("\nLinija ");
+		Serial.print(i);
+
+		if (digitalRead(linijuSensoriai[i]) == 1) {
+			Serial.print(" +");
+		} else {
+			Serial.print(" -");
+		}
+	}
 }
+
+void atnaujintiJutikliuDuomenis()
+{
+	// printLinijuMatyma();
+
+	for (int i = 0; i <= 9; i++)
+	{ //9
+		bitClear(myLINE, i);
+	}
+
+	//Linija
+	if (digitalRead(linijuSensoriai[0]) == 1)
+		bitSet(myLINE, 3);
+	if (digitalRead(linijuSensoriai[1]) == 1)
+		bitSet(myLINE, 2);
+	if (digitalRead(linijuSensoriai[2]) == 1)
+		bitSet(myLINE, 0);
+	if (digitalRead(linijuSensoriai[3]) == 1)
+		bitSet(myLINE, 1);
+}
+
+void ledasON() {
+	digitalWrite(LEDas, HIGH);
+}
+
+void ledasOFF() {
+	digitalWrite(LEDas, LOW);
+}
+
 
 /**
  * TODO wtf - ar čia iš viso kur nors naudojama?
