@@ -31,6 +31,8 @@ void sukurtiBendraPinuMasyva() {
 		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][0] = ziurintysIDesineSensoriai[i][0];
 		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][1] = ziurintysIDesineSensoriai[i][1];
 
+		visiPinai[bendrasIndex] = ziurintysIDesineSensoriai[i][0];
+
 		bendrasIndex++;
 	}
 
@@ -39,6 +41,8 @@ void sukurtiBendraPinuMasyva() {
 		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][0] = ziurintysIViduriSensoriai[i][0];
 		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][1] = ziurintysIViduriSensoriai[i][1];
 
+		visiPinai[bendrasIndex] = ziurintysIViduriSensoriai[i][0];
+
 		bendrasIndex++;
 	}
 
@@ -46,6 +50,8 @@ void sukurtiBendraPinuMasyva() {
 	for (int i = 0; i < ziurintysIKairePinaiDydis; i++) {
 		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][0] = ziurintysIKaireSensoriai[i][0];
 		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][1] = ziurintysIKaireSensoriai[i][1];
+
+		visiPinai[bendrasIndex] = ziurintysIKaireSensoriai[i][0];
 
 		bendrasIndex++;
 	}

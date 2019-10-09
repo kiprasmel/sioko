@@ -148,6 +148,7 @@ const int kiekYraSensoriuPinu = ziurintysIDesinePinaiDydis + ziurintysIKairePina
  * iš kitų turimų duomenų
  */
 int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[kiekYraSensoriuPinu][2];
+int visiPinai[kiekYraSensoriuPinu];
 
 /** ŽIŪRI į linijas (bet jau nebesvarbūs skaičiavimams) */
 const int linijuSensoriai[] = {
