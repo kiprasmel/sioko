@@ -2,6 +2,7 @@
 #include "irremote_pultelis.h" // tik testavimo strategijoms
 #include "inicializuoti.h"		 // tik testavimo strategijoms
 #include "motoras.h"
+#include "pagalbines_funkcijos.h"
 
 void hardCodedVarikliuTestai()
 {
@@ -160,4 +161,8 @@ void testuotiKiekLaikoSukames(unsigned long laikasMs) {
 	motor(0, 0);
 
 	delay(3000);
+}
+
+void ijungtiLedaJeiBetKurisPinasMato() {
+	arBetKuriPuseKaNorsMato() ? ledasON() : ledasOFF();
 }
