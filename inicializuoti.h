@@ -48,6 +48,12 @@ const double greitisSukimosi = 255;										 // #EDITME
 const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
 const double perKiekMsApsisukam90Sukdamiesi255 = 56; // 56; 64;
 
+/**
+ * TODO - implementuot šituos
+ */
+// const double sukimosiLaikasMs1Laipsnio = perKiekMsApsisukam90Sukdamiesi255 / 255 * greitisSukimosi / 90;
+// const double sukimosiLaikasMsTolimiausiuLaipsniu = sukimosiLaikasMs1Laipsnio * tolimiausioPinoLaipsnis;
+
 /** --- */
 
 /**
