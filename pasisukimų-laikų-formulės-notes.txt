@@ -1,0 +1,28 @@
+
+90 deg	|	255 speed	| 56 ms
+45 deg	|	255 speed	| 32 ms
+
+90 deg - 56 ms
+45 deg - 32 ms
+
+90 * k * 32 = 45 * k * 56
+
+kai deg = 90; k = 1;
+
+
+90 deg 56 ms
+45 deg x  ms
+
+x = 45 * 56 / 90 = 28;
+
+28 gautas, o 32 - tinkantis
+
+32 / 28 = 1.14285714285714285714...
+8 / 7
+
+PI - 2
+
+---
+
+deg = 90; k = 1
+deg = 45; k = PI - 2
