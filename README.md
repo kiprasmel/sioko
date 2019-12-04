@@ -2,10 +2,24 @@
 
 🤖⚡ Kovinio roboto programinė įranga, remastered
 
+## Installation
+
+1. Make sure you have all the required [dependencies](./Dependencies)
+
+2. Run `./install.sh`
+
 ## Dependencies
 
 - [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
 - [Teensy LC](https://www.pjrc.com/teensy/td_download.html)
+- For building on linux for teensy - [teensyduino](https://www.pjrc.com/teensy/td_download.html)
+
+## Configuration
+
+`board`: `Teensy 3.5` (not `uno`! (analogWriteFrequency etc.))
+`programmer`: `AVRISP mk11`
+
+note - linux's port of the device you connect through a USB will probably be `/dev/ttyACM*` or `/dev/ttyUSB*`
 
 ## Questions
 

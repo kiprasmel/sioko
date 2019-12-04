@@ -1,9 +1,9 @@
 /**
  * Susivedam jutiklių duomenis ir apsisaugom nuo linijos kirtimo, o
  * tada vairuojam robotą :D
- * 
+ *
  * #TODO Taip pat reikia pertvarkyti `Line` funkciją - linijos tikrinimą ir atsitraukimą.
- * (gali būt, kad neišvengsim while / delay) 
+ * (gali būt, kad neišvengsim while / delay)
 */
 
 #include "vairuotiRobota.h"
@@ -17,26 +17,26 @@
 // for testing:
 // #include "ivairusTestai.h"
 
+void pirmynSuDelay() {
+	motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+	// digitalWrite(LEDas, HIGH);
+
+	delay(50);
+
+	// digitalWrite(LEDas, LOW);
+	return;
+}
+
 void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 {
 	atnaujintiJutikliuDuomenis(); // #TODO #CHECK galima mėginti atkomentuot senąjį pin'ų surašymą
 
-	// pinuSensoriuTestas(); // serial print'ai
-
 	originaliLinijaBeDefaultCase();
-
-	// Serial.print(myLINE + "\r\n");
-	// Serial.println(myLINE + " linija");
-
-	// // TESTING ONLY
-	// if (arVidurysKaNorsMato() || arKaireKaNorsMato() || arDesineKaNorsMato())  {
-	// 	motor(0, 0);
-	// 	return;
-	// }
 
 	if (arVidurysKaNorsMato())
 	{
-		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
+		// motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
+		pirmynSuDelay();
 		return;
 	}
 
@@ -46,18 +46,21 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 		/** dafuq? Abu šonai mato:D Tiesiog varom pirmyn */
 		if (arKaireKaNorsMato() && arDesineKaNorsMato())
 		{
-			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
+			// motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn); // +max forward; +max forward
+			pirmynSuDelay();
 			return;
 		}
 
 		else if (arKaireKaNorsMato())
 		{
-			motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
+			// motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
+			motoraiKolPriekisPamato(-greitisSukimosi, +greitisSukimosi);
 			return;
 		}
 		else if (arDesineKaNorsMato())
 		{
-			motor(+greitisSukimosi, -greitisSukimosi); // -max rotate; +max rotate
+			// motor(+greitisSukimosi, -greitisSukimosi); // -max rotate; +max rotate
+			motoraiKolPriekisPamato(+greitisSukimosi, -greitisSukimosi); // -max rotate; +max rotate
 			return;
 		}
 	}
@@ -65,26 +68,11 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 	// nemato niekas
 	else
 	{
-		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-		Serial.print("Niekas");
+		// motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+		pirmynSuDelay();
+		// Serial.print("Niekas");
 		return;
 	}
-
-	//// Ar KAIRĖ ką nors mato?  min => max reikšmingumas
-	//// gali reikėt išimt Left1
-	//// else if (digitalRead(Left1) || digitalRead(Left2) || digitalRead(Left3))
-	//else if (arKaireKaNorsMato())
-	//{
-	//motor(-greitisSukimosi, +greitisSukimosi); // -max rotate; +max rotate
-	//return;
-	//}
-	//// Ar DEŠINĖ ką nors mato? min => max reikšmingumas
-	//// gali reikėt išimt Right1
-	//else if (arDesineKaNorsMato())
-	//{
-	//motor(+greitisSukimosi, -greitisSukimosi); // +max rotate; -max rotate
-	//return;
-	//}
 }
 
 void vairuotiRobotaSuApskaiciavimais()
@@ -93,58 +81,86 @@ void vairuotiRobotaSuApskaiciavimais()
 
 	originaliLinijaBeDefaultCase();
 
-	if (arVidurysKaNorsMato())
-	{
-		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+	/**
+	 * #EXPERIMENTAL
+	 * Išjungiam, kad visas flow būtų toks pat bet kokiu atveju,
+	 * turint omeny, jeigu norėtume daryti ką nors skirtingo,
+	 * nepriklausomai nuo to, ar vidurys mato.
+	 */
+	bool arRodytLEDa = true; /** testing */
+
+	// if (arVidurysKaNorsMato()) {
+	// 	motor(0, 0);
+	// 	while (true) {}
+	// }
+
+	if (siunciamPirmynJeiguPriekisMato(arRodytLEDa)) {
+		/**
+		 * jeigu siunčiam pirmyn, nes priekis mato,
+		 * tai nutraukiam tolesnius skaičiavimus
+		 */
 		return;
 	}
 
-	double oponentoPozicija = 0;
-	double kiekMsReikesSuktis = 0;
+	// siunciamIrUzlokinamPirmynKolPriekisMato(arRodytLEDa);
 
-	oponentoPozicija = kurYraOponentas(); // nuo -1 iki +1
+	/** BEGIN calculations */
 
-	/** 
+	double oponentoPozicija = kurYraOponentas(); // nuo -1 iki +1
+
+	/**
+	 * nuo `0` iki `tolimiausioPinoLaipsnis` laipsnių
+	 *
 	 * skaičiuojam numamant, jog didžiausias kampas, kokį mato sensorius,
-	 * palyginus su roboto priekiu, yra 90 laipsnių (360 / 4)
-	 * #TODO #CLEANUP
-	* #sukimosiSkaiciavimas
+	 * #sukimosiSkaiciavimas
 	*/
-	kiekMsReikesSuktis = fabs(perKiekMsApsisukam90Sukdamiesi255 * oponentoPozicija); // nuo 0 iki 90 laipsnių
-	// Serial.print(perKiekMsApsisukam360Sukdamiesi255);
+	double kiekMsReikesSuktisNotAbs = (double) perKiekMsApsisukam90Sukdamiesi255 * oponentoPozicija;
+	double kiekMsReikesSuktisFabs = fabs(kiekMsReikesSuktisNotAbs);
+	unsigned long kiekMsReikesSuktis = (unsigned long) kiekMsReikesSuktisFabs;
 
-	// Serial.print("\nKiek ms reikės suktis ");
-	// Serial.print(kiekMsReikesSuktis);
-	// Serial.print(" oponento pozicija ");
+	// Serial.print("\nOponento pozicija ");
 	// Serial.print(oponentoPozicija);
-
-	Serial.print("\r\n\r\nOponento pozicija");
-	Serial.print(oponentoPozicija);
-	Serial.print("\r\n kiek reikės suktis == ");
-	Serial.print(kiekMsReikesSuktis);
+	// Serial.print("\nkiek reikės suktis == ");
+	// Serial.print(kiekMsReikesSuktis);
 
 	// // #TESTING
-	// if (kiekMsReikesSuktis != 0)
+	// if (oponentoPozicija != 0)
 	// {
 	// 	digitalWrite(LEDas, HIGH);
+	// 	delay(10);
 	// }
 	// else
 	// {
 	// 	digitalWrite(LEDas, LOW);
 	// }
 
-	// if (abs(oponentoPozicija) < didinimoSkaicius)
 	if (oponentoPozicija == 0) // priekis
 	{
-		//nenaudos while ciklo, tad `loop`as vyks nesustodamas, kol oponentoPozicija pasikeis iš 0
+		/** nenaudos while ciklo, tad `loop`as vyks nesustodamas, kol oponentoPozicija pasikeis iš 0 */
 		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
 	}
 	else if (oponentoPozicija < 0) // kairė
 	{
-		motoraiSuLaiku(-greitisSukimosi, greitisSukimosi, kiekMsReikesSuktis); // naudos while ciklą
+		motoraiSuLaiku(-greitisSukimosi, +greitisSukimosi, kiekMsReikesSuktis); // naudos while ciklą
+		// while (true) {
+		// 	digitalWrite(LEDas, HIGH);
+		// 	delay(50);
+
+		// 	digitalWrite(LEDas, LOW);
+		// 	delay(50);
+		// };
 	}
 	else if (oponentoPozicija > 0) // dešinė
 	{
-		motoraiSuLaiku(greitisSukimosi, -greitisSukimosi, kiekMsReikesSuktis); // naudos while ciklą
+		motoraiSuLaiku(+greitisSukimosi, -greitisSukimosi, kiekMsReikesSuktis); // naudos while ciklą
+		// while (true) {
+		// 	digitalWrite(LEDas, HIGH);
+		// 	delay(50);
+
+		// 	digitalWrite(LEDas, LOW);
+		// 	delay(50);
+		// };
 	}
+
+	return;
 }

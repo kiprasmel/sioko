@@ -1,6 +1,8 @@
 #include "ivairusTestai.h"
 #include "irremote_pultelis.h" // tik testavimo strategijoms
 #include "inicializuoti.h"		 // tik testavimo strategijoms
+#include "motoras.h"
+#include "pagalbines_funkcijos.h"
 
 void hardCodedVarikliuTestai()
 {
@@ -9,7 +11,7 @@ void hardCodedVarikliuTestai()
 			140,
 			130};
 
-	int masyvoDydis = sizeof(msTimeStamps) / sizeof(msTimeStamps[0]);
+	int masyvoDydis = gautiMasyvoDydi(msTimeStamps);
 
 	motor(0, 0);
 	for (int i = 0; i < masyvoDydis; ++i)
@@ -103,40 +105,64 @@ void interaktyvusSukimosiTestaiNesibaigiantys()
 	}
 }
 
-void pinuSensoriuTestas()
-{
-	/** (((int))) */
-	// const int pinaiIrJuPavadinimai[][2] = {
-	// 	[Left1, "left1"],
-	// 	[Left2, "left2"],
-	// 	[Left3, "left3"],
-	// 	[Right1, "right1"],
-	// 	[Right2, "right2"],
-	// 	[Right3, "right3"],
-	// 	[Middle1, "middle1"],
-	// 	[Middle2, "middle2"],
-	// 	[Middle3, "middle3"]
-	// };
+// void pinuSensoriuTestas()
+// {
+// 	/** (((int))) */
+// 	// const int pinaiIrJuPavadinimai[][2] = {
+// 	// 	[Left1, "left1"],
+// 	// 	[Left2, "left2"],
+// 	// 	[Left3, "left3"],
+// 	// 	[Right1, "right1"],
+// 	// 	[Right2, "right2"],
+// 	// 	[Right3, "right3"],
+// 	// 	[Middle1, "middle1"],
+// 	// 	[Middle2, "middle2"],
+// 	// 	[Middle3, "middle3"]
+// 	// };
 
-	const byte pinai[] = {Left1, Left2, Left3, Right1, Right2, Right3, Middle1, Middle2, Middle3};
+// 	const byte pinai[] = {Left1, Left2, Left3, Right1, Right2, Right3, Middle1, Middle2, Middle3};
 
+// 	/**
+// 	 * the number inside the second `[]` must be entered.
+// 	 *
+// 	 * It shall represent the number of characters
+// 	 * that the longest string has
+// 	 *
+// 	 * (arduino just doesn't have strings - move to c++ already)
+// 	 */
+// 	const char pavadinimai[][9] = {"\nleft1", "\nleft2", "\nleft3",
+// 																 "\nright1", "\nright2", "\nright3",
+// 																 "\nmiddle1", "\nmiddle2", "\nmiddle3"};
+
+// 	for (int i = 0; i < 9; i++)
+// 	{
+// 		if (digitalRead(pinai[i]) == 0)
+// 		{
+// 			Serial.print(pavadinimai[i]);
+// 		}
+// 	}
+// }
+
+void testuotiKiekLaikoSukames(unsigned long laikasMs) {
+	motor(255, -255);
+	delay(laikasMs);
 	/**
-	 * the number inside the second `[]` must be entered.
-	 * 
-	 * It shall represent the number of characters
-	 * that the longest string has
-	 * 
-	 * (arduino just doesn't have strings - move to c++ already)
+	 * 50 per mažai stipriai
+	 * 60 šiek tiek per daug
+	 *
+	 * 56 good 90 deg 255 speed
+	 *
+	 * ---
+	 *
+	 * 32 bandėm kažkam
+	 *
 	 */
-	const char pavadinimai[][9] = {"\nleft1", "\nleft2", "\nleft3",
-																 "\nright1", "\nright2", "\nright3",
-																 "\nmiddle1", "\nmiddle2", "\nmiddle3"};
 
-	for (int i = 0; i < 9; i++)
-	{
-		if (digitalRead(pinai[i]) == 0)
-		{
-			Serial.print(pavadinimai[i]);
-		}
-	}
+	motor(0, 0);
+
+	delay(3000);
+}
+
+void ijungtiLedaJeiBetKurisPinasMato() {
+	arBetKuriPuseKaNorsMato() ? ledasON() : ledasOFF();
 }

@@ -23,10 +23,21 @@ void logArraySizes2D(T &array2D);
 template <typename T>
 void logArraySizes3D(T &array3D);
 
+/**
+ * BAD - you cannot pass in an array,
+ * because it gets converted into a pointer
+ * and it's size gets lost.
+ */
+void someFunction(int someArray[]) {
+	std::cout << "\nsomeFunction size ";
+
+	logArraySizes1D(someArray);
+}
+
 int main()
 {
-	/** 
-	 * these numbers don't mean anything - 
+	/**
+	 * these numbers don't mean anything -
 	 * they just were copy-pasted from our
 	 * pin numbers & their angles
 	 * (that's why we needed this test)
@@ -64,6 +75,14 @@ int main()
 	/**
 	 * 9 elements * 2 elements * 4 bytes (int) = 72 bytes
 	 */
+
+	int array1dForFunction[] = {
+		1, 2, 3, 4, 5, 6
+	};
+
+	someFunction(array1dForFunction);
+
+	std::cout << "\n";
 
 	return 0;
 }

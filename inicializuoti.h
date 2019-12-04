@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * inicializuoti.h
  *
@@ -5,89 +7,168 @@
  * funkcijomis, kurių reikia inicializacijai ir visam programos
  * veikimui.
  *
+ * Naudojamas pagrindiniame projekto faile (sioko.ino)
+ * ir suteikia globalius kintamuosius visiems failams.
+ *
  * Copyright (c) 2019 Kipras Melnikovas
  *
 */
 
-#pragma once
+/**
+ * DĖMESIO
+ *
+ * Šitas VEIKIA masyvams, kurie yra `stack`e,
+ * bet ne `heap`e!
+ *
+ * Šitas NEVEIKIA, jeigu masyvas buvo paduotas kaip funkcijos parametras,
+ * nes jis tampa `pointer`iu ir nebeišeina patikrinti jo dydžio!
+ *
+ * Skaityti daugiau:
+ *
+ * https://stackoverflow.com/a/10349610
+ * https://stackoverflow.com/a/37539
+ *
+ */
+#define gautiMasyvoDydi(x) (sizeof(x) / sizeof((x)[0]))
 
 void inicializuoti();
+
+void sukurtiBendraPinuMasyva();
+void suteiktiPinModus();
+void paruostiGeneralConfiga();
+
+/**
+ * didžiausio laipsnio modulio (paversto į teigiamo sk.) greitis
+ * iš `pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai`
+*/
+const double tolimiausioPinoLaipsnis = 90;
 
 const double greitisVaziavimoPirmyn = 255;
 const double greitisSukimosi = 255;										 // #EDITME
 const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
-const double perKiekMsApsisukam90Sukdamiesi255 = 40;
+const double perKiekMsApsisukam90Sukdamiesi255 = 56; // 56; 64;
 
-// const double perKiekMsApsisukam360Sukdamiesi255 = greitisSukimosi * 157 / 255;
+/**
+ * TODO - implementuot šituos
+ */
+// const double sukimosiLaikasMs1Laipsnio = perKiekMsApsisukam90Sukdamiesi255 / 255 * greitisSukimosi / 90;
+// const double sukimosiLaikasMsTolimiausiuLaipsniu = sukimosiLaikasMs1Laipsnio * tolimiausioPinoLaipsnis;
 
-// 255 greitis - 157 sec
-// 1 greitis = x sec
-// x = 1 * 157 / 255
-// x = 0.61
-// * greitisSukimosi
+/** --- */
 
-// greitis 100; sukimasis 100
-// greitis 50; sukimasis 200
-
-// laikas = kelias / greicio
-/*
-	1 laipsnio apsisukimas = 157 / 360 ~ 0.43
-	90 laipsniu = 38.7
-
-
-
-	157 = kelias / 255
-	x = kelias / 100
-	
-
+/**
+ * new layout of pins etc
+ *
+ * Esmė sudelioti pagal tai, kur pinai **ŽIŪRI**
+ *
+ * Note - strategijos bus broken
+ *
 */
-
-// greitis = kelias / laikas
-
-// testavimui
-// const double perKiekMsApsisukam360Sukdamiesi255 = 4003; //#TODO
-// const double greitisSukimosi = 10;													 // #EDITME
-
-// TODO FAST perdaryt šituos. Galbūt reiktų iškart dėt, kas yra priekyje, kas kairėj, kas dešinėj etc.
-//puolimo sensoriai
 
 const byte LEDas = 13;
 
-const byte Right1 = 21; // Dešinysis aukščiausias (nesvarbiausias)
-const byte Right2 = 23; // Dešinysis vidurinis
-const byte Right3 = 22; // Pats pats dešinysis (90 laipsnių) svarbiausias
 
-const byte Middle1 = 20; // kairiausias
-const byte Middle2 = 19; // vidurinysis
-const byte Middle3 = 33; // desiniausias
 
-const byte Left1 = 18; // Kairysis aukščiausias (nesvarbiausias)
-const byte Left2 = 16; // Kairysis vidurinis
-const byte Left3 = 17; // Pats pats kairysis (90 laipsnių) svarbiausias
 
-// const byte Right1 = 23;
-// const byte Right2 = 22;
-// const byte Right3 = 21;
-// const byte Middle1 = 20;
-// const byte Middle2 = 19;
-// const byte Middle3 = 33;
-// const byte Left3 = 18;
-// const byte Left2 = 17;
-// const byte Left1 = 16;
+/** palieku čia - reikia strategijoms -- TODO perdaryt, nes nereikšmingi */
+const int Middle1 = 16; /** lazeris ilgas, padėtas pačiame viduryje */
+const int Middle2 = 21; /** ne lazeris, žiūri į vidurinį (irgi pačiame viduryje) */
+const int Middle3 = 15; /** lazeris trumpas, padėtas pačiame viduryje */
 
 const byte Rightback = 15;
 const byte Leftback = 34;
 
 /**
- * visų pusių pinai, suskirstyti pusėmis.
- * išvardinti nuo mažiausiai reikšmingo iki reikšmingiausio
- * (kuo labiau toje pusėje, tuo reikšmingesnis)
-*/
-const int kairesPinai[] = {Left1, Left2, Left3};
-const int priekioPinai[] = {Middle1, Middle2, Middle3};
-const int desinesPinai[] = {Right1, Right2, Right3};
+ * Toliau aprašomi sensoriai:
+ *
+ * { pinas, kiekLaipsniuPasisukes }
+ *
+ */
+
+/** ŽIŪRI į dešinę */
+const int ziurintysIDesineSensoriai[][2] = {
+		{17, 45}, /** lazeris trumpas */
+		// {18, 45}, /** lazeris ilgas */
+		{22, 45},
+		{19, 90}
+};
+
+const int ziurintysIDesineSensoriaiDydis = gautiMasyvoDydi(ziurintysIDesineSensoriai);
+
+const int ziurintysIDesinePinai[ziurintysIDesineSensoriaiDydis] = {
+	ziurintysIDesineSensoriai[0][0],
+	ziurintysIDesineSensoriai[1][0],
+	ziurintysIDesineSensoriai[2][0],
+	// ziurintysIDesineSensoriai[3][0]
+};
+
+const int ziurintysIDesinePinaiDydis = gautiMasyvoDydi(ziurintysIDesinePinai);
+
+/** ŽIŪRI į vidurį */
+const int ziurintysIViduriSensoriai[][2] = {
+		// {Middle1, 0}, /** lazeris ilgas */
+		// {Middle2, 0}, /** buvo vienas priekinis, dabar yra 2 iš šonų priekyje */
+		{Middle3, 0},  /** lazeris trumpas */
+		{34, 0}, /** iš šono į priekį */
+		{21, 0} /** iš šono į priekį */
+};
+
+const int ziurintysIViduriSensoriaiDydis = gautiMasyvoDydi(ziurintysIViduriSensoriai);
+
+const int ziurintysIViduriPinai[ziurintysIViduriSensoriaiDydis] = {
+	ziurintysIViduriSensoriai[0][0],
+	ziurintysIViduriSensoriai[1][0],
+	ziurintysIViduriSensoriai[2][0],
+	// ziurintysIViduriSensoriai[3][0]
+};
+
+const int ziurintysIViduriPinaiDydis = gautiMasyvoDydi(ziurintysIViduriPinai);
+
+/** ŽIŪRI į kairę */
+const int ziurintysIKaireSensoriai[][2] = {
+		{23, -90},
+		{20, -45},
+		// {14, -45}, /** lazeris ilgas */
+		{39, -45}  /** lazeris trumpas */
+};
+
+const int ziurintysIKaireSensoriaiDydis = gautiMasyvoDydi(ziurintysIKaireSensoriai);
+
+const int ziurintysIKairePinai[ziurintysIKaireSensoriaiDydis] = {
+	ziurintysIKaireSensoriai[0][0],
+	ziurintysIKaireSensoriai[1][0],
+	ziurintysIKaireSensoriai[2][0],
+	// ziurintysIKaireSensoriai[3][0]
+};
+
+const int ziurintysIKairePinaiDydis = gautiMasyvoDydi(ziurintysIKairePinai);
 
 /**
+ * Nesirūpinam linijom.
+ * čia tik tie sensoriai, kurie aktualūs skaičiuojant pasisukimus / puolimus.
+ */
+const int kiekYraSensoriuPinu = ziurintysIDesinePinaiDydis + ziurintysIKairePinaiDydis + ziurintysIViduriPinaiDydis;
+
+/**
+ * dinamiškai sukuriamas `inicializuoti()` funkcijoje
+ * iš kitų turimų duomenų
+ */
+int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[kiekYraSensoriuPinu][2];
+int visiPinai[kiekYraSensoriuPinu];
+
+/** ŽIŪRI į linijas (bet jau nebesvarbūs skaičiavimams) */
+const int linijuSensoriai[] = {
+	35, /** LeftLine1 */
+	36, /** LeftLine2 */
+	37, /** RightLine1 */
+	38 /** RightLine2 */
+};
+
+/** --- */
+
+/**
+ * TODO perrašyt šituos docs'us pagal naujausią softo versiją.
+ *
  * skaičiuojant, kur yra oponentas kuo kairiau, tuo daugiau -, kuo
  * dešiniau, tuo daugiau + Turi būti vienodai pinų kairėje ir dešinėje
  *
@@ -96,87 +177,60 @@ const int desinesPinai[] = {Right1, Right2, Right3};
  * suma vienos pusės būtų nuo -255 iki +255;
  * formulė:
  * (double) tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2);
- * 
+ *
  * skaitykite => https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
- * 
+ *
  * šiuo metu, poKiekPinuKiekvienojePuseje = 3; tolimiausioPinoLaipsnis = 255;
  * 255 / ((3 * (3 + 1) / 2) = 255 / (3 * 4 / 2) = 255 / 6 = 42.5;
- * 
+ *
  * pradedant nuo mažiausiai reikšmingo pino ir prie 0 pridedant gautą reikšmę;
  * sekančiam - labiau reikšmingesniam, pridedam tiek pat, iki kol pridedam visiems,
  * o galutinė suma = 255
- * 
+ *
  * ---
- * 
+ *
  * arba, galima naudoti bet kokias reikšmes, tarkim, didinant / mažinant kas 64,
  * o paskui gautą balų skaičių mappinant nuo -255 iki +255
 */
 
+/** --- */
+
 /**
  * Konfiguracija. Pakeitus pinų sudėtį reikia PATIEMS pertvarkyti!
 */
-const int kiekPinuPusiu = 3;
-const int poKiekPinuKiekvienojePuseje = 3;
+// // const int poKiekPinuKiekvienojePuseje = 3;
 
-const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
-		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
-		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
-
-const double tolimiausioPinoLaipsnis = 90;
-const double didinimoSkaicius = tolimiausioPinoLaipsnis / ((poKiekPinuKiekvienojePuseje * (poKiekPinuKiekvienojePuseje + 1)) / 2); // TODO reikia tiesiog nuo min iki maximalaus balo.
+// // const int minusinisIndeksas = 0, // kelinti sudėlioti KAIRIEJI pinai
+// // 		neutralusIndeksas = 1,			 // kelinti sudėlioti VIDURINIAI pinai
+// // 		pliusinisIndeksas = 2;			 // kelinti sudėlioti DEŠINIEJI pinai
 
 /**
  * Išmatuoti pasisukimo laipsniai, lyginant nuo priekio.
- * 
+ *
  */
-const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
-		{Left3, -90},
-		{Left2, -50},
-		{Left1, -15},
-		{Middle1, 0},
-		{Middle2, 0},
-		{Middle3, 0},
-		{Right1, 15},
-		{Right2, 50},
-		{Right3, 90}};
+// const int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2] = {
+// 		{Left3, -90},
+// 		{Left2, -50},
+// 		{Left1, -15},
+// 		{Middle1, 0},
+// 		{Middle2, 0},
+// 		{Middle3, 0},
+// 		{Right1, 15},
+// 		{Right2, 50},
+// 		{Right3, 90}};
 
-const int kiekYraPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai) / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
-
-// tolimiausioPinoLaipsnis = didinimoSkaicius * poKiekPinuKiekvienojePuseje;
-
-/**
- * patvirtinti, jog atitinka min/max sąlygą 
-*/
-//assert(didinimoSkaicius * poKiekPinuKiekvienojePuseje >= -tolimiausioPinoLaipsnis && didinimoSkaicius * poKiekPinuKiekvienojePuseje <= tolimiausioPinoLaipsnis);
-
-/**
- * #TODO optimizuoti `apskaiciuotiNaujaBala`
-*/
-// double didinimoReiksmes[poKiekPinuKiekvienojePuseje];
-// didinimoReiksmes[poKiekPinuKiekvienojePuseje - 1] = didinimoSkaicius;
-// for (int i = poKiekPinuKiekvienojePuseje - 2; i > 0; --i)
-// {
-// 	didinimoReiksmes[i] = didinimoReiksmes[i + 1] + didinimoSkaicius;
-// }
-double apskaiciuotiNaujaBala(double skaicius, int iteratorius); // tiesigo nuo min iki 100
-
-const int visiPinai[kiekPinuPusiu][poKiekPinuKiekvienojePuseje] = {
-		{Left1, Left2, Left3},
-		{Middle1, Middle2, Middle3},
-		{Right1, Right2, Right3}};
-
-double visiPinaiIrJuTeikiamiBalai[kiekPinuPusiu * poKiekPinuKiekvienojePuseje][2];
-
-void suskaiciuotiBalusVisiemsPinams();
+// const int kiekYraSensoriuPinu = sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai); / sizeof(pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[0]);
 
 /** <= --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- => **/
 
-/** 
+/**
+ * TODO - atsirinkti, ko reikia, o kitką išmest
+ *
  * Toliau eina legacy dalykai, kuriuos sukūriau ne aš, bet kurie dar
  * pilnai nepertvarkyti ir kol kas reikalingi naudojimui.
  *
  * Rekomenduojama jų nenaudoti, taip pat, jeigu įmanoma - perrašyti
- * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc. 
+ * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc.
 */
 
 // protokolas (atrodo, jog nereikalingas)
@@ -208,11 +262,11 @@ const byte DIR1 = 6;	// ?
 const byte DIR2 = 10; // ?
 
 //Linijos sensoriai
-const byte LeftLine1 = 35; //rau
-const byte LeftLine2 = 36; //g
+// const byte LeftLine1 = 35; //rau
+// const byte LeftLine2 = 36; //g
 
-const byte RightLine1 = 37; //ru
-const byte RightLine2 = 38; //z
+// const byte RightLine1 = 37; //ru
+// const byte RightLine2 = 38; //z
 
 int k = 0;
 int b = 0;

@@ -1,59 +1,124 @@
 /*
  * inicializuoti.ino
- * 
+ *
  * inicializavimo failas
- * 
+ *
+ * Naudojamas pagrindiniame projekto faile (sioko.ino)
+ * ir suteikia globalius kintamuosius visiems failams.
+ *
  * Copyright (c) 2019 Kipras Melnikovas
- * 
+ *
 */
 
 #include "inicializuoti.h"
 #include <assert.h>
 
-void inicializuoti()
-{
-	// suskaiciuotiBalusVisiemsPinams();
+void inicializuoti() {
+	sukurtiBendraPinuMasyva();
+
+	suteiktiPinModusViskam();
+
+	paruostiGeneralConfiga();
 }
 
-double apskaiciuotiNaujaBala(double skaicius, int iteratorius)
-{
-	assert(skaicius >= 0 && iteratorius >= 0);
+void sukurtiBendraPinuMasyva() {
+	int bendrasIndex = 0;
 
-	// pradedam skaičiuoti nuo paskutinio elemento - 1, o paskui, didėjant
-	// iteratoriui, skaičius vis mažėja
-	double balas = skaicius * (poKiekPinuKiekvienojePuseje - 1 - iteratorius);
+	/** perkopijuojam: */
 
-	// patvirtinti, jog atitinka (patikrinom ankščiau)
-	// assert(balas >= -255 && balas <= 255);
+	/** dešinę */
+	for (int i = 0; i < ziurintysIDesinePinaiDydis; i++) {
+		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][0] = ziurintysIDesineSensoriai[i][0];
+		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][1] = ziurintysIDesineSensoriai[i][1];
 
-	// switch'e nenaudojam `break`, nes `return` taip ar taip viską nutraukia ir grąžina reikšmę.
-	switch (iteratorius)
-	{
-	case minusinisIndeksas:
-		// return balas * -1;
-		balas *= -1;
-	case neutralusIndeksas:
-		// return 0;
-		balas = 0;
-	case pliusinisIndeksas:
-		// return balas;
-		balas = balas;
-	default:
-		Serial.println("Klaida! iteratorius buvo didesnis, negu yra indeksų\nir todėl neįmanoma apskaičiuoti naujos didinimo reikšmės,\njog galėtume nustatyti, kur yra oponentas!");
+		visiPinai[bendrasIndex] = ziurintysIDesineSensoriai[i][0];
+
+		bendrasIndex++;
+	}
+
+	/** vidurį */
+	for (int i = 0; i < ziurintysIViduriPinaiDydis; i++) {
+		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][0] = ziurintysIViduriSensoriai[i][0];
+		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][1] = ziurintysIViduriSensoriai[i][1];
+
+		visiPinai[bendrasIndex] = ziurintysIViduriSensoriai[i][0];
+
+		bendrasIndex++;
+	}
+
+	/** kairę */
+	for (int i = 0; i < ziurintysIKairePinaiDydis; i++) {
+		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][0] = ziurintysIKaireSensoriai[i][0];
+		pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[bendrasIndex][1] = ziurintysIKaireSensoriai[i][1];
+
+		visiPinai[bendrasIndex] = ziurintysIKaireSensoriai[i][0];
+
+		bendrasIndex++;
+	}
+}
+
+
+void suteiktiPinModusViskam() {
+	const int outputPins[] = {
+			LEDas,
+			PWM1,
+			PWM2,
+			DIR1,
+			DIR2,
 	};
 
-	// Serial.print("\nNaujas balas: ");
-	// Serial.print(balas);
-	return balas;
+	suteiktiPinModeMasyvui(outputPins, gautiMasyvoDydi(outputPins), OUTPUT);
+
+	const int randomInputPins[] = {START_MODULE, Rightback, Leftback};
+
+	suteiktiPinModeMasyvui(randomInputPins, gautiMasyvoDydi(randomInputPins), INPUT);
+
+	suteiktiPinModeMasyvui(ziurintysIKairePinai, ziurintysIKairePinaiDydis, INPUT);
+	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT);
+	suteiktiPinModeMasyvui(ziurintysIDesinePinai,  ziurintysIDesinePinaiDydis, INPUT);
+
+	suteiktiPinModeMasyvui(linijuSensoriai,  gautiMasyvoDydi(linijuSensoriai), INPUT);
 }
 
-// void suskaiciuotiBalusVisiemsPinams()
-// {
-// 	for (int i = 0; i < kiekPinuPusiu; ++i)
-// 	{
-// 		for (int j = 0; j < poKiekPinuKiekvienojePuseje; ++j)
-// 		{
-// 			visiPinaiIrJuTeikiamiBalai[i][j] = apskaiciuotiNaujaBala(didinimoSkaicius, i);
-// 		}
-// 	}
-// }
+void suteiktiPinModeMasyvui(const int pinuMasyvas[], int masyvoDydis, int pinModas) {
+	for (int i = 0; i < masyvoDydis; i++) {
+		const int pin = pinuMasyvas[i];
+		pinMode(pin, pinModas);
+	}
+}
+
+void paruostiGeneralConfiga() {
+	/**
+	 * CONFIG
+	 * Nustato variklių dažnį.
+	 * Jeigu šitų nėra, tai varikliai nevažiuoja.
+	 *
+	 * ką daro `analogWriteFrequency`?
+	 *
+	 * Man neveikia per `vscode`, meta errorus -
+	 * tikriausiai trūksta kažkokios bibliotekos.
+	 *
+	 * `Upload`inant su arduino IDE veikia.
+	*/
+	analogWriteFrequency(PWM2, 15000.0f); /** #BROKEN #CHECK */
+	analogWriteFrequency(PWM1, 15000.0f);
+
+	/** enable receiving I suppose?:D */
+	irrecv.enableIRIn();
+	// irrecv.blink13(true); /** signalizuotų, kai gaunam signalą */
+
+	/**
+	 * CONFIG
+	 * įjungti/išjungti strategijų nustatymą pulteliu
+	 */
+	// pulteliuNustatytiStrategijas();
+
+	MAIN_STRATEGY_STATE = 1;
+	START_STRATEGY_STATE = 1;
+
+	/**
+	 * CONFIG
+	 * #TEMP #DEV - nevykdom pradinės strategijos (įjungti production'ui!)
+	 */
+	// vykdytiStrategija(pradineStrategija);
+}

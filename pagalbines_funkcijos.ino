@@ -6,155 +6,236 @@
  * Tikrinant su `digitalRead`, mato tada, kai `== 0`, o ne `1`!
  */
 
-bool arVidurysKaNorsMato()
-{
-	if (
-			digitalRead(Middle1) == 0 || digitalRead(Middle2) == 0 || digitalRead(Middle3) == 0
-			//|| digitalRead(Left1) == 0 || digitalRead(Right1) == 0
-			// makes checking loose (also includes the near left & right sensors)
-	)
-	{
-		Serial.print("\nVidurys");
-
-		digitalWrite(LEDas, HIGH);
-		return true;
-	}
-	else
-	{
-		digitalWrite(LEDas, LOW);
-		return false;
-	}
-}
-
-bool arKaireKaNorsMato()
-{
-	if (digitalRead(Left1) == 0 || digitalRead(Left2) == 0 || digitalRead(Left3) == 0)
-	{
-		Serial.print("\nKaire");
-
-		digitalWrite(LEDas, HIGH);
-		return true;
-	}
-	else
-	{
-		digitalWrite(LEDas, LOW);
-		return false;
-	}
-}
-
-bool arDesineKaNorsMato()
-{
-	if (digitalRead(Right1) == 0 || digitalRead(Right2) == 0 || digitalRead(Right3) == 0)
-	{
-		Serial.print("\nDesine");
-
-		digitalWrite(LEDas, HIGH);
-		return true;
-	}
-	else
-	{
-		digitalWrite(LEDas, LOW);
-		return false;
-	}
-}
-
-int kiekMatoKazkuriPuse(const int pinaiSkenavimui[])
+int kiekMatoKazkuriPuse(const int pinaiSkenavimui[], const int masyvoDydis)
 {
 	int suma = 0;
-	int kiekYraPinu = (sizeof(pinaiSkenavimui) / sizeof(pinaiSkenavimui[0]));
-	for (int i = 0; i < kiekYraPinu; ++i)
+
+	for (int i = 0; i < masyvoDydis; i++)
 	{
 		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
 		{
 			++suma;
 		}
 	}
+
 	return suma;
 }
 
-void atnaujintiBitusXPusesPagalPinus(byte &kazkuriPuse, const int pinaiSkenavimui[])
+bool arVidurysKaNorsMato()
 {
-	int kiekYraPinu = (sizeof(pinaiSkenavimui) / sizeof(pinaiSkenavimui[0]));
+	const int kiekMato = kiekMatoKazkuriPuse(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis);
 
-	// for (int i = 0; i < kiekYraPinu; ++i)
-	// {
-	// 	bitClear(kazkuriPuse, i);
+	if (
+		kiekMato > 0
+	)
+	{
+		// Serial.print("\nVidurys");
+		// digitalWrite(LEDas, HIGH);
+
+		return true;
+	}
+	else
+	{
+		// digitalWrite(LEDas, LOW);
+
+		return false;
+	}
+}
+
+// bool arVidurysKaNorsMato() {
+// 	if (digitalRead(ziurintysIViduriPinai[0]) == 0
+// 		|| digitalRead(ziurintysIViduriPinai[1]) == 0
+// 		|| digitalRead(ziurintysIViduriPinai[2]) == 0
+// 		|| digitalRead(ziurintysIViduriPinai[3]) == 0
+// 	) {
+// 		return true;
+// 	}
+
+// 	return false;
+// }
+
+bool arKaireKaNorsMato()
+{
+	const int kiekMato = kiekMatoKazkuriPuse(ziurintysIKairePinai, ziurintysIKairePinaiDydis);
+
+	if (kiekMato > 0) {
+		// Serial.print("\nKaire");
+		// digitalWrite(LEDas, HIGH);
+
+		return true;
+	} else {
+		// digitalWrite(LEDas, LOW);
+
+		return false;
+	}
+}
+
+bool arDesineKaNorsMato()
+{
+	const int kiekMato = kiekMatoKazkuriPuse(ziurintysIDesinePinai, ziurintysIDesinePinaiDydis);
+
+	// byte pinas;
+	// bool bentVienasMato = false;
+
+	// for (int i = 0; i < ziurintysIDesinePinaiDydis; i++) {
+	// 	pinas = ziurintysIKairePinai[i];
+
+	// 	if (digitalRead(pinas)) {
+	// 		bentVienasMato = true;
+	// 	}
 	// }
 
-	for (int i = 0; i < kiekYraPinu; ++i)
+	// if (bentVienasMato)
+	if (kiekMato > 0) {
+	// Serial.print("\nDesine");
+
+		// digitalWrite(LEDas, HIGH);
+		return true;
+	} else {
+		// digitalWrite(LEDas, LOW);
+		return false;
+	}
+}
+
+bool arBetKuriPuseKaNorsMato()
+{
+	const int kiekMato = kiekMatoKazkuriPuse(visiPinai, kiekYraSensoriuPinu);
+
+	return kiekMato > 0 ? true : false;
+}
+
+void atnaujintiBitusXPusesPagalPinus(byte kazkuriPuse, const int pinaiSkenavimui[], int masyvoDydis)
+{
+	/** pirma išvalyti; tas 10 keistas */
+	for (int i = 0; i < 10; ++i)
 	{
-		if (digitalRead(pinaiSkenavimui[i]) == 0) // jeigu matome
+		bitClear(kazkuriPuse, i);
+	}
+
+	int kiekMato = 0;
+
+	for (int i = 0; i < masyvoDydis; ++i)
+	{
+		/**
+		 * TODO
+		 *
+		 * LINIJA MATO, kai yra `1`,
+		 * o VISI KITI, kai `0`!!!! ATSARGHEI XD
+		 *
+		 */
+		if (digitalRead(pinaiSkenavimui[i]) == 1) // jeigu matome
 		{
+			kiekMato++;
 			bitSet(kazkuriPuse, i); // 1
 		}
-		else // nematome
-		{
-			bitClear(kazkuriPuse, i); // 0
+		// // else // nematome
+		// // {
+		// // 	bitClear(kazkuriPuse, i); // 0
+		// // }
+	}
+	// // return kazkuriPuse;
+
+	Serial.print("\nKiek mato linija: ");
+	Serial.print(kiekMato);
+
+}
+
+// void atnaujintiJutikliuDuomenis() {
+// 	atnaujintiBitusXPusesPagalPinus(myLINE, linijuSensoriai, gautiMasyvoDydi(linijuSensoriai));
+// 	// // atnaujintiBitusXPusesPagalPinus(MYFRONT, ziurintysIKaireSensoriai);
+// 	// // atnaujintiBitusXPusesPagalPinus(, ziurintysIKaireSensoriai);
+// }
+
+void printLinijuMatyma() {
+	Serial.print("\n\nLinijos:");
+
+	for (int i = 0; i < gautiMasyvoDydi(linijuSensoriai); i++) {
+		Serial.print("\nLinija ");
+		Serial.print(i);
+
+		if (digitalRead(linijuSensoriai[i]) == 1) {
+			Serial.print(" +");
+		} else {
+			Serial.print(" -");
 		}
 	}
-	// return kazkuriPuse;
 }
 
 void atnaujintiJutikliuDuomenis()
 {
+	// printLinijuMatyma();
+
 	for (int i = 0; i <= 9; i++)
 	{ //9
 		bitClear(myLINE, i);
-		bitClear(myFRONT, i);
-		bitClear(mySIDES, i);
 	}
-	//Sonai
-
-	//if (digitalRead(Rightback) == 0)  bitSet(mySIDES, 0);
-	if (digitalRead(Right1) == 0)
-		bitSet(mySIDES, 1);
-	if (digitalRead(Right2) == 0)
-		bitSet(mySIDES, 2);
-	if (digitalRead(Left2) == 0)
-		bitSet(mySIDES, 3);
-	if (digitalRead(Left1) == 0)
-		bitSet(mySIDES, 4);
-	//if (digitalRead(Leftback) == 0)   bitSet(mySIDES, 5);
-
-	//Priekis
-	if (digitalRead(Right3) == 0)
-		bitSet(myFRONT, 0);
-	if (digitalRead(Middle1) == 0)
-		bitSet(myFRONT, 1);
-	if (digitalRead(Middle2) == 0)
-		bitSet(myFRONT, 2);
-	if (digitalRead(Middle3) == 0)
-		bitSet(myFRONT, 3);
-	if (digitalRead(Left3) == 0)
-		bitSet(myFRONT, 4);
-
-	/*if (digitalRead(Right1) == 0) bitSet(myFRONT, 6);
-    if (digitalRead(Right2) == 0) bitSet(myFRONT, 5);*/
-	/*if (digitalRead(Right3) == 0) bitSet(myFRONT, 4);
-    if (digitalRead(Middle2) == 0) bitSet(myFRONT, 3);
-    if (digitalRead(Left3) == 0) bitSet(myFRONT, 2);*/
-	/*if (digitalRead(Left2) == 0) bitSet(myFRONT, 1);
-    if (digitalRead(Right1) == 0) bitSet(myFRONT, 0);*/
 
 	//Linija
-	if (digitalRead(LeftLine1) == 1)
+	if (digitalRead(linijuSensoriai[0]) == 1)
 		bitSet(myLINE, 3);
-	if (digitalRead(LeftLine2) == 1)
+	if (digitalRead(linijuSensoriai[1]) == 1)
 		bitSet(myLINE, 2);
-	if (digitalRead(RightLine1) == 1)
+	if (digitalRead(linijuSensoriai[2]) == 1)
 		bitSet(myLINE, 0);
-	if (digitalRead(RightLine2) == 1)
+	if (digitalRead(linijuSensoriai[3]) == 1)
 		bitSet(myLINE, 1);
 }
 
-// void atnaujintiJutikliuDuomenis()
-// {
-// 	atnaujintiBitusXPusesPagalPinus(myFRONT, priekioPinai);
-// 	atnaujintiBitusXPusesPagalPinus(mySIDES, sonuPinai);
-// 	// myFRONT = atnaujintiBitusXPusesPagalPinus(myFRONT, priekioPinai);
-// 	// mySIDES = ;
+void ledasON() {
+	digitalWrite(LEDas, HIGH);
+}
 
-// 	// TODO FIX labai keistai čia nustatinėja. Kaip pertvarkyt normaliai?
+void ledasOFF() {
+	digitalWrite(LEDas, LOW);
+}
+
+
+/**
+ * TODO wtf - ar čia iš viso kur nors naudojama?
+ * Niekur nematau `myFRONT` / `mySIDES` kintamųjų
+ * Matau tik `myLINE`
+ */
+// void atnaujintiJutikliuDuomenis_OLD()
+// {
+// 	for (int i = 0; i <= 9; i++)
+// 	{ //9
+// 		bitClear(myLINE, i);
+// 		bitClear(myFRONT, i);
+// 		bitClear(mySIDES, i);
+// 	}
+// 	//Sonai
+
+// 	//if (digitalRead(Rightback) == 0)  bitSet(mySIDES, 0);
+// 	if (digitalRead(Right1) == 0)
+// 		bitSet(mySIDES, 1);
+// 	if (digitalRead(Right2) == 0)
+// 		bitSet(mySIDES, 2);
+// 	if (digitalRead(Left2) == 0)
+// 		bitSet(mySIDES, 3);
+// 	if (digitalRead(Left1) == 0)
+// 		bitSet(mySIDES, 4);
+// 	//if (digitalRead(Leftback) == 0)   bitSet(mySIDES, 5);
+
+// 	//Priekis
+// 	if (digitalRead(Right3) == 0)
+// 		bitSet(myFRONT, 0);
+// 	if (digitalRead(Middle1) == 0)
+// 		bitSet(myFRONT, 1);
+// 	if (digitalRead(Middle2) == 0)
+// 		bitSet(myFRONT, 2);
+// 	if (digitalRead(Middle3) == 0)
+// 		bitSet(myFRONT, 3);
+// 	if (digitalRead(Left3) == 0)
+// 		bitSet(myFRONT, 4);
+
+// 	/*if (digitalRead(Right1) == 0) bitSet(myFRONT, 6);
+//     if (digitalRead(Right2) == 0) bitSet(myFRONT, 5);*/
+// 	/*if (digitalRead(Right3) == 0) bitSet(myFRONT, 4);
+//     if (digitalRead(Middle2) == 0) bitSet(myFRONT, 3);
+//     if (digitalRead(Left3) == 0) bitSet(myFRONT, 2);*/
+// 	/*if (digitalRead(Left2) == 0) bitSet(myFRONT, 1);
+//     if (digitalRead(Right1) == 0) bitSet(myFRONT, 0);*/
+
 // 	//Linija
 // 	if (digitalRead(LeftLine1) == 1)
 // 		bitSet(myLINE, 3);
@@ -165,88 +246,3 @@ void atnaujintiJutikliuDuomenis()
 // 	if (digitalRead(RightLine2) == 1)
 // 		bitSet(myLINE, 1);
 // }
-
-/** 
- * TODO išsikelt kintamuosiuos masyvus (Pinų) į globalų scopą /
- * namespace'ą, kad nereiktų initialisint atskirai kiekvieną kart, kai
- * realiai jie tiesiog yra nuorodos (refs) į jau turimus globalius
- * kintamuosius
-*/
-// int Jutikliu_Duom()
-// nuskenuot jutiklius, susivest info į myLINE, myFRONT, mySIDES kintamuosius booleanais
-void atnaujintiJutikliuDuomenis_old()
-{
-
-	// TODO CHECK kodėl nuo 0 iki 9 (10 kartų)? Tipo turi myLINE, myFRONT ir mySIDES po 10 bitų?
-	for (int i = 0; i <= 9; i++)
-	{
-		bitClear(myLINE, i);
-		bitClear(myFRONT, i);
-		bitClear(mySIDES, i);
-	}
-
-	// TODO CHECK kiek yra šonuose pinų? Ir ar reikia pradėt read'int ir settint nuo 1, ar nuo 0?
-	const int sonuPinai[] = {Right1, Right2, Left1, Left2};
-
-	for (int i = 1; i <= sizeof(sonuPinai) / sizeof(const int); ++i)
-	{
-		if (digitalRead(sonuPinai[i]) == 0)
-		{
-			bitSet(mySIDES, i);
-		}
-	}
-
-	// //if (digitalRead(Rightback) == 0)  bitSet(mySIDES, 0);
-	// if (digitalRead(Right1) == 0)
-	// 	bitSet(mySIDES, 1);
-	// if (digitalRead(Right2) == 0)
-	// 	bitSet(mySIDES, 2);
-	// if (digitalRead(Left2) == 0)
-	// 	bitSet(mySIDES, 3);
-	// if (digitalRead(Left1) == 0)
-	// 	bitSet(mySIDES, 4);
-	// //if (digitalRead(Leftback) == 0)   bitSet(mySIDES, 5);
-
-	// TODO CHECK kodėl sonuPinus pradedam nustatynėt nuo 1, o priekio nuo
-	// 0? myFRONT atrodys 0bxxxxx kur x = 0 arba 1; bitSet visada nustato
-	// 1; pradeda nustatinėt nuo mažiausiai reikšmingo (dešiniausio bito)
-	// iki kairiausio.
-	// const int priekioPinai[] = {Right3, Middle1, Middle2, Middle3, Left3};
-
-	for (int i = 0; i < sizeof(priekioPinai) / sizeof(priekioPinai[0]); ++i)
-	{
-		if (digitalRead(priekioPinai[i]) == 0) // jeigu matome
-		{
-			bitSet(myFRONT, i); // myFRONT[i] = 1; (tik myFRONT yra bitų kintamasis)
-		}
-	}
-	// if (digitalRead(Right3) == 0)
-	// 	bitSet(myFRONT, 0);
-	// if (digitalRead(Middle1) == 0)
-	// 	bitSet(myFRONT, 1);
-	// if (digitalRead(Middle2) == 0)
-	// 	bitSet(myFRONT, 2);
-	// if (digitalRead(Middle3) == 0)
-	// 	bitSet(myFRONT, 3);
-	// if (digitalRead(Left3) == 0)
-	// 	bitSet(myFRONT, 4);
-
-	/*if (digitalRead(Right1) == 0) bitSet(myFRONT, 6);
-    if (digitalRead(Right2) == 0) bitSet(myFRONT, 5);*/
-	/*if (digitalRead(Right3) == 0) bitSet(myFRONT, 4);
-    if (digitalRead(Middle2) == 0) bitSet(myFRONT, 3);
-    if (digitalRead(Left3) == 0) bitSet(myFRONT, 2);*/
-	/*if (digitalRead(Left2) == 0) bitSet(myFRONT, 1);
-    if (digitalRead(Right1) == 0) bitSet(myFRONT, 0);*/
-
-	// TODO FIX labai keistai čia nustatinėja. Kaip pertvarkyt normaliai?
-	//Linija
-	if (digitalRead(LeftLine1) == 1)
-		bitSet(myLINE, 3);
-	if (digitalRead(LeftLine2) == 1)
-		bitSet(myLINE, 2);
-	if (digitalRead(RightLine1) == 1)
-		bitSet(myLINE, 0);
-	if (digitalRead(RightLine2) == 1)
-		bitSet(myLINE, 1);
-}

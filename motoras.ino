@@ -11,12 +11,25 @@ int kokiaKryptis(int motoroGreitis)
 
 bool arStabdytiMotorus()
 {
-	return digitalRead(START_MODULE) == HIGH ? false : true;
+	const int startModulis = digitalRead(START_MODULE);
+	const bool arStabdyti = startModulis == HIGH ? false : true;
+
+	// Serial.print("\nSTART_MODULE ");
+	// Serial.print(START_MODULE);
+	// Serial.print("\nstartModulis ");
+	// Serial.print(startModulis);
+	// Serial.print("\narStabdyti ");
+	// Serial.print(arStabdyti);
+
+	return arStabdyti;
 	// return digitalRead(START_MODULE) == LOW ? true : false;
 }
 
-/** 
+/**
  * laukti, iki kol `START_MODULE` == `HIGH`
+ *
+ * BAD, nes ir motoras tą patį daro
+ *
  */
 void lauktiKolPaleisimRobota()
 {
@@ -31,11 +44,25 @@ void motor(int a, int b)
 	b = constrain(b, -255, 255);
 	// a-=10;//buvo80 pries tempima i viena puse
 
+	// /** lekiam pirmyn, jeigu priekis mato */
+	// if (arVidurysKaNorsMato()) {
+	// 	a = 255;
+	// 	b = 255;
+	// }
+
 	if (arStabdytiMotorus())
 	{
 		a = 0;
 		b = 0;
 	}
+
+	if (a == b && a == greitisVaziavimoPirmyn) {
+		/** važiuojam pirmyn */
+		ledasON();
+	} else {
+		ledasOFF();
+	}
+
 	if (a <= -1) //&& a > -255
 	{
 		digitalWrite(DIR1, 1);
@@ -70,57 +97,6 @@ void motor(int a, int b)
 	}
 }
 
-/** NEVEIKIA */
-// void motor(int a, int b)
-// {
-// 	a = constrain(a, -255, 255);
-// 	b = constrain(b, -255, 255);
-
-// 	if (arStabdytiMotorus) {
-// 		a = 0;
-// 		b = 0;
-// 	}
-
-// 	// if (arVidurysKaNorsMato()) // #BAD
-// 	// {
-// 	// 	// motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-// 	// 	a = greitisVaziavimoPirmyn;
-// 	// 	b = greitisVaziavimoPirmyn;
-// 	// }
-
-// 	if (a <= -1) //&& a > -255
-// 	{
-// 		digitalWrite(DIR1, 1);
-// 		analogWrite(PWM1, (255 - abs(a)));
-// 	}
-// 	else if (a >= 1)
-// 	{
-// 		digitalWrite(DIR1, 0);
-// 		analogWrite(PWM1, a);
-// 	}
-// 	else if (a == 0)
-// 	{
-// 		digitalWrite(DIR1, 0);
-// 		analogWrite(PWM1, 0);
-// 	}
-
-// 	if (b >= 1) //&& b > -255
-// 	{
-// 		// b = map(abs(b), 0,255,255,0);
-// 		digitalWrite(DIR2, 0);
-// 		analogWrite(PWM2, b); // 255 -
-// 	}
-// 	else if (b <= -1) //&& b < 255
-// 	{
-// 		digitalWrite(DIR2, 1);
-// 		analogWrite(PWM2, (255 - abs(b)));
-// 	}
-// 	else if (b == 0)
-// 	{
-// 		digitalWrite(DIR2, 0);
-// 		analogWrite(PWM2, 0);
-// 	}
-// }
 
 // void motor(int kairioMotoroGreitis, int desinioMotoroGreitis)
 // {
@@ -156,7 +132,34 @@ void motor(int a, int b)
 // 	digitalWrite(DIR2, kokiaKryptis(desinioMotoroGreitis));
 // }
 
-/** naudoja while ciklą, kad motorai vykdytų dalykus X laiko */
+void motoraiKolPriekisPamato(int kairioMotoroGreitis, int desinioMotoroGreitis) {
+	motor(kairioMotoroGreitis, desinioMotoroGreitis);
+
+	while (true) {
+		motor(kairioMotoroGreitis, desinioMotoroGreitis);
+
+		if (arVidurysKaNorsMato()) {
+			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+
+			// motor(0, 0);
+			digitalWrite(LEDas, HIGH);
+			// while (true) {};
+
+			delay(50);
+
+			digitalWrite(LEDas, LOW);
+
+			return;
+		}
+	}
+
+	return;
+}
+
+/**
+ * naudoja while ciklą, kad motorai vykdytų dalykus X laiko
+ * (senoji versija iš `v1.1.0` (9962c68))
+ */
 void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
 {
 	if (arVidurysKaNorsMato())
@@ -173,8 +176,8 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 
 	while (millis() - time < kiekMsLaukti)
 	{
-		/** 
-		 * tikrinam jutiklių duomenis, jog jeigu priekis ką nors mato - iškart varytume į priekį. 
+		/**
+		 * tikrinam jutiklių duomenis, jog jeigu priekis ką nors mato - iškart varytume į priekį.
 		 */
 		atnaujintiJutikliuDuomenis(); // #NEW! Gali būt, kad sutvarkys.
 		// Line();							// gali būt bėdų dėl prastos funkcijos #TODO ATKOMENTUOT
@@ -204,6 +207,18 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 	motor(0, 0);
 }
 
+// void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
+// {
+// 	unsigned long pradinisLaikas = millis();
+
+// 	while (millis() - pradinisLaikas <= kiekMsLaukti && !arVidurysKaNorsMato())
+// 	{
+// 		motor(kairioMotoroGreitis, desinioMotoroGreitis);
+// 	}
+
+// 	return;
+// }
+
 void motoraiSuLaikuNereguojantysIPrieki(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
 {
 	time = millis();
@@ -212,4 +227,54 @@ void motoraiSuLaikuNereguojantysIPrieki(int kairioMotoroGreitis, int desinioMoto
 	{
 	}
 	motor(0, 0);
+}
+
+/**
+ * DĖMESIO
+ *
+ * Atsargiai su `delay` - jie užlaikys visą programą,
+ * ne tik LED'ą - motoras važiuos į priekį ilgiau
+ * nepaisant kitų sąlygų, nes nieks nesikeis (duh)
+ *
+ * NOTE
+ * Šitas neužlockins važiavimui pirmyn - jis tik pasiūs!
+ *
+ */
+bool siunciamPirmynJeiguPriekisMato(bool arRodytLEDa) {
+	if (arVidurysKaNorsMato())
+	{
+		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+
+		// if (arRodytLEDa) {
+		// 	digitalWrite(LEDas, HIGH);
+		// 	delay(10);
+		// }
+
+		return true;
+
+	} else {
+		// if (arRodytLEDa) {
+		// 	digitalWrite(LEDas, LOW);
+		// 	delay(10);
+		// }
+
+		return false;
+	}
+}
+
+void siunciamIrUzlokinamPirmynKolPriekisMato(bool arRodytLEDa) {
+	while (arVidurysKaNorsMato()) {
+
+		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+
+		if (arRodytLEDa) {
+			digitalWrite(LEDas, HIGH);
+			delay(10);
+		}
+	}
+
+	digitalWrite(LEDas, LOW);
+	delay(10);
+
+	return;
 }
