@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "pagalbines_funkcijos.h"
 #include "inicializuoti.h"
 
@@ -149,7 +150,7 @@ void atnaujintiBitusXPusesPagalPinus(byte kazkuriPuse, const int pinaiSkenavimui
 void printLinijuMatyma() {
 	Serial.print("\n\nLinijos:");
 
-	for (int i = 0; i < gautiMasyvoDydi(linijuSensoriai); i++) {
+	for (size_t i = 0; i < gautiMasyvoDydi(linijuSensoriai); i++) {
 		Serial.print("\nLinija ");
 		Serial.print(i);
 

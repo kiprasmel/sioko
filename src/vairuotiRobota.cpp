@@ -6,6 +6,7 @@
  * (gali būt, kad neišvengsim while / delay)
 */
 
+#include <Arduino.h>
 #include "vairuotiRobota.h"
 #include "kurYraOponentas.h"
 #include "motoras.h"

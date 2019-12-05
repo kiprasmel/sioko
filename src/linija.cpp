@@ -1,8 +1,10 @@
+#include <Arduino.h>
 #include "linija.h"
 #include "inicializuoti.h"
+#include "motoras.h"
 
 /**
- * WARNING 
+ * WARNING
  * Not fully working yet (needs more testing)
  */
 void linijosTikrinimas()

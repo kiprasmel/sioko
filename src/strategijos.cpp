@@ -1,4 +1,4 @@
-/** 
+/**
  * TODO CHECK FIX
  *
  * 1. Pervadinti funkciją
@@ -14,12 +14,15 @@
  *    Pertvarkyt šitą. Source:
  *    https://www.arduino.cc/reference/en/language/functions/time/millis/
  * 			P.S. Buvo `unsigned int time`, tai viskas ok.
- * 
+ *
  * 5. Nedėt į `case` blokus logikos, o juose iškviest funkciją.
- * 		a) Todėl sukurti funkcijas kiekvienam manevrui 
+ * 		a) Todėl sukurti funkcijas kiekvienam manevrui
  */
 
 // TODO - pervadinti pagal strategijų pavadinimus
+#include <Arduino.h>
+#include "strategijos.h"
+#include "pagalbines_funkcijos.h"
 #include "strategijos.h"
 #include "motoras.h"
 #include "inicializuoti.h" // #TODO #CHECK nežinau, ar reikalingas čia
@@ -62,6 +65,9 @@ void vykdytiStrategija(StrategijosPagalHex strategijosKodas)
 		break;
 	case stratZigzagasKairenDidelisNEC7:
 		zigzagasKairenDidelis();
+		break;
+	case stratPatvirtinimasNECEnter:
+		/** do nothing (TODO reikia išimti) */
 		break;
 	}
 }
@@ -110,15 +116,15 @@ void zigzagasDesinenDidelis()
 	zigzag_desine_D();
 }
 
-/** 
+/**
  * zigzagasDesinenMazas
- * 
+ *
  * į dešinę
  * vietoje
  * max į priekį
  * stipriai į dešinę
  * vietoje
- * max į priekį 
+ * max į priekį
  */
 
 void zigzagasDesinenMazas_unfinished()
@@ -129,13 +135,13 @@ void zigzagasDesinenMazas_unfinished()
 	unsigned int laikas = millis();
 
 	// #TODO #STRATS
-	const int directions[6][2] = {
-			{-200, 200},
-			{0, 0},
-			{255, 255},
-			{200, -200},
-			{0, 0},
-			{255, 255}};
+	// const int directions[6][2] = {
+	// 		{-200, 200},
+	// 		{0, 0},
+	// 		{255, 255},
+	// 		{200, -200},
+	// 		{0, 0},
+	// 		{255, 255}};
 
 	// CHECK 20 ms tikrina, right? Bet kiek kartų įvyksta tikrinimas
 	// Nes kiek kartų patikrina, kol praeina 20 ms?

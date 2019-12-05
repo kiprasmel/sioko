@@ -23,13 +23,26 @@ enum StrategijosPagalHex : long unsigned int
 	stratZigzagasKairenMazasNEC5 = 0xFFD827,		// stratZigzagasKairenMazasNEC5
 	stratZigzagasDesinenDidelisNEC6 = 0xFF8877, // stratZigzagasDesinenDidelisNEC6
 	stratZigzagasKairenDidelisNEC7 = 0xFFE817,	// stratZigzagasKairenDidelisNEC7
-	stratAstuntaNEC8 = 0xFF48B7,
-	stratDevintaNEC9 = 0xFF9A65,
+	// stratAstuntaNEC8 = 0xFF48B7,
+	// stratDevintaNEC9 = 0xFF9A65,
 	stratPatvirtinimasNECEnter = 0xFFE01F // TODO anksčiau `enter`
 };
 
 unsigned int laikas;
 StrategijosPagalHex pradineStrategija, pagrindineStrategija;
 
-void pirmaStrategija();
 void vykdytiStrategija(StrategijosPagalHex strategijosKodas);
+
+void pirmaStrategija();
+void antraStrategija();
+void treciaStrategija();
+void zigzagasDesinenMazas();
+void zigzagasKairenMazas();
+void zigzagasDesinenDidelis();
+void zigzagasKairenDidelis();
+
+/** legacy */
+void zigzag_kaire_M();
+void zigzag_desine_M();
+void zigzag_kaire_D();
+void zigzag_desine_D();

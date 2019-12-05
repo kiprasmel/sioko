@@ -34,7 +34,8 @@
 void inicializuoti();
 
 void sukurtiBendraPinuMasyva();
-void suteiktiPinModus();
+void suteiktiPinModusViskam();
+void suteiktiPinModeMasyvui(const int pinuMasyvas[], int masyvoDydis, int pinModas);
 void paruostiGeneralConfiga();
 
 /**

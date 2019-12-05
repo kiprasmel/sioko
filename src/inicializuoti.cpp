@@ -10,7 +10,9 @@
  *
 */
 
+#include <Arduino.h>
 #include "inicializuoti.h"
+#include "irremote_pultelis.h"
 #include <assert.h>
 
 void inicializuoti() {
