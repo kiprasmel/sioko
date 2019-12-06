@@ -8,7 +8,6 @@
 git clone https://github.com/sarpik/sioko.git
 # or:  git clone git@github.com:sarpik/sioko.git
 cd sioko/
-git submodule update --init --recursive
 ```
 
 ## Dependencies
