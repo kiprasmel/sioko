@@ -25,21 +25,13 @@
 #include "pagalbines_funkcijos.h"
 #include "strategijos.h"
 #include "motoras.h"
-#include "inicializuoti.h" // #TODO #CHECK nežinau, ar reikalingas čia
+#include "inicializuoti.h"
 
-// enum StrategijosPagalHex
-// {
-// 	stratPirmaNEC1 = 0xFF906F,									// TODO - reikia užvadinti
-// 	startAntraNEC2 = 0xFFB847,									//
-// 	stratTreciaNEC3 = 0xFFF807,									//
-// 	stratZigzagasDesinenMazasNEC4 = 0xFF9867,		// stratZigzagasDesinenMazasNEC4
-// 	stratZigzagasKairenMazasNEC5 = 0xFFD827,		// stratZigzagasKairenMazasNEC5
-// 	stratZigzagasDesinenDidelisNEC6 = 0xFF8877, // stratZigzagasDesinenDidelisNEC6
-// 	stratZigzagasKairenDidelisNEC7 = 0xFFE817,	// stratZigzagasKairenDidelisNEC7
-// 	stratAstuntaNEC8 = 0xFF48B7,
-// 	stratDevintaNEC9 = 0xFF9A65,
-// 	stratPatvirtinimasNECEnter = 0xFFE01F // TODO anksčiau `enter`
-// };
+size_t laikas = 0;
+StrategijosPagalHex pradineStrategija = nezinoma;
+StrategijosPagalHex pagrindineStrategija = nezinoma;
+
+extern StrategijosPagalHex pradineStrategija, pagrindineStrategija;
 
 void vykdytiStrategija(StrategijosPagalHex strategijosKodas)
 {
@@ -68,6 +60,8 @@ void vykdytiStrategija(StrategijosPagalHex strategijosKodas)
 		break;
 	case stratPatvirtinimasNECEnter:
 		/** do nothing (TODO reikia išimti) */
+		break;
+	case nezinoma:
 		break;
 	}
 }

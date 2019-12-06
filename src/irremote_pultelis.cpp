@@ -5,7 +5,13 @@
  */
 
 #include <Arduino.h>
+#include "config.h"
 #include "irremote_pultelis.h"
+
+/** Siųstuvo nustatymai */
+const byte RECV_PIN = 30;
+IRrecv irrecv(RECV_PIN);
+decode_results results;
 
 /**
  * Kaip veikia `irrecv.decode(&results)` ?

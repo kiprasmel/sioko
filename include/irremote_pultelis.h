@@ -5,9 +5,9 @@
 #include "strategijos.h"
 
 /** Siųstuvo nustatymai */
-const byte RECV_PIN = 30;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
+extern const byte RECV_PIN;
+extern IRrecv irrecv;
+extern decode_results results;
 
 void pulteliuNustatytiStrategijas();
 void lauktiEnterPaspaudimo();

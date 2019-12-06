@@ -16,6 +16,7 @@
 
 enum StrategijosPagalHex : long unsigned int
 {
+	nezinoma = 0,
 	stratPirmaNEC1 = 0xFF906F,									// TODO - reikia užvadinti
 	stratAntraNEC2 = 0xFFB847,									//
 	stratTreciaNEC3 = 0xFFF807,									//
@@ -28,8 +29,9 @@ enum StrategijosPagalHex : long unsigned int
 	stratPatvirtinimasNECEnter = 0xFFE01F // TODO anksčiau `enter`
 };
 
-unsigned int laikas;
-StrategijosPagalHex pradineStrategija, pagrindineStrategija;
+extern size_t laikas;
+extern StrategijosPagalHex pradineStrategija;
+extern StrategijosPagalHex pagrindineStrategija;
 
 void vykdytiStrategija(StrategijosPagalHex strategijosKodas);
 
