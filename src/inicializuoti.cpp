@@ -10,7 +10,9 @@
  *
 */
 
+#include <Arduino.h>
 #include "inicializuoti.h"
+#include "irremote_pultelis.h"
 #include <assert.h>
 
 void inicializuoti() {
@@ -77,11 +79,11 @@ void suteiktiPinModusViskam() {
 	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT);
 	suteiktiPinModeMasyvui(ziurintysIDesinePinai,  ziurintysIDesinePinaiDydis, INPUT);
 
-	suteiktiPinModeMasyvui(linijuSensoriai,  gautiMasyvoDydi(linijuSensoriai), INPUT);
+	suteiktiPinModeMasyvui(linijuSensoriai, linijuSensoriaiDydis, INPUT);
 }
 
-void suteiktiPinModeMasyvui(const int pinuMasyvas[], int masyvoDydis, int pinModas) {
-	for (int i = 0; i < masyvoDydis; i++) {
+void suteiktiPinModeMasyvui(const int pinuMasyvas[], size_t masyvoDydis, int pinModas) {
+	for (size_t i = 0; i < masyvoDydis; i++) {
 		const int pin = pinuMasyvas[i];
 		pinMode(pin, pinModas);
 	}

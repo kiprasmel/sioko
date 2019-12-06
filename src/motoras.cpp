@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "motoras.h"
 #include "inicializuoti.h"
 #include "pagalbines_funkcijos.h"

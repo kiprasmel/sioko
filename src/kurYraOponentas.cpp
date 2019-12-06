@@ -7,6 +7,7 @@
  * Copyright (c) 2019 Kipras Melnikovas
 */
 
+#include <Arduino.h>
 #include "kurYraOponentas.h"
 #include "inicializuoti.h" // tolimiausioPinoLaipsnis
 #include "pagalbines_funkcijos.h"

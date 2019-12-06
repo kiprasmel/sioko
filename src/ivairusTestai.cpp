@@ -1,8 +1,10 @@
+#include <Arduino.h>
 #include "ivairusTestai.h"
 #include "irremote_pultelis.h" // tik testavimo strategijoms
 #include "inicializuoti.h"		 // tik testavimo strategijoms
 #include "motoras.h"
 #include "pagalbines_funkcijos.h"
+#include "strategijos.h"
 
 void hardCodedVarikliuTestai()
 {

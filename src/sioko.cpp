@@ -8,6 +8,7 @@
  *
 */
 
+#include <Arduino.h>
 #include "inicializuoti.h"
 #include "strategijos.h"
 #include "irremote_pultelis.h"

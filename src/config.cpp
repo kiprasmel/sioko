@@ -1,41 +1,5 @@
-#pragma once
-
-/*
- * inicializuoti.h
- *
- * inicializavimo header failas su visais globaliais kintamaisiais ir
- * funkcijomis, kurių reikia inicializacijai ir visam programos
- * veikimui.
- *
- * Naudojamas pagrindiniame projekto faile (sioko.ino)
- * ir suteikia globalius kintamuosius visiems failams.
- *
- * Copyright (c) 2019 Kipras Melnikovas
- *
-*/
-
-/**
- * DĖMESIO
- *
- * Šitas VEIKIA masyvams, kurie yra `stack`e,
- * bet ne `heap`e!
- *
- * Šitas NEVEIKIA, jeigu masyvas buvo paduotas kaip funkcijos parametras,
- * nes jis tampa `pointer`iu ir nebeišeina patikrinti jo dydžio!
- *
- * Skaityti daugiau:
- *
- * https://stackoverflow.com/a/10349610
- * https://stackoverflow.com/a/37539
- *
- */
-#define gautiMasyvoDydi(x) (sizeof(x) / sizeof((x)[0]))
-
-void inicializuoti();
-
-void sukurtiBendraPinuMasyva();
-void suteiktiPinModus();
-void paruostiGeneralConfiga();
+#include "config.h"
+#include "pagalbines_funkcijos.h"
 
 /**
  * didžiausio laipsnio modulio (paversto į teigiamo sk.) greitis
@@ -44,31 +8,15 @@ void paruostiGeneralConfiga();
 const double tolimiausioPinoLaipsnis = 90;
 
 const double greitisVaziavimoPirmyn = 255;
-const double greitisSukimosi = 255;										 // #EDITME
+const double greitisSukimosi = 255;
 const double perKiekMsApsisukam360Sukdamiesi255 = 157; //50; //157;
 const double perKiekMsApsisukam90Sukdamiesi255 = 56; // 56; 64;
 
 /**
- * TODO - implementuot šituos
- */
-// const double sukimosiLaikasMs1Laipsnio = perKiekMsApsisukam90Sukdamiesi255 / 255 * greitisSukimosi / 90;
-// const double sukimosiLaikasMsTolimiausiuLaipsniu = sukimosiLaikasMs1Laipsnio * tolimiausioPinoLaipsnis;
-
-/** --- */
-
-/**
- * new layout of pins etc
- *
- * Esmė sudelioti pagal tai, kur pinai **ŽIŪRI**
- *
- * Note - strategijos bus broken
- *
+ * Esmė pinus sudelioti pagal tai, kur jie **ŽIŪRI**
 */
 
 const byte LEDas = 13;
-
-
-
 
 /** palieku čia - reikia strategijoms -- TODO perdaryt, nes nereikšmingi */
 const int Middle1 = 16; /** lazeris ilgas, padėtas pačiame viduryje */
@@ -164,6 +112,8 @@ const int linijuSensoriai[] = {
 	38 /** RightLine2 */
 };
 
+const size_t linijuSensoriaiDydis = gautiMasyvoDydi(linijuSensoriai);
+
 /** --- */
 
 /**
@@ -233,21 +183,6 @@ const int linijuSensoriai[] = {
  * esantį kodą su jais į naują kodą su atnaujintais kintamaisiais etc.
 */
 
-// protokolas (atrodo, jog nereikalingas)
-#define MY_PROTOCOL NEC
-
-//Pultelio hex kodai ir nustatymai
-#define Number1 0xFF906F
-#define Number2 0xFFB847
-#define Number3 0xFFF807
-#define Number4 0xFF9867
-#define Number5 0xFFD827
-#define Number6 0xFF8877
-#define Number7 0xFFE817
-#define Number8 0xFF48B7
-#define Number9 0xFF9A65
-#define Enter 0xFFE01F
-
 // pagalbiniai pavadinimai bitais (nuo 0 iki 255);
 byte myLINE = B0000;
 byte myLINEBACK = B00;
@@ -271,12 +206,6 @@ const byte DIR2 = 10; // ?
 int k = 0;
 int b = 0;
 
-//nep right
-//33
-//34
-//nep left
-//15
-//14
 const byte START_MODULE = 29;
 
 //Varikliu greiciai
@@ -296,7 +225,3 @@ byte MAIN_STRATEGY_STATE = 0;
 
 // millis
 unsigned long time;
-
-bool Front = false;
-
-byte check;

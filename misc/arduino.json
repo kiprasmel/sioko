@@ -1,0 +1,7 @@
+{
+	"note": "this is outdated",
+	"programmer": "AVRISP mkII",
+	"board": "arduino:avr:uno",
+	"port": "/dev/ttyACM0",
+	"sketch": "sioko.ino"
+}

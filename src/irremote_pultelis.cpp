@@ -4,13 +4,14 @@
  * See https://www.circuitbasics.com/arduino-ir-remote-receiver-tutorial/
  */
 
-/** CHECK kokie čia includai? Iš kur bibliotekos / kokios jos, ir kam naudojat jų utilities? */
-// #include <boarddefs.h>
-// #include <ir_Lego_PF_BitStreamEncoder.h>
-// #include <IRremote.h>
-// #include <IRremoteInt.h>
-#include "strategijos.h"
+#include <Arduino.h>
+#include "config.h"
 #include "irremote_pultelis.h"
+
+/** Siųstuvo nustatymai */
+const byte RECV_PIN = 30;
+IRrecv irrecv(RECV_PIN);
+decode_results results;
 
 /**
  * Kaip veikia `irrecv.decode(&results)` ?
