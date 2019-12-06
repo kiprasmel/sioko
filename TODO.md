@@ -6,6 +6,8 @@
 
 ### Important
 
+- Apsispręst, kuria kalba viską darom xd
+
 - Strategijos (pradinės) yra rip. Naudoja `delay`s etc.
 	-	 Perdaryt
 

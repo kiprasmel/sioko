@@ -10,6 +10,16 @@ git clone https://github.com/sarpik/sioko.git
 cd sioko/
 ```
 
+## Running
+
+Tau reikės [platformio core (CLI)](https://docs.platformio.org/en/latest/installation.html) arba [platformio IDE (extension'as VSCode'ui)](https://platformio.org/platformio-ide).
+
+```sh
+platformio run
+platformio run --target upload
+platformio device monitor --baud 9600
+```
+
 ## Dependencies
 
 - [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
