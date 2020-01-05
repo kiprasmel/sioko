@@ -35,3 +35,7 @@ bool arBetKuriPuseKaNorsMato();
 
 void ledasON();
 void ledasOFF();
+
+bool arMato(int &pinas);
+bool arMatoLinija(int &pinas);
+bool arMatoLazeris(int &pinas);

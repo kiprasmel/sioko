@@ -16,12 +16,7 @@ const double perKiekMsApsisukam90Sukdamiesi255 = 56; // 56; 64;
  * Esmė pinus sudelioti pagal tai, kur jie **ŽIŪRI**
 */
 
-const byte LEDas = 13;
-
-/** palieku čia - reikia strategijoms -- TODO perdaryt, nes nereikšmingi */
-const int Middle1 = 16; /** lazeris ilgas, padėtas pačiame viduryje */
-const int Middle2 = 21; /** ne lazeris, žiūri į vidurinį (irgi pačiame viduryje) */
-const int Middle3 = 15; /** lazeris trumpas, padėtas pačiame viduryje */
+const byte LEDas = 39;
 
 const byte Rightback = 15;
 const byte Leftback = 34;
@@ -34,11 +29,15 @@ const byte Leftback = 34;
  */
 
 /** ŽIŪRI į dešinę */
+/** TODO susidėt pinų pasisukimo laipsnius */
 const int ziurintysIDesineSensoriai[][2] = {
-		{17, 45}, /** lazeris trumpas */
-		// {18, 45}, /** lazeris ilgas */
-		{22, 45},
-		{19, 90}
+		// {17, 45}, /** lazeris trumpas */
+		// // {18, 45}, /** lazeris ilgas */
+		// {22, 45},
+		// {19, 90}
+		{22, 90},
+		{20, 45},
+		{21, 15}
 };
 
 const int ziurintysIDesineSensoriaiDydis = gautiMasyvoDydi(ziurintysIDesineSensoriai);
@@ -52,13 +51,15 @@ const int ziurintysIDesinePinai[ziurintysIDesineSensoriaiDydis] = {
 
 const int ziurintysIDesinePinaiDydis = gautiMasyvoDydi(ziurintysIDesinePinai);
 
+/** palieku čia - reikia strategijoms -- TODO perdaryt, nes nereikšmingi */
+const int Middle1 = 17; /** lazeris ilgas, padėtas pačiame viduryje */
+const int Middle2 = 23; /** ne lazeris, žiūri į vidurinį (irgi pačiame viduryje) */
+const int Middle3 = 23; /** lazeris trumpas, padėtas pačiame viduryje */
+
 /** ŽIŪRI į vidurį */
 const int ziurintysIViduriSensoriai[][2] = {
-		// {Middle1, 0}, /** lazeris ilgas */
-		// {Middle2, 0}, /** buvo vienas priekinis, dabar yra 2 iš šonų priekyje */
-		{Middle3, 0},  /** lazeris trumpas */
-		{34, 0}, /** iš šono į priekį */
-		{21, 0} /** iš šono į priekį */
+		{17, 0}, /** left */
+		{23, 0} /** right */
 };
 
 const int ziurintysIViduriSensoriaiDydis = gautiMasyvoDydi(ziurintysIViduriSensoriai);
@@ -66,7 +67,7 @@ const int ziurintysIViduriSensoriaiDydis = gautiMasyvoDydi(ziurintysIViduriSenso
 const int ziurintysIViduriPinai[ziurintysIViduriSensoriaiDydis] = {
 	ziurintysIViduriSensoriai[0][0],
 	ziurintysIViduriSensoriai[1][0],
-	ziurintysIViduriSensoriai[2][0],
+	// ziurintysIViduriSensoriai[2][0],
 	// ziurintysIViduriSensoriai[3][0]
 };
 
@@ -74,10 +75,9 @@ const int ziurintysIViduriPinaiDydis = gautiMasyvoDydi(ziurintysIViduriPinai);
 
 /** ŽIŪRI į kairę */
 const int ziurintysIKaireSensoriai[][2] = {
-		{23, -90},
-		{20, -45},
-		// {14, -45}, /** lazeris ilgas */
-		{39, -45}  /** lazeris trumpas */
+		{16, -90},
+		{19, -15},
+		{18, -45}
 };
 
 const int ziurintysIKaireSensoriaiDydis = gautiMasyvoDydi(ziurintysIKaireSensoriai);
@@ -96,6 +96,8 @@ const int ziurintysIKairePinaiDydis = gautiMasyvoDydi(ziurintysIKairePinai);
  * čia tik tie sensoriai, kurie aktualūs skaičiuojant pasisukimus / puolimus.
  */
 const int kiekYraSensoriuPinu = ziurintysIDesinePinaiDydis + ziurintysIKairePinaiDydis + ziurintysIViduriPinaiDydis;
+const int visiPinaiDydis = kiekYraSensoriuPinu;
+
 
 /**
  * dinamiškai sukuriamas `inicializuoti()` funkcijoje
@@ -106,10 +108,10 @@ int visiPinai[kiekYraSensoriuPinu];
 
 /** ŽIŪRI į linijas (bet jau nebesvarbūs skaičiavimams) */
 const int linijuSensoriai[] = {
-	35, /** LeftLine1 */
-	36, /** LeftLine2 */
-	37, /** RightLine1 */
-	38 /** RightLine2 */
+	34, /** LeftLine1 */
+	33, /** LeftLine2 */
+	31, /** RightLine1 */
+	32 /** RightLine2 */
 };
 
 const size_t linijuSensoriaiDydis = gautiMasyvoDydi(linijuSensoriai);

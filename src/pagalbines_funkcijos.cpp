@@ -190,6 +190,20 @@ void ledasOFF() {
 	digitalWrite(LEDas, LOW);
 }
 
+/**
+ * paprastam sensoriui, linijai ir lazeriui skiriasi!
+ */
+bool arMato(int &pinas) {
+	return (digitalRead(pinas) == 0);
+}
+
+bool arMatoLinija(int &pinas) {
+	return (digitalRead(pinas) == 1);
+}
+
+bool arMatoLazeris(int &pinas) {
+	return (digitalRead(pinas) == 1);
+}
 
 /**
  * TODO wtf - ar čia iš viso kur nors naudojama?
