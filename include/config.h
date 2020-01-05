@@ -37,6 +37,7 @@ extern const int ziurintysIKaireSensoriaiDydis;
 extern const int ziurintysIKairePinai[];
 extern const int ziurintysIKairePinaiDydis;
 extern const int kiekYraSensoriuPinu;
+extern const int visiPinaiDydis; /** alias */
 // extern int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[kiekYraSensoriuPinu][2];
 extern int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2];
 // extern int visiPinai[kiekYraSensoriuPinu];
