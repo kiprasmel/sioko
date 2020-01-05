@@ -75,9 +75,9 @@ void suteiktiPinModusViskam() {
 
 	suteiktiPinModeMasyvui(randomInputPins, gautiMasyvoDydi(randomInputPins), INPUT);
 
-	suteiktiPinModeMasyvui(ziurintysIKairePinai, ziurintysIKairePinaiDydis, INPUT);
-	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT);
-	suteiktiPinModeMasyvui(ziurintysIDesinePinai,  ziurintysIDesinePinaiDydis, INPUT);
+	suteiktiPinModeMasyvui(ziurintysIKairePinai, ziurintysIKairePinaiDydis, INPUT_PULLUP);
+	suteiktiPinModeMasyvui(ziurintysIViduriPinai, ziurintysIViduriPinaiDydis, INPUT_PULLUP);
+	suteiktiPinModeMasyvui(ziurintysIDesinePinai,  ziurintysIDesinePinaiDydis, INPUT_PULLUP);
 
 	suteiktiPinModeMasyvui(linijuSensoriai, linijuSensoriaiDydis, INPUT);
 }
