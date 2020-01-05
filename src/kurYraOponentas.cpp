@@ -19,7 +19,7 @@
 
 double oponentoPozicijosBalasVidutinis()
 {
-	int kiekPinuMato = 0;
+	size_t kiekPinuMato = 0;
 
 	double baluSuma = 0;
 
@@ -40,7 +40,7 @@ double oponentoPozicijosBalasVidutinis()
 
 double oponentoPozicijosBalasMediana()
 {
-	int kiekPinuMato = 0;
+	size_t kiekPinuMato = 0;
 
 	int matanciuPinuLaipsniai[kiekYraSensoriuPinu];
 
@@ -117,6 +117,14 @@ double oponentoPozicijosBalasMediana()
 
 	Serial.print("\nKiekPinuMato = ");
 	Serial.print(kiekPinuMato);
+
+	Serial.print("\nMatanciu pinu laipsniai == ");
+
+	for (size_t i = 0; i < kiekPinuMato; ++i) {
+		Serial.print(matanciuPinuLaipsniai[i]);
+		Serial.print(" ");
+	}
+
 	Serial.print("\nMediana = ");
 	Serial.print(baluSuma);
 
