@@ -30,12 +30,6 @@ rm    -rf ./.pio/build/
 mkdir -p  ./.pio/build/teensy35/FrameworkArduino/
 ```
 
-## Dependencies
-
-- [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
-- [Teensy LC](https://www.pjrc.com/teensy/td_download.html)
-- For building on linux for teensy - [teensyduino](https://www.pjrc.com/teensy/td_download.html)
-
 ## Configuration
 
 > todo - get rid of this & dependencies since we're now using platformio
