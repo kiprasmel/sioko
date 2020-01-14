@@ -27,6 +27,18 @@ void linijosTikrinimas()
 	}
 }
 
+/**
+ * Aš pats linijos tikrinimo logikos (šitos) nesu keitęs
+ * ir čia yra likę iš senesnių laikų,
+ * tai gali būt pretty meh -
+ * TODO būtų nice kada normaliai perrašyt,
+ * nes čia ir kintamųjų jau nebenaudojamų yra,
+ * kaip `myLINEBACK` etc.
+ *
+ * o ir tikriausiai efektyviau būtų galima visa tai padaryt,
+ * stateCharts come to mind xoxo
+ *
+*/
 void originaliLinijaBeDefaultCase()
 {
 	/**
@@ -112,8 +124,15 @@ void originaliLinijaBeDefaultCase()
 			}
 		}
 		break;
-		// case 0:
+		/**
+		 * Šitie būtini, kad iš'break'intų lauk
+		 * (bent default)
+		*/
+		case 0:
+		//   Serial.print("myLINE 0 - linija");
 		//   motor(SPEED_NORMAL, SPEED_NORMAL);
-		//   break;
+		  break;
+		default:
+			break;
 	}
 }
