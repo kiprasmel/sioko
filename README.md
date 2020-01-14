@@ -20,6 +20,16 @@ platformio run --target upload
 platformio device monitor --baud 9600
 ```
 
+> Note - platformio kartais ožuojasi ir meta error'us,
+> nors sukompiliuoja gerai.
+> Sutvarkymui reikia mixuot šias dvi komandas ir kartot viršutinę procedūrą
+> iš naujo, kol pagaliau viskas pavyksta:D
+
+```
+rm    -rf ./.pio/build/
+mkdir -p  ./.pio/build/teensy35/FrameworkArduino/
+```
+
 ## Dependencies
 
 - [IRremote ^2.2.3](https://github.com/z3t0/Arduino-IRremote)
