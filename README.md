@@ -30,6 +30,10 @@ rm    -rf ./.pio/build/
 mkdir -p  ./.pio/build/teensy35/FrameworkArduino/
 ```
 
+## Misc
+
+1. Įjungus USB, port'as dažniausiai būna `/dev/ttyACM0`; dar gali būti `/dev/ttyUSB0`, arba vietoj `0` bet koks skaičius.
+
 ## Licence
 
 [GPL-3.0](./LICENSE) © 2018-present [Kipras Melnikovas](https://github.com/sarpik)
