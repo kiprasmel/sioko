@@ -16,6 +16,8 @@
 #include "vairuotiRobota.h"
 #include "ivairusTestai.h"
 #include "strategijos.h"
+#include "e2e/arSensoriaiJunginejasi.h"
+#include "vairuotiSuStateChartais.h"
 
 void setup()
 {
@@ -35,6 +37,11 @@ void loop()
 	// Serial.println();
 
 	// vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
+	// vairuotiRobotaSuApskaiciavimais();
+
+	// arSensoriaiJunginejasi();
+
+	vairuotiRobotaSuStateChartais();
 
 	/**
 	 * TEST ONLY - laukti, kol visi duomenys iš serial'o bus išsiųsti, ir tik tada tęsti.
