@@ -15,6 +15,8 @@
 #include "linija.h"
 #include <math.h>
 
+#include "xstate.h"
+
 // for testing:
 // #include "ivairusTestai.h"
 
@@ -76,6 +78,10 @@ void vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai()
 	}
 }
 
+/**
+ * TODO - šito bent kol kas nebenaudojam,
+ * nes pradėjom judėt su stateChart'ais
+*/
 void vairuotiRobotaSuApskaiciavimais()
 {
 	atnaujintiJutikliuDuomenis();
@@ -95,19 +101,22 @@ void vairuotiRobotaSuApskaiciavimais()
 	// 	while (true) {}
 	// }
 
-	if (siunciamPirmynJeiguPriekisMato(arRodytLEDa)) {
-		/**
-		 * jeigu siunčiam pirmyn, nes priekis mato,
-		 * tai nutraukiam tolesnius skaičiavimus
-		 */
-		return;
-	}
+	// if (siunciamPirmynJeiguPriekisMato(arRodytLEDa)) {
+	// 	/**
+	// 	 * jeigu siunčiam pirmyn, nes priekis mato,
+	// 	 * tai nutraukiam tolesnius skaičiavimus
+	// 	 */
+	// 	return;
+	// }
 
 	// siunciamIrUzlokinamPirmynKolPriekisMato(arRodytLEDa);
 
 	/** BEGIN calculations */
 
 	double oponentoPozicija = kurYraOponentas(); // nuo -1 iki +1
+
+	Serial.print("\nOponento pozicija == ");
+	Serial.print(oponentoPozicija);
 
 	/**
 	 * nuo `0` iki `tolimiausioPinoLaipsnis` laipsnių
@@ -119,26 +128,26 @@ void vairuotiRobotaSuApskaiciavimais()
 	double kiekMsReikesSuktisFabs = fabs(kiekMsReikesSuktisNotAbs);
 	unsigned long kiekMsReikesSuktis = (unsigned long) kiekMsReikesSuktisFabs;
 
-	// Serial.print("\nOponento pozicija ");
-	// Serial.print(oponentoPozicija);
-	// Serial.print("\nkiek reikės suktis == ");
-	// Serial.print(kiekMsReikesSuktis);
+	Serial.print("\nkiek ms reikės suktis == ");
+	Serial.print(kiekMsReikesSuktis);
 
-	// // #TESTING
-	// if (oponentoPozicija != 0)
+	// // #TESTING if (oponentoPozicija != 0)
 	// {
-	// 	digitalWrite(LEDas, HIGH);
-	// 	delay(10);
+	//  digitalWrite(LEDas, HIGH); delay(10);
 	// }
 	// else
 	// {
-	// 	digitalWrite(LEDas, LOW);
+	//  digitalWrite(LEDas, LOW);
 	// }
 
 	if (oponentoPozicija == 0) // priekis
 	{
 		/** nenaudos while ciklo, tad `loop`as vyks nesustodamas, kol oponentoPozicija pasikeis iš 0 */
-		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+		motor(0, 0);
+		while (1) {}
+
+		// const int randomLaikasVaziavimuiPirmyn = 20;
+		// motoraiSuLaiku(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn, randomLaikasVaziavimuiPirmyn);
 	}
 	else if (oponentoPozicija < 0) // kairė
 	{
