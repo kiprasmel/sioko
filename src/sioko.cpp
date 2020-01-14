@@ -16,16 +16,37 @@
 #include "vairuotiRobota.h"
 #include "ivairusTestai.h"
 #include "strategijos.h"
+#include "e2e/arSensoriaiJunginejasi.h"
+#include "vairuotiSuStateChartais.h"
 
 void setup()
 {
-	Serial.begin(115200);
+	Serial.begin(9600);
+
+	/**
+	 * TEST ONLY - laukti, kol įsijungs serial'as (TEST ONLY)
+	 * see https://www.arduino.cc/reference/en/language/functions/communication/serial/ifserial/
+	*/
+	// while (!Serial) { /** wait */ }
 
 	inicializuoti();
 }
 
 void loop()
 {
+	// Serial.println();
+
 	// vairuotiRobotaBeSkaiciavimuIrUzlaikymuPrimityviai();
-	vairuotiRobotaSuApskaiciavimais();
+	// vairuotiRobotaSuApskaiciavimais();
+
+	// arSensoriaiJunginejasi();
+
+	vairuotiRobotaSuStateChartais();
+
+	/**
+	 * TEST ONLY - laukti, kol visi duomenys iš serial'o bus išsiųsti, ir tik tada tęsti.
+	 *
+	 * https://www.arduino.cc/reference/en/language/functions/communication/serial/flush/
+	 */
+	// Serial.flush();
 }

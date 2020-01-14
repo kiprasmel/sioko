@@ -39,3 +39,10 @@ void ledasOFF();
 bool arMato(int &pinas);
 bool arMatoLinija(int &pinas);
 bool arMatoLazeris(int &pinas);
+
+size_t kiekMatoPriekis();
+size_t kiekMatoKaire();
+size_t kiekMatoKaire();
+size_t kiekMatoLinija();
+
+bool arPraejoLaikas(unsigned long& pradziaMs, unsigned long& kiekTrunkaMs);

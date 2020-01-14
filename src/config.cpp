@@ -107,7 +107,7 @@ int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[kiekYraSensoriuPinu][2
 int visiPinai[kiekYraSensoriuPinu];
 
 /** ŽIŪRI į linijas (bet jau nebesvarbūs skaičiavimams) */
-const int linijuSensoriai[] = {
+int linijuSensoriai[] = {
 	34, /** LeftLine1 */
 	33, /** LeftLine2 */
 	31, /** RightLine1 */
