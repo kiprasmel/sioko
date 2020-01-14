@@ -205,6 +205,64 @@ bool arMatoLazeris(int &pinas) {
 	return (digitalRead(pinas) == 1);
 }
 
+size_t kiekMatoPriekis() {
+	return kiekMatoKazkuriPuse(ziurintysIKairePinai, ziurintysIKairePinaiDydis);
+}
+
+size_t kiekMatoKaire() {
+	return kiekMatoKazkuriPuse(ziurintysIKairePinai, ziurintysIKairePinaiDydis);
+}
+
+size_t kiekMatoDesine() {
+	return kiekMatoKazkuriPuse(ziurintysIDesinePinai, ziurintysIDesinePinaiDydis);
+}
+
+/**
+ * TODO daryt su `kiekMatoKazkuriPuse`, tik extendint,
+ * kad tikrinimui naudotų `arMatoLinija`
+*/
+// size_t kiekMatoLinija() {
+// 	size_t suma = 0;
+
+// 	for (size_t i = 0; i < linijuSensoriaiDydis; ++i) {
+// 		const int& pinas = linijuSensoriai[i];
+
+// 		if (arMatoLinija(pinas)) {
+// 			++suma;
+// 		}
+// 	}
+
+// 	return suma;
+// }
+size_t kiekMatoLinija() {
+	size_t suma = 0;
+
+	if (arMatoLinija(linijuSensoriai[0])) { ++suma; }
+	if (arMatoLinija(linijuSensoriai[1])) { ++suma; }
+	if (arMatoLinija(linijuSensoriai[2])) { ++suma; }
+	if (arMatoLinija(linijuSensoriai[3])) { ++suma; }
+
+	Serial.print("kiekMatoLinija = ");
+	Serial.print(suma);
+	Serial.print("\n");
+
+	return suma;
+}
+
+/**
+ * `kiekTrunka` -> `threshold`
+*/
+bool arPraejoLaikas(unsigned long& pradziaMs, unsigned long& kiekTrunkaMs) {
+	const unsigned long& dabartinisLaikasMs = millis();
+
+	/** [10, 11, 12, 13, 14, 15, 16, 17, ...] >=        10 + 5 */
+	if (dabartinisLaikasMs                    >= pradziaMs + kiekTrunkaMs) {
+		return true;
+	}
+
+	return false;
+}
+
 /**
  * TODO wtf - ar čia iš viso kur nors naudojama?
  * Niekur nematau `myFRONT` / `mySIDES` kintamųjų
