@@ -42,7 +42,7 @@ extern const int visiPinaiDydis; /** alias */
 extern int pinaiIrJuPasisukimoLaipsniaiKaireMinusaiDesinePliusai[][2];
 // extern int visiPinai[kiekYraSensoriuPinu];
 extern int visiPinai[];
-extern const int linijuSensoriai[];
+extern int linijuSensoriai[];
 extern const size_t linijuSensoriaiDydis;
 // #define MY_PROTOCOL NEC
 // #define Number1 0xFF906F
