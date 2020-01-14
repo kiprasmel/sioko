@@ -158,17 +158,27 @@ void motoraiKolPriekisPamato(int kairioMotoroGreitis, int desinioMotoroGreitis) 
 }
 
 /**
+ * TODO - šito bent kol kas nenaudojam,
+ * nes vėlgi - stateChart'ai,
+ *
+ * o ir apskritai čia gana keblu nuspręsti,
+ * kada yra laikas nutraukti etc
+ * ir atsiranda daugybė kitų bug'ų,
+ * kur neaišku, ar hardware'as, ar software'as kaltas.
+ *
+ * So no honey for this bad boy rn.
+ *
  * naudoja while ciklą, kad motorai vykdytų dalykus X laiko
  * (senoji versija iš `v1.1.0` (9962c68))
  */
 void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned long kiekMsLaukti)
 {
-	if (arVidurysKaNorsMato())
-	{
-		motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-		kiekMsLaukti = -1;
-		return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
-	}
+	// if (arVidurysKaNorsMato())
+	// {
+	// 	motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+	// 	kiekMsLaukti = -1;
+	// 	return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
+	// }
 
 	time = millis();
 	// unsigned long laikasDepth2;
@@ -199,12 +209,18 @@ void motoraiSuLaiku(int kairioMotoroGreitis, int desinioMotoroGreitis, unsigned 
 			// 	arVidurysKaNorsMato(); // tiesiog atnaujins ledą
 			// }
 
-			motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
-			kiekMsLaukti = -1;
-			return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
+			// motor(greitisVaziavimoPirmyn, greitisVaziavimoPirmyn);
+			// kiekMsLaukti = -1;
+
+			// ledasON();
+			// while (1) {};
+
+			// return; // nežinau, ar veikia returnas (ar nutraukia ciklą)
 		}
 		// pause programm (not good). Much like using a delay.
 	}
+
+	/** questionable */
 	motor(0, 0);
 }
 
