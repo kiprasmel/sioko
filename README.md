@@ -30,15 +30,6 @@ rm    -rf ./.pio/build/
 mkdir -p  ./.pio/build/teensy35/FrameworkArduino/
 ```
 
-## Configuration
-
-> todo - get rid of this & dependencies since we're now using platformio
-
-`board`: `Teensy 3.5` (not `uno`! (analogWriteFrequency etc.))
-`programmer`: `AVRISP mk11`
-
-note - linux's port of the device you connect through a USB will probably be `/dev/ttyACM*` or `/dev/ttyUSB*`
-
 ## Licence
 
 [GPL-3.0](./LICENSE) © 2018-present [Kipras Melnikovas](https://github.com/sarpik)
