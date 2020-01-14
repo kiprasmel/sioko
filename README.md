@@ -35,11 +35,9 @@ platformio device monitor --baud 9600
 
 note - linux's port of the device you connect through a USB will probably be `/dev/ttyACM*` or `/dev/ttyUSB*`
 
-## [Licence](./LICENSE)
+## Licence
 
-> [GPL-3.0](./LICENSE)
-
-Copyright (c) 2019 [Kipras Melnikovas](https://github.com/sarpik)
+[GPL-3.0](./LICENSE) © 2018-present [Kipras Melnikovas](https://github.com/sarpik)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
