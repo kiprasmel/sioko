@@ -206,7 +206,8 @@ bool arMatoLazeris(int &pinas) {
 }
 
 size_t kiekMatoPriekis() {
-	return kiekMatoKazkuriPuse(ziurintysIKairePinai, ziurintysIKairePinaiDydis);
+	return kiekMatoKazkuriPuse(ziurintysIKairePinai, ziurintysIKairePinaiDydis)
+		+ (size_t) arMatoLazeris() + (size_t) arMatoLazeris(); /** TODO FIXME HACK - šitas laikinai, kol nepadarėm https://github.com/sarpik/sioko/issues/15 */
 }
 
 size_t kiekMatoKaire() {
