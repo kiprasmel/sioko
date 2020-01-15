@@ -12,7 +12,7 @@ cd sioko/
 
 ## Running
 
-Tau reikės [platformio core (CLI)](https://docs.platformio.org/en/latest/installation.html) arba [platformio IDE (extension'as VSCode'ui)](https://platformio.org/platformio-ide).
+Tau reikės [platformio core (CLI)](https://docs.platformio.org/en/latest/installation.html#installation-methods) arba [platformio IDE (extension'as VSCode'ui)](https://platformio.org/platformio-ide).
 
 ```sh
 platformio run
